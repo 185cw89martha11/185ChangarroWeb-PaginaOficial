@@ -1,0 +1,13 @@
+# Configuración para Render.com (Blueprint).
+# En Render: New > Blueprint > elige el repositorio. Render lee este archivo solo.
+services:
+  - type: web
+    name: 185changarroweb
+    runtime: node
+    plan: free
+    buildCommand: npm install
+    startCommand: npm start
+    healthCheckPath: /salud
+    envVars:
+      - key: NODE_VERSION
+        value: "24"
