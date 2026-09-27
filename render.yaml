@@ -11,3 +11,10 @@ services:
     envVars:
       - key: NODE_VERSION
         value: "24"
+      # Panel de administración y buzón de solicitudes. Los valores se ponen en Render > Environment (ver integraciones/README.md).
+      - key: ADMIN_CLAVE_HASH
+        sync: false
+      - key: APPS_SCRIPT_URL
+        sync: false
+      - key: APPS_SCRIPT_SECRETO
+        sync: false

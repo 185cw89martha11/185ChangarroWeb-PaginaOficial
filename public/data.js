@@ -3,7 +3,7 @@
   Todo el contenido que se ve en la demo vive aquí. app.js solo lo pinta.
 
   COLORS    clave -> [nombre visible, color hex]. El color debe dar buen contraste con texto blanco.
-  FONTS     clave -> pila de fuentes para el nombre del negocio y los títulos (cargadas en index.html desde Google Fonts).
+  FONTS     clave -> pila de fuentes para el nombre del negocio y los títulos (cargadas en demo.html desde Google Fonts).
   GIROS     un objeto por tipo de negocio. Campos:
               label        texto del selector de giro
               name         nombre de ejemplo (se usa si el vendedor no escribe uno)

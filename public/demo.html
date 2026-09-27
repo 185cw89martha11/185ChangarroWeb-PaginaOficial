@@ -1,0 +1,155 @@
+<!doctype html>
+<html lang="es-MX">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<link rel="icon" type="image/png" href="icono.png">
+<title>185ChangarroWeb</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Alfa+Slab+One&family=Figtree:wght@400;500;600;700&family=Italiana&family=JetBrains+Mono:wght@400;500&family=Young+Serif&display=swap">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<div class="app" id="app">
+  <header class="top">
+    <div class="brandmark">
+      <img class="bm-logo" src="logo.png" alt="" width="52" height="34">
+      <div><strong>185ChangarroWeb</strong><small>Muestrario de páginas para negocios</small></div>
+    </div>
+    <div class="tabs" role="tablist" aria-label="Vista">
+      <button role="tab" id="tab-demo" aria-selected="true" aria-controls="view-demo">Demo</button>
+      <button role="tab" id="tab-prop" aria-selected="false" aria-controls="view-prop">Propuesta</button>
+    </div>
+    <button class="btn only-mobile" id="btn-ajustes" type="button">Ajustes</button>
+    <button class="btn solid" id="btn-present" type="button" aria-label="Presentar al cliente">
+      <svg width="14" height="14" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 4.5v15l12-7.5z" fill="currentColor"/></svg>
+      <span class="only-desktop">Presentar</span>
+    </button>
+  </header>
+
+  <main class="views">
+    <section class="view view-demo" id="view-demo" aria-label="Demo">
+      <aside class="panel" id="panel" aria-label="Ajustes de la demo">
+        <div class="panel-top">
+          <p class="hint">Escribe el nombre del negocio de tu cliente, elige su giro y su color, y prende o apaga funciones. Después pica <b>Presentar</b> para enseñarla sin este panel.</p>
+          <button class="btn only-mobile" id="panel-close" type="button">Listo</button>
+        </div>
+        <div>
+          <h2>Negocio</h2>
+          <div class="fields">
+            <div class="field"><label for="f-name">Nombre del negocio</label><input id="f-name" type="text" autocomplete="off"></div>
+            <div class="field"><label for="f-giro">Giro</label><select id="f-giro"></select></div>
+            <div class="field"><span class="lbl" id="lbl-color">Color de la marca</span><div class="swatches" id="f-colors" role="group" aria-labelledby="lbl-color"></div></div>
+            <div class="field"><label for="f-wa">WhatsApp del negocio</label><input id="f-wa" type="text" inputmode="tel" autocomplete="off"></div>
+            <div class="field"><label for="f-addr">Dirección</label><input id="f-addr" type="text" autocomplete="off"></div>
+          </div>
+        </div>
+        <div>
+          <h2>Funciones</h2>
+          <div class="toggles" id="f-toggles"></div>
+        </div>
+        <div>
+          <h2>Se puede agregar después</h2>
+          <div class="chips" id="f-extras"></div>
+        </div>
+      </aside>
+      <div class="scrim" id="scrim" hidden></div>
+
+      <div class="stage">
+        <div class="phone">
+          <div class="screen" id="screen">
+            <div class="urlbar"><svg width="12" height="12" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 10V7a5 5 0 0 1 10 0v3h1.5A1.5 1.5 0 0 1 20 11.5v8a1.5 1.5 0 0 1-1.5 1.5h-13A1.5 1.5 0 0 1 4 19.5v-8A1.5 1.5 0 0 1 5.5 10zm2.5 0h5V7a2.5 2.5 0 0 0-5 0z" fill="currentColor"/></svg><span id="url"></span></div>
+            <div class="site" id="site"></div>
+
+            <div class="fab-label" id="fab-label" hidden>¿Te ayudo?</div>
+            <div class="fabs">
+              <button class="fab chat" id="fab-chat" type="button" aria-label="Abrir asistente">
+                <svg width="24" height="24" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 4.5h16A1.5 1.5 0 0 1 21.5 6v10a1.5 1.5 0 0 1-1.5 1.5H10l-4.5 3.5v-3.5H4A1.5 1.5 0 0 1 2.5 16V6A1.5 1.5 0 0 1 4 4.5z" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/><circle cx="8" cy="11" r="1.3" fill="currentColor"/><circle cx="12" cy="11" r="1.3" fill="currentColor"/><circle cx="16" cy="11" r="1.3" fill="currentColor"/></svg>
+              </button>
+              <button class="fab wa" id="fab-wa" type="button" aria-label="Escribir por WhatsApp">
+                <svg width="24" height="24" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 3.5h2.6l1.5 3.8-1.9 1.3a10.5 10.5 0 0 0 4.9 4.9l1.3-1.9 3.8 1.5v2.6a2 2 0 0 1-2.1 2A14.7 14.7 0 0 1 5 5.6a2 2 0 0 1 2-2.1z" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/></svg>
+              </button>
+            </div>
+
+            <div class="chat" id="chat" hidden role="dialog" aria-label="Asistente del negocio">
+              <div class="c-head">
+                <div class="s-logo sm" id="c-logo" aria-hidden="true"></div>
+                <div class="c-title"><strong id="c-name"></strong><span>Contesta con los datos del negocio</span></div>
+                <button class="c-x" id="c-close" type="button" aria-label="Cerrar asistente"><svg width="14" height="14" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 5l14 14M19 5L5 19" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"/></svg></button>
+              </div>
+              <div class="c-msgs" id="c-msgs" aria-live="polite"></div>
+              <div class="c-quick" id="c-quick"></div>
+              <form class="c-form" id="c-form">
+                <input class="s-input" id="c-input" type="text" placeholder="Escribe tu pregunta" autocomplete="off" aria-label="Tu pregunta">
+                <button class="s-btn pri" type="submit" aria-label="Enviar"><svg width="18" height="18" viewBox="0 0 24 24" aria-hidden="true"><path d="M3.5 11.5 20 4l-5.5 16.5-3-6.8z" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/></svg></button>
+              </form>
+              <p class="c-legal">Asistente automático. Si no sabe algo, te pasa con una persona.</p>
+            </div>
+
+            <div class="toast" id="toast" hidden role="status"></div>
+            <div class="pmodal" id="pmodal" hidden>
+              <div class="pbox" role="dialog" aria-label="Aviso de privacidad">
+                <h4>Aviso de privacidad <span class="s-tagex">Resumen de ejemplo</span></h4>
+                <p id="p-text"></p>
+                <p style="color:var(--s-muted);font-size:13px">En la página real va el aviso completo, redactado para este negocio.</p>
+                <button class="s-btn pri" id="p-close" type="button">Entendido</button>
+              </div>
+            </div>
+          </div>
+        </div>
+        <p class="stage-note">Sitio de demostración con datos de ejemplo. Todo lo de la izquierda lo cambia en vivo.</p>
+      </div>
+    </section>
+
+    <section class="view view-prop" id="view-prop" aria-label="Propuesta" hidden>
+      <div class="p-wrap">
+        <div class="p-head">
+          <p class="eyebrow">Propuesta</p>
+          <h1>Página web para <span class="p-name" id="p-name"></span></h1>
+          <p class="p-lead">Tres opciones. Todas incluyen mantenimiento desde el primer día, y el dominio queda a nombre del negocio.</p>
+          <div class="p-tools">
+            <button class="btn" id="btn-edit" type="button">Editar precios</button>
+            <label class="p-check"><input type="checkbox" id="offer-toggle"> Mostrar oferta de apertura</label>
+          </div>
+        </div>
+        <div class="offer" id="offer"><b>Oferta de apertura.</b> Los primeros 3 negocios reciben 30% de descuento en la instalación (no aplica a la mensualidad), a cambio de una opinión por escrito y permiso para mostrar su página como ejemplo.</div>
+        <div class="plans" id="plans"></div>
+        <div class="p-grid">
+          <section class="p-card">
+            <h2>Mantenimiento desde el día uno</h2>
+            <ul class="checks" id="l-mant"></ul>
+            <div class="rules">
+              <p>Sin plazo forzoso: puede cancelar con 30 días de aviso.</p>
+              <p>Si el pago se atrasa más de 15 días, la página se pausa. No se borra.</p>
+              <p>El dominio siempre queda a nombre del negocio.</p>
+            </div>
+          </section>
+          <section class="p-card">
+            <h2>Ejemplo de reporte mensual</h2>
+            <div class="stats">
+              <div class="stat"><b>412</b><span>visitas</span></div>
+              <div class="stat"><b>57</b><span>clics a WhatsApp</span></div>
+              <div class="stat"><b>18</b><span>citas apartadas</span></div>
+            </div>
+            <p class="muted">Cifras de ejemplo. Cada mes le llega su reporte real por WhatsApp.</p>
+          </section>
+          <section class="p-card">
+            <h2>Qué necesito de usted</h2>
+            <ul class="checks" id="l-need"></ul>
+          </section>
+          <section class="p-card">
+            <h2>Se cobra aparte</h2>
+            <ul class="checks minus" id="l-extra"></ul>
+          </section>
+        </div>
+      </div>
+    </section>
+  </main>
+</div>
+<button class="exit" id="exit-present" type="button" hidden>Salir de presentación</button>
+
+<script src="data.js"></script>
+<script src="app.js"></script>
+</body>
+</html>

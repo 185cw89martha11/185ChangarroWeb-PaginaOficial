@@ -4,7 +4,7 @@ Demo interactiva para enseñarle a un negocio cómo se vería su página web, m�
 
 ## Usarla
 
-1. Abre `public/index.html` en el navegador (o corre el servidor, ver abajo).
+1. Abre `public/demo.html` en el navegador (o corre el servidor y entra a `/demo`, ver abajo). La portada pública es `public/index.html`.
 2. En el panel, escribe el nombre del negocio, elige su giro y su color, y prende o apaga funciones.
 3. Pica **Presentar** para enseñársela al cliente sin el panel. Para salir, usa el botón "Salir de presentación" o la tecla Esc.
 4. En la pestaña **Propuesta**, pica **Editar precios** para ajustar los montos. Se guardan en ese navegador.
@@ -17,7 +17,7 @@ Necesita Node.js 20 o más nuevo. No tiene dependencias.
 npm start
 ```
 
-Abre http://localhost:3000. Las páginas son `/` (demo) y `/tarifas`. `npm run dev` reinicia el servidor solo al guardar cambios.
+Abre http://localhost:3000. Las páginas son `/` (portada), `/demo`, `/tarifas`, `/terminos`, `/privacidad` y `/admin` (panel de solicitudes, pide clave). `npm run dev` reinicia el servidor solo al guardar cambios.
 
 ## Subirla a Render.com
 
@@ -30,11 +30,16 @@ En el plan gratis, el servicio se duerme después de 15 minutos sin visitas y ta
 
 ## Archivos
 
-- `public/index.html`: estructura de la demo.
+- `public/index.html`: portada pública (quiénes somos, planes y contratar).
+- `public/demo.html`: estructura de la demo.
+- `public/planes.js`: planes y precios que usan la portada y Tarifas.
 - `public/tarifas.html`: página de planes y precios.
 - `public/styles.css`: estilos.
 - `public/data.js`: giros, precios, funciones y textos. Aquí se cambia el contenido.
 - `public/app.js`: lo que hace funcionar la demo.
+- `public/admin.html` y `public/admin.js`: panel de administración de solicitudes.
 - `server.js`: servidor para Render. Solo entrega lo que está en `public/`.
+- `solicitudes.js`: recibe las aceptaciones y da acceso al panel.
+- `integraciones/`: buzón en Hoja de Google. Los pasos para activarlo están en `integraciones/README.md`.
 - `package.json`, `render.yaml`, `.node-version`: configuración de Node y Render.
 - `CLAUDE.md`: contexto y reglas del proyecto para Claude Code.

@@ -4,6 +4,15 @@ const http = require('http');
 const fs = require('fs');
 const path = require('path');
 
+// Variables solo de esta computadora (.env.local no se sube a GitHub). En Render se ponen en Environment.
+try {
+  fs.readFileSync(path.join(__dirname, '.env.local'), 'utf8').split(/\r?\n/).forEach(l => {
+    const m = /^\s*([A-Z_]+)\s*=\s*(.*)\s*$/.exec(l);
+    if (m && !(m[1] in process.env)) process.env[m[1]] = m[2];
+  });
+} catch (e) {}
+const solicitudes = require('./solicitudes');
+
 const PORT = Number(process.env.PORT) || 3000;
 const HOST = '0.0.0.0';
 const PUBLIC = path.join(__dirname, 'public');
@@ -11,6 +20,8 @@ const PUBLIC = path.join(__dirname, 'public');
 // Rutas limpias: /tarifas en vez de /tarifas.html
 const ROUTES = {
   '/': 'index.html',
+  '/demo': 'demo.html',
+  '/admin': 'admin.html',
   '/tarifas': 'tarifas.html',
   '/terminos': 'terminos.html',
   '/privacidad': 'privacidad.html'
@@ -39,11 +50,13 @@ const server = http.createServer((req, res) => {
   res.setHeader('X-Content-Type-Options', 'nosniff');
   res.setHeader('Referrer-Policy', 'strict-origin-when-cross-origin');
 
-  if (req.method !== 'GET' && req.method !== 'HEAD') return send(res, 405, 'Método no permitido');
-
   let pathname;
   try { pathname = decodeURIComponent(new URL(req.url, 'http://localhost').pathname); }
   catch (e) { return send(res, 400, 'Dirección no válida'); }
+
+  if (pathname.startsWith('/api/')) return solicitudes.manejar(req, res, pathname);
+
+  if (req.method !== 'GET' && req.method !== 'HEAD') return send(res, 405, 'Método no permitido');
 
   // Render usa esta ruta para saber que el servidor está vivo.
   if (pathname === '/salud') return send(res, 200, 'ok');

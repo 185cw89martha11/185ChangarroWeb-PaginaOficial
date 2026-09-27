@@ -3,152 +3,217 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<link rel="icon" type="image/png" href="icono.png">
 <title>185ChangarroWeb</title>
+<meta name="description" content="Páginas web para negocios locales, con mantenimiento desde el primer día.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Alfa+Slab+One&family=Figtree:wght@400;500;600;700&family=Italiana&family=JetBrains+Mono:wght@400;500&family=Young+Serif&display=swap">
-<link rel="stylesheet" href="styles.css">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Figtree:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap">
+<style>
+body{margin:0}[hidden]{display:none!important}
+:root{
+  --bg:#F1EFF7; --panel:#FFFFFF; --panel-2:#F7F5FB; --ink:#1C1826; --muted:#5E5873; --line:#DEDAE8;
+  --accent:#6B3FC4; --accent-ink:#FFFFFF; --accent-soft:#EEE8FA;
+  --grad:linear-gradient(90deg, #5670FE 0%, #9E6BE4 50%, #F567C8 100%); --grad-ink:#FFFFFF;
+  --f-ui:'Figtree', system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+  --f-mono:'JetBrains Mono', ui-monospace, Menlo, Consolas, monospace;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --bg:#110F17; --panel:#19161F; --panel-2:#211D29; --ink:#ECE8F4; --muted:#A29CB3; --line:#302B3A;
+    --accent:#B79AF2; --accent-ink:#140F1F; --accent-soft:#241C35;
+    color-scheme:dark;
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#110F17; --panel:#19161F; --panel-2:#211D29; --ink:#ECE8F4; --muted:#A29CB3; --line:#302B3A;
+  --accent:#B79AF2; --accent-ink:#140F1F; --accent-soft:#241C35;
+  color-scheme:dark;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth; scroll-padding-top:72px}
+body{background:var(--bg); color:var(--ink); font-family:var(--f-ui); font-size:15px; line-height:1.5}
+a{color:var(--accent); text-underline-offset:2px}
+:focus-visible{outline:2px solid var(--accent); outline-offset:2px}
+@media (prefers-reduced-motion: reduce){ html{scroll-behavior:auto} }
+
+/* Barra de arriba */
+.top{position:sticky; top:0; z-index:5; background:var(--panel); border-bottom:1px solid var(--line)}
+.top-in{max-width:1080px; margin:0 auto; padding:10px 16px; display:flex; align-items:center; justify-content:space-between; gap:12px}
+.mini{display:flex; align-items:center; gap:8px; font-weight:700; color:var(--ink); text-decoration:none}
+.logo{height:48px; width:auto; border-radius:8px; background:#fff; flex:none; display:block}
+.btn{display:inline-flex; align-items:center; justify-content:center; gap:6px; border:1px solid var(--line); background:var(--panel); color:var(--ink); padding:9px 16px; border-radius:10px; font-weight:700; font-size:14px; text-decoration:none; white-space:nowrap}
+.btn.pri, .btn.wa{background:var(--grad); color:var(--grad-ink); border-color:transparent; text-shadow:0 1px 2px rgba(40,20,70,.35)}
+
+.wrap{max-width:1080px; margin:0 auto; padding-inline:16px}
+section{padding-block:40px}
+.eyebrow{margin:0 0 6px; font-size:11px; font-weight:700; letter-spacing:.14em; text-transform:uppercase; color:var(--muted)}
+h2{margin:0 0 8px; font-size:26px; line-height:1.15; letter-spacing:-.01em}
+.lead{margin:0; color:var(--muted); max-width:62ch}
+
+/* Portada: nombre y quiénes somos, al centro */
+.hero{text-align:center; padding-block:64px 40px}
+.hero h1{margin:0; font-size:clamp(34px, 9vw, 60px); line-height:1.05; letter-spacing:-.02em; font-weight:800; overflow-wrap:anywhere}
+.hero .tag{margin:12px auto 0; font-size:18px; color:var(--muted); max-width:36ch}
+.about{display:grid; grid-template-columns:repeat(2, minmax(0,1fr)); gap:14px; max-width:820px; margin:32px auto 0; text-align:left}
+.card{background:var(--panel); border:1px solid var(--line); border-radius:16px; padding:18px}
+.card h3{margin:0 0 6px; font-size:17px}
+.card p{margin:0; color:var(--muted)}
+.hero-cta{display:flex; flex-wrap:wrap; justify-content:center; gap:10px; margin-top:28px}
+
+/* Tarifas */
+.plans{display:grid; grid-template-columns:repeat(3, minmax(0,1fr)); gap:14px; align-items:start; margin-top:20px}
+.plan{background:var(--panel); border:1px solid var(--line); border-radius:16px; padding:18px; display:flex; flex-direction:column; gap:14px}
+.plan.featured{border-color:var(--accent); box-shadow:0 0 0 1px var(--accent)}
+.plan-top{display:flex; align-items:center; justify-content:space-between; gap:8px}
+.plan h3{margin:0; font-size:19px}
+.badge{font-size:10.5px; font-weight:700; letter-spacing:.07em; text-transform:uppercase; background:var(--accent); color:var(--accent-ink); padding:3px 8px; border-radius:6px; white-space:nowrap}
+.for{margin:-6px 0 0; color:var(--muted); font-size:14px}
+.prices{display:grid; grid-template-columns:1fr 1fr; gap:8px}
+.price{background:var(--panel-2); border-radius:12px; padding:9px 11px}
+.price span{display:block; font-size:10.5px; font-weight:700; letter-spacing:.09em; text-transform:uppercase; color:var(--muted)}
+.price b{display:block; font-family:var(--f-mono); font-size:22px; font-weight:500; font-variant-numeric:tabular-nums}
+.price small{font-size:12px; color:var(--muted)}
+ul.checks{list-style:none; margin:0; padding:0; display:flex; flex-direction:column; gap:7px}
+.checks li{display:grid; grid-template-columns:18px 1fr; gap:8px; font-size:14px; line-height:1.4}
+.checks li::before{content:""; width:13px; height:7px; margin-top:5px; border-left:2px solid var(--accent); border-bottom:2px solid var(--accent); transform:rotate(-45deg)}
+.checks li.all{font-weight:700}
+.opt{color:var(--muted); font-size:12.5px}
+.more{margin-top:16px}
+.more .btn{white-space:normal; text-align:center}
+
+/* Contratar */
+.contract{background:var(--panel); border:1px solid var(--line); border-radius:20px; padding:24px}
+.steps{margin:18px 0 0; padding:0; list-style:none; display:grid; grid-template-columns:repeat(3, minmax(0,1fr)); gap:12px; counter-reset:paso}
+.steps li{background:var(--panel-2); border-radius:14px; padding:14px; counter-increment:paso}
+.steps li::before{content:counter(paso); display:grid; place-items:center; width:26px; height:26px; border-radius:50%; background:var(--accent); color:var(--accent-ink); font-weight:800; font-size:13px; margin-bottom:8px}
+.steps b{display:block; margin-bottom:2px}
+.steps p{margin:0; font-size:14px; color:var(--muted)}
+.docs{display:flex; flex-wrap:wrap; gap:8px; margin-top:18px}
+.actions{display:flex; flex-wrap:wrap; gap:10px; margin-top:20px; padding-top:20px; border-top:1px solid var(--line)}
+.small{font-size:13px; color:var(--muted); margin:10px 0 0}
+
+.foot{border-top:1px solid var(--line); padding-block:22px 40px; font-size:13px; color:var(--muted); display:flex; flex-wrap:wrap; gap:6px 16px}
+
+@media (max-width: 880px){
+  .plans, .steps{grid-template-columns:minmax(0,1fr)}
+}
+@media (max-width: 600px){
+  .about{grid-template-columns:minmax(0,1fr)}
+  .hero{padding-block:44px 28px}
+  .contract{padding:18px}
+  .actions .btn, .hero-cta .btn{flex:1 1 100%}
+}
+</style>
 </head>
 <body>
-<div class="app" id="app">
-  <header class="top">
-    <div class="brandmark">
-      <span class="bm-logo" aria-hidden="true"></span>
-      <div><strong>185ChangarroWeb</strong><small>Muestrario de páginas para negocios</small></div>
-    </div>
-    <div class="tabs" role="tablist" aria-label="Vista">
-      <button role="tab" id="tab-demo" aria-selected="true" aria-controls="view-demo">Demo</button>
-      <button role="tab" id="tab-prop" aria-selected="false" aria-controls="view-prop">Propuesta</button>
-    </div>
-    <button class="btn only-mobile" id="btn-ajustes" type="button">Ajustes</button>
-    <button class="btn solid" id="btn-present" type="button" aria-label="Presentar al cliente">
-      <svg width="14" height="14" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 4.5v15l12-7.5z" fill="currentColor"/></svg>
-      <span class="only-desktop">Presentar</span>
-    </button>
-  </header>
 
-  <main class="views">
-    <section class="view view-demo" id="view-demo" aria-label="Demo">
-      <aside class="panel" id="panel" aria-label="Ajustes de la demo">
-        <div class="panel-top">
-          <p class="hint">Escribe el nombre del negocio de tu cliente, elige su giro y su color, y prende o apaga funciones. Después pica <b>Presentar</b> para enseñarla sin este panel.</p>
-          <button class="btn only-mobile" id="panel-close" type="button">Listo</button>
-        </div>
-        <div>
-          <h2>Negocio</h2>
-          <div class="fields">
-            <div class="field"><label for="f-name">Nombre del negocio</label><input id="f-name" type="text" autocomplete="off"></div>
-            <div class="field"><label for="f-giro">Giro</label><select id="f-giro"></select></div>
-            <div class="field"><span class="lbl" id="lbl-color">Color de la marca</span><div class="swatches" id="f-colors" role="group" aria-labelledby="lbl-color"></div></div>
-            <div class="field"><label for="f-wa">WhatsApp del negocio</label><input id="f-wa" type="text" inputmode="tel" autocomplete="off"></div>
-            <div class="field"><label for="f-addr">Dirección</label><input id="f-addr" type="text" autocomplete="off"></div>
-          </div>
-        </div>
-        <div>
-          <h2>Funciones</h2>
-          <div class="toggles" id="f-toggles"></div>
-        </div>
-        <div>
-          <h2>Se puede agregar después</h2>
-          <div class="chips" id="f-extras"></div>
-        </div>
-      </aside>
-      <div class="scrim" id="scrim" hidden></div>
+<header class="top">
+  <div class="top-in">
+    <a class="mini" href="#inicio"><img class="logo" src="logo.png" alt="185ChangarroWeb" width="73" height="48"></a>
+    <a class="btn pri" href="#contratar">Contratar</a>
+  </div>
+</header>
 
-      <div class="stage">
-        <div class="phone">
-          <div class="screen" id="screen">
-            <div class="urlbar"><svg width="12" height="12" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 10V7a5 5 0 0 1 10 0v3h1.5A1.5 1.5 0 0 1 20 11.5v8a1.5 1.5 0 0 1-1.5 1.5h-13A1.5 1.5 0 0 1 4 19.5v-8A1.5 1.5 0 0 1 5.5 10zm2.5 0h5V7a2.5 2.5 0 0 0-5 0z" fill="currentColor"/></svg><span id="url"></span></div>
-            <div class="site" id="site"></div>
+<main id="inicio">
+  <!-- Nombre y quiénes somos -->
+  <section class="hero wrap">
+    <h1>185ChangarroWeb</h1>
+    <p class="tag">Páginas web para negocios locales, con mantenimiento desde el primer día.</p>
 
-            <div class="fab-label" id="fab-label" hidden>¿Te ayudo?</div>
-            <div class="fabs">
-              <button class="fab chat" id="fab-chat" type="button" aria-label="Abrir asistente">
-                <svg width="24" height="24" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 4.5h16A1.5 1.5 0 0 1 21.5 6v10a1.5 1.5 0 0 1-1.5 1.5H10l-4.5 3.5v-3.5H4A1.5 1.5 0 0 1 2.5 16V6A1.5 1.5 0 0 1 4 4.5z" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/><circle cx="8" cy="11" r="1.3" fill="currentColor"/><circle cx="12" cy="11" r="1.3" fill="currentColor"/><circle cx="16" cy="11" r="1.3" fill="currentColor"/></svg>
-              </button>
-              <button class="fab wa" id="fab-wa" type="button" aria-label="Escribir por WhatsApp">
-                <svg width="24" height="24" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 3.5h2.6l1.5 3.8-1.9 1.3a10.5 10.5 0 0 0 4.9 4.9l1.3-1.9 3.8 1.5v2.6a2 2 0 0 1-2.1 2A14.7 14.7 0 0 1 5 5.6a2 2 0 0 1 2-2.1z" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/></svg>
-              </button>
-            </div>
-
-            <div class="chat" id="chat" hidden role="dialog" aria-label="Asistente del negocio">
-              <div class="c-head">
-                <div class="s-logo sm" id="c-logo" aria-hidden="true"></div>
-                <div class="c-title"><strong id="c-name"></strong><span>Contesta con los datos del negocio</span></div>
-                <button class="c-x" id="c-close" type="button" aria-label="Cerrar asistente"><svg width="14" height="14" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 5l14 14M19 5L5 19" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"/></svg></button>
-              </div>
-              <div class="c-msgs" id="c-msgs" aria-live="polite"></div>
-              <div class="c-quick" id="c-quick"></div>
-              <form class="c-form" id="c-form">
-                <input class="s-input" id="c-input" type="text" placeholder="Escribe tu pregunta" autocomplete="off" aria-label="Tu pregunta">
-                <button class="s-btn pri" type="submit" aria-label="Enviar"><svg width="18" height="18" viewBox="0 0 24 24" aria-hidden="true"><path d="M3.5 11.5 20 4l-5.5 16.5-3-6.8z" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/></svg></button>
-              </form>
-              <p class="c-legal">Asistente automático. Si no sabe algo, te pasa con una persona.</p>
-            </div>
-
-            <div class="toast" id="toast" hidden role="status"></div>
-            <div class="pmodal" id="pmodal" hidden>
-              <div class="pbox" role="dialog" aria-label="Aviso de privacidad">
-                <h4>Aviso de privacidad <span class="s-tagex">Resumen de ejemplo</span></h4>
-                <p id="p-text"></p>
-                <p style="color:var(--s-muted);font-size:13px">En la página real va el aviso completo, redactado para este negocio.</p>
-                <button class="s-btn pri" id="p-close" type="button">Entendido</button>
-              </div>
-            </div>
-          </div>
-        </div>
-        <p class="stage-note">Sitio de demostración con datos de ejemplo. Todo lo de la izquierda lo cambia en vivo.</p>
+    <div class="about">
+      <div class="card">
+        <h3>Quiénes somos</h3>
+        <p>Un servicio local de páginas web para changarros, tiendas, consultorios, estéticas y cualquier negocio que quiera que lo encuentren en internet.</p>
       </div>
-    </section>
-
-    <section class="view view-prop" id="view-prop" aria-label="Propuesta" hidden>
-      <div class="p-wrap">
-        <div class="p-head">
-          <p class="eyebrow">Propuesta</p>
-          <h1>Página web para <span class="p-name" id="p-name"></span></h1>
-          <p class="p-lead">Tres opciones. Todas incluyen mantenimiento desde el primer día, y el dominio queda a nombre del negocio.</p>
-          <div class="p-tools">
-            <button class="btn" id="btn-edit" type="button">Editar precios</button>
-            <label class="p-check"><input type="checkbox" id="offer-toggle"> Mostrar oferta de apertura</label>
-          </div>
-        </div>
-        <div class="offer" id="offer"><b>Oferta de apertura.</b> Los primeros 3 negocios reciben 30% de descuento en la instalación (no aplica a la mensualidad), a cambio de una opinión por escrito y permiso para mostrar su página como ejemplo.</div>
-        <div class="plans" id="plans"></div>
-        <div class="p-grid">
-          <section class="p-card">
-            <h2>Mantenimiento desde el día uno</h2>
-            <ul class="checks" id="l-mant"></ul>
-            <div class="rules">
-              <p>Sin plazo forzoso: puede cancelar con 30 días de aviso.</p>
-              <p>Si el pago se atrasa más de 15 días, la página se pausa. No se borra.</p>
-              <p>El dominio siempre queda a nombre del negocio.</p>
-            </div>
-          </section>
-          <section class="p-card">
-            <h2>Ejemplo de reporte mensual</h2>
-            <div class="stats">
-              <div class="stat"><b>412</b><span>visitas</span></div>
-              <div class="stat"><b>57</b><span>clics a WhatsApp</span></div>
-              <div class="stat"><b>18</b><span>citas apartadas</span></div>
-            </div>
-            <p class="muted">Cifras de ejemplo. Cada mes le llega su reporte real por WhatsApp.</p>
-          </section>
-          <section class="p-card">
-            <h2>Qué necesito de usted</h2>
-            <ul class="checks" id="l-need"></ul>
-          </section>
-          <section class="p-card">
-            <h2>Se cobra aparte</h2>
-            <ul class="checks minus" id="l-extra"></ul>
-          </section>
-        </div>
+      <div class="card">
+        <h3>Qué hacemos</h3>
+        <p>Hacemos su página, la publicamos con dominio a nombre de su negocio y la mantenemos al día cada mes: precios, horarios, fotos y promociones.</p>
       </div>
-    </section>
-  </main>
-</div>
-<button class="exit" id="exit-present" type="button" hidden>Salir de presentación</button>
+    </div>
 
-<script src="data.js"></script>
-<script src="app.js"></script>
+    <div class="hero-cta">
+      <a class="btn pri" href="#tarifas">Ver planes y precios</a>
+      <a class="btn" href="#contratar">Quiero contratar</a>
+    </div>
+  </section>
+
+  <!-- Tarifas: los datos vienen de planes.js, igual que en tarifas.html -->
+  <section class="wrap" id="tarifas">
+    <p class="eyebrow">Tarifas</p>
+    <h2>Tres planes, todos con mantenimiento</h2>
+    <p class="lead">El dominio y las cuentas siempre quedan a nombre del negocio. Precios en pesos mexicanos, IVA incluido.</p>
+    <div class="plans" id="plans"></div>
+    <div class="more"><a class="btn" href="tarifas.html">Ver tarifas completas: tiempos de respuesta, pagos y catálogo de funciones</a></div>
+  </section>
+
+  <!-- Contratar y aceptación -->
+  <section class="wrap" id="contratar">
+    <div class="contract">
+      <p class="eyebrow">Contratar</p>
+      <h2>¿Listo para tener su página?</h2>
+      <p class="lead">Así se contrata. La aceptación se hace por escrito y queda como constancia para ambas partes.</p>
+
+      <ol class="steps">
+        <li><b>Elija su plan</b><p>Revise las Tarifas y lo que incluye cada plan.</p></li>
+        <li><b>Lea los documentos</b><p>Los Términos y Condiciones y el Aviso de Privacidad.</p></li>
+        <li><b>Acepte y envíe</b><p>Se prepara un mensaje con su aceptación para mandarlo por WhatsApp o correo.</p></li>
+      </ol>
+
+      <div class="docs">
+        <a class="btn" href="tarifas.html">Tarifas</a>
+        <a class="btn" href="terminos.html">Términos y Condiciones</a>
+        <a class="btn" href="privacidad.html">Aviso de Privacidad</a>
+      </div>
+
+      <div class="actions">
+        <a class="btn pri" href="terminos.html#aceptar">Aceptar y contratar</a>
+        <a class="btn wa" id="c-wa" href="#" target="_blank" rel="noopener">Preguntar por WhatsApp</a>
+        <a class="btn" id="c-mail" href="#">Escribir por correo</a>
+      </div>
+      <p class="small">¿Tiene dudas antes de contratar? Escríbanos; los botones abren WhatsApp o su correo con el mensaje ya escrito.</p>
+    </div>
+  </section>
+</main>
+
+<footer class="wrap foot">
+  <span>© 2026 185ChangarroWeb</span>
+  <a href="tarifas.html">Tarifas</a>
+  <a href="terminos.html">Términos y Condiciones</a>
+  <a href="privacidad.html">Aviso de Privacidad</a>
+</footer>
+
+<script src="planes.js"></script>
+<script>
+(function(){
+  // Datos de contacto de 185ChangarroWeb.
+  // WHATSAPP: 52 + 10 dígitos, sin espacios ni signos (ej. '523312345678').
+  // MENSAJE y ASUNTO: lo que aparece ya escrito al abrir WhatsApp o el correo.
+  var WHATSAPP = '523151260581';
+  var CORREO = '185changarroweb@gmail.com';
+  var MENSAJE = 'Hola, 185ChangarroWeb. Vi su página y quiero información para tener la página de mi negocio.';
+  var ASUNTO = 'Información para una página web';
+
+  var wa = document.getElementById('c-wa'), mail = document.getElementById('c-mail');
+  if(WHATSAPP) wa.href = 'https://wa.me/' + WHATSAPP + '?text=' + encodeURIComponent(MENSAJE); else wa.hidden = true;
+  if(CORREO) mail.href = 'mailto:' + CORREO + '?subject=' + encodeURIComponent(ASUNTO) + '&body=' + encodeURIComponent(MENSAJE); else mail.hidden = true;
+
+  // Planes: siempre los precios oficiales de planes.js (no los editados en Tarifas).
+  function fmt(n){ return Number(n||0).toLocaleString('es-MX'); }
+  var box = document.getElementById('plans');
+  window.PLANES_185.PLANS.forEach(function(p){
+    var a = document.createElement('article'); a.className = 'plan' + (p.featured ? ' featured' : '');
+    a.innerHTML = '<div class="plan-top"><h3>' + p.name + '</h3>' + (p.featured ? '<span class="badge">Recomendado</span>' : '') + '</div>'
+      + '<p class="for">' + p.forx + '</p>'
+      + '<div class="prices">'
+      + '<div class="price"><span>Instalación</span><b>$' + fmt(p.inst) + '</b><small>pago único</small></div>'
+      + '<div class="price"><span>Mensualidad</span><b>$' + fmt(p.mes) + '</b><small>al mes</small></div>'
+      + '</div>'
+      + '<ul class="checks">' + p.inc.map(function(x){ return '<li' + (x.indexOf('<b>Todo') === 0 ? ' class="all"' : '') + '><span>' + x + '</span></li>'; }).join('') + '</ul>'
+      + '<p class="for" style="margin:0">Lista en ' + p.time + '</p>';
+    box.appendChild(a);
+  });
+})();
+</script>
 </body>
 </html>

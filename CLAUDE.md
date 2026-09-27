@@ -12,20 +12,25 @@ Esto es el muestrario, no la página final de un cliente. Generar sitios reales 
 
 ## Cómo correrlo
 
-- Abre `public/index.html` directo en el navegador. Funciona con `file://`, sin servidor.
-- Con Node (20 o más nuevo): `npm start` y abre http://localhost:3000. Las páginas son `/` y `/tarifas`. Para probarlo en el celular dentro de la misma red, usa la IP de la computadora con el puerto 3000.
+- Abre `public/index.html` (portada) o `public/demo.html` (demo) directo en el navegador. Funciona con `file://`, sin servidor.
+- Con Node (20 o más nuevo): `npm start` y abre http://localhost:3000. Las páginas son `/` (portada), `/demo`, `/tarifas`, `/terminos`, `/privacidad` y `/admin`. Para probarlo en el celular dentro de la misma red, usa la IP de la computadora con el puerto 3000.
 - Se publica en Render.com como Web Service de Node con `render.yaml` (build `npm install`, start `npm start`, health check `/salud`). Los pasos están en `README.md`.
 
 ## Estructura
 
 | Archivo | Qué tiene |
 |---|---|
-| `public/index.html` | Marcado: barra superior, panel de ajustes, marco de teléfono con el sitio del cliente, asistente, pestaña Propuesta. |
-| `public/tarifas.html` | Página independiente de planes, precios editables, tiempos de respuesta y catálogo de funciones. Sus datos viven en su propio `<script>`. |
+| `public/index.html` | Portada pública de 185ChangarroWeb: nombre, quiénes somos, planes (de `planes.js`), sección Contratar con enlaces a Tarifas, Términos y Aviso, y botones de WhatsApp y correo. Los datos de contacto están al inicio de su `<script>`. |
+| `public/demo.html` | Demo de ventas. Marcado: barra superior, panel de ajustes, marco de teléfono con el sitio del cliente, asistente, pestaña Propuesta. |
+| `public/tarifas.html` | Página de planes, precios editables, tiempos de respuesta y catálogo de funciones. |
+| `public/planes.js` | Planes y catálogo de funciones (`window.PLANES_185`). Los usan `tarifas.html` e `index.html`. |
 | `public/styles.css` | Tokens de la herramienta (claro y oscuro) y estilos del sitio del cliente. El sitio del cliente es siempre claro; sus colores viven en `.screen`. |
 | `public/data.js` | Todo el contenido: giros, colores, fuentes, funciones y paquetes. Expone `window.VITRINA_DATA`. El comentario del inicio explica cada campo. |
 | `public/app.js` | Estado, render del sitio, agenda, asistente por reglas, panel, propuesta y modo presentación. |
-| `server.js` | Servidor de Node sin dependencias. Entrega solo lo que está en `public/`, con rutas limpias y `/salud`. Escucha en `process.env.PORT` y `0.0.0.0`, como pide Render. |
+| `public/admin.html`, `public/admin.js` | Panel de administración: pide la clave cada vez, descarga las solicitudes de aceptación a IndexedDB cifradas (AES-GCM con llave PBKDF2 de la clave), las guarda o borra, y las exporta a PDF con huella SHA-256. |
+| `solicitudes.js` | API `/api/...`: recibe las aceptaciones de `terminos.html`, las deja en el buzón (Hoja de Google vía Apps Script, o `datos/solicitudes.json` en esta computadora) y da acceso al panel con la clave. |
+| `integraciones/` | Código del Apps Script de la Hoja de Google y pasos para configurarlo. |
+| `server.js` | Servidor de Node sin dependencias. Entrega solo lo que está en `public/`, con rutas limpias, `/salud` y `/api/`. Escucha en `process.env.PORT` y `0.0.0.0`, como pide Render. |
 | `package.json`, `render.yaml`, `.node-version` | Configuración de Node y de Render. |
 
 ## Reglas del proyecto
@@ -33,8 +38,8 @@ Esto es el muestrario, no la página final de un cliente. Generar sitios reales 
 - JavaScript sin framework y sin paso de build. Scripts clásicos, no `type="module"`, para que siga funcionando con `file://`.
 - El contenido va en `data.js`. `app.js` solo lo pinta.
 - Todo lo que ve el navegador va en `public/`. Lo que quede fuera (servidor, configuración, notas) nunca se entrega al público.
-- `public/terminos.html` y `public/privacidad.html` son los documentos legales de 185ChangarroWeb. Si cambia una regla, precio o plan, actualiza también `public/tarifas.html` para que digan lo mismo, y la lista `PLANES` del script de `terminos.html` si cambia lo que incluye un plan en `tarifas.html`.
-- Antes de publicar una versión nueva de Tarifas o de los documentos legales, guarda una copia con fecha en `versiones/AAAA-MM-DD/`. Esas copias prueban qué incluía cada plan el día en que un cliente contrató; no se borran ni se editan.
+- `public/terminos.html` y `public/privacidad.html` son los documentos legales de 185ChangarroWeb. Si cambia una regla, precio o plan, actualiza también `public/planes.js` y `public/tarifas.html` para que digan lo mismo, y la lista `PLANES` del script de `terminos.html` si cambia lo que incluye un plan en `planes.js`.
+- Antes de publicar una versión nueva de Tarifas o de los documentos legales, guarda una copia con fecha en `versiones/AAAA-MM-DD/`. Esas copias prueban qué incluía cada plan el día en que un cliente contrató; no se borran ni se editan. Si ya existe la carpeta de ese día, usa `AAAA-MM-DD-2`, `-3`, etc. Incluye los archivos que la página necesita para verse igual (por ejemplo, `planes.js` y el logo).
 - Todo en español de México. En el sitio del cliente se le habla de "tú" al cliente final. En el panel y la propuesta se le habla de "usted" al dueño del negocio.
 - Tiene que verse bien a 390 px de ancho, porque se enseña desde el celular. Nada de scroll horizontal.
 - La herramienta usa tokens en `:root` con modo oscuro. El sitio del cliente no cambia con el tema.
@@ -44,12 +49,15 @@ Esto es el muestrario, no la página final de un cliente. Generar sitios reales 
 - El QR es decorativo a propósito y no se puede escanear: el dominio de ejemplo podría existir y llevar al negocio de otra persona. Cámbialo por un QR real solo cuando exista el dominio del cliente.
 - Los botones de WhatsApp, Llamar y mapa muestran un aviso en pantalla en vez de abrir enlaces, porque el número y la dirección son de ejemplo.
 - El aviso de privacidad siempre va incluido. Es obligatorio cuando la página pide datos personales.
+- La clave del panel nunca va escrita en el código ni en el repositorio. El servidor solo tiene su huella PBKDF2 en `ADMIN_CLAVE_HASH` (Render > Environment, o `.env.local` en esta computadora, que no se sube). El panel no la guarda: la pide cada vez que se abre y se bloquea tras 15 minutos sin uso.
+- Las solicitudes solo pasan por el buzón (Hoja de Google) hasta que el panel las descarga; después se borran de ahí y viven cifradas en IndexedDB del navegador del panel. Si cambian los datos que pide el formulario de aceptación, actualiza `solicitudes.js`, `admin.js` (`CAMPOS`) y las secciones 2 y 4 del Aviso de Privacidad.
+- La huella SHA-256 no impide editar un PDF exportado; sirve para notar si se editó, comparándolo con la solicitud original del panel.
 
 ## Cómo agregar un giro
 
 1. En `public/data.js`, copia un objeto de `GIROS` con una clave nueva, sin acentos (por ejemplo `gimnasio`).
 2. Llena todos los campos. El comentario del inicio de `data.js` dice qué es cada uno.
-3. Si ocupa otra fuente, agrégala al enlace de Google Fonts en `public/index.html` y a `FONTS`.
+3. Si ocupa otra fuente, agrégala al enlace de Google Fonts en `public/demo.html` y a `FONTS`.
 4. Revisa que la agenda salte los días cerrados, que "abierto ahora" sea correcto y que el asistente conteste las preguntas de `faq`.
 
 ## Contexto para el asistente de WhatsApp
@@ -67,4 +75,4 @@ Si en algún momento se pide conectar un agente a WhatsApp:
 4. **Más giros:** gimnasio, consultorio, papelería, ferretería, estética.
 5. **QR real** cuando exista el dominio del cliente.
 
-Los precios oficiales están en `public/tarifas.html` y en la sección 3 de `public/terminos.html`. `PLANS` de `data.js` debe usar los mismos nombres y precios.
+Los precios oficiales están en `public/planes.js` (los muestran Tarifas y la portada) y en la sección 3 de `public/terminos.html`. `PLANS` de `data.js` debe usar los mismos nombres y precios.
