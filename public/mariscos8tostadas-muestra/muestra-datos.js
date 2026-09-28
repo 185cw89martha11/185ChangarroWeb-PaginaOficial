@@ -97,9 +97,9 @@ window.MUESTRA_DATOS = {
     // hasta media hora antes de cerrar). Las mesas ocupadas de la muestra son inventadas (mesaOcupada en muestra.js)
     mesas: 10,
     logo: 'img/logo-negocio.jpg',
-    // QR real: lleva a esta muestra en nuestro sitio (one85changarroweb.onrender.com/mariscos8tostadas-muestra/),
-    // por medio de un QR dinámico de qr.generatorqr.com. Si ese servicio lo desactiva, hay que cambiarlo.
-    qr: 'img/qr.png',
+    // QR real: lleva directo a esta muestra en nuestro sitio (https://one85changarroweb.onrender.com/mariscos8tostadas-muestra/).
+    // Se generó sin servicios intermedios, así que no caduca. ?v= obliga al navegador a bajar la imagen nueva si se cambia.
+    qr: 'img/qr.png?v=2',
     // cada sucursal tiene su subpágina; al entrar se elige una. Solo cambian horario, mapa, dirección, teléfono y redes.
     // slug: lo que va en la dirección (…/estadio). zona: el texto chico debajo del nombre.
     // porConfirmar: la dirección no está confirmada por el negocio (la de Estadio salió de Yelp); la página le agrega la nota.

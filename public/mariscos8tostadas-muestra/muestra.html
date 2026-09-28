@@ -10,7 +10,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Figtree:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&family=Young+Serif&display=swap">
-<link rel="stylesheet" href="muestra.css">
+<link rel="stylesheet" href="muestra.css?v=2026-09-27b">
 </head>
 <body>
 <div class="app">
@@ -36,10 +36,7 @@
     <!-- en pantallas verticales el panel sale desde la izquierda con el botón "Ábreme…" -->
     <aside class="panel" id="panel" aria-label="Funciones de la muestra">
       <div class="panel-cab">
-        <div>
-          <h2>Negocio</h2>
-          <p class="negocio-fijo" id="negocio-fijo"></p>
-        </div>
+        <p class="negocio-fijo" id="negocio-fijo"></p>
         <button class="btn icono panel-cerrar" id="panel-cerrar" type="button" aria-label="Cerrar el panel">
           <svg width="16" height="16" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 6l12 12M18 6 6 18" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
         </button>
@@ -134,8 +131,9 @@
   </a>
 </dialog>
 
-<script src="planes.js"></script>
-<script src="muestra-datos.js"></script>
-<script src="muestra.js"></script>
+<!-- ?v= obliga a bajar los archivos nuevos: cámbiala cada vez que se publiquen cambios (el HTML no se guarda en caché, pero estos sí, una hora) -->
+<script src="planes.js?v=2026-09-27b"></script>
+<script src="muestra-datos.js?v=2026-09-27b"></script>
+<script src="muestra.js?v=2026-09-27b"></script>
 </body>
 </html>
