@@ -21,6 +21,7 @@ const PUBLIC = path.join(__dirname, 'public');
 const ROUTES = {
   '/': 'index.html',
   '/demo': 'demo.html',
+  '/muestra': 'muestra.html',
   '/admin': 'admin.html',
   '/tarifas': 'tarifas.html',
   '/terminos': 'terminos.html',

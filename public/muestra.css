@@ -73,16 +73,7 @@ button{cursor:pointer}
 .grupo-cab small{font-size:12px; color:var(--muted); white-space:nowrap}
 .grupo .toggles{padding:4px 12px 4px; border-top:1px solid var(--line)}
 .grupo .tog:first-child{padding-top:10px}
-/* nombre del negocio (fijo) y botón para cerrar el panel, que solo se ve en pantallas verticales */
-.panel-cab{display:flex; align-items:flex-start; justify-content:space-between; gap:10px}
-.negocio-fijo{margin:0; font-size:17px; font-weight:700}
-.btn.panel-cerrar{display:none}
-/* botón "Ábreme…" y lugar del selector Celular/Computadora: solo en pantallas verticales */
-.abrir-panel{display:none; align-items:center; gap:10px; width:100%; max-width:520px; margin:0 auto 12px; padding:12px 16px; border:0; border-radius:14px;
-  background:var(--grad); color:var(--grad-ink); font-weight:700; font-size:14.5px; line-height:1.3; text-align:left; box-shadow:var(--shadow); text-shadow:0 1px 2px rgba(40,20,70,.35)}
-.abrir-panel .flecha{flex:none; animation:empuja 1.4s ease-in-out infinite}
-@keyframes empuja{0%, 100%{transform:translateX(0)} 50%{transform:translateX(-5px)}}
-.seg-lugar{display:none}
+.ir-muestra{display:none}
 .tag{display:inline-block; margin-left:6px; font-size:10.5px; font-weight:700; letter-spacing:.03em; padding:1px 7px; border-radius:999px; background:var(--panel-2); border:1px solid var(--line); color:var(--muted); vertical-align:1px}
 .tog.fija{cursor:default}
 .plan-sugerido{background:var(--accent-soft); border-radius:12px; padding:10px 12px; font-size:13px; line-height:1.45; margin-bottom:10px}
@@ -96,11 +87,7 @@ button{cursor:pointer}
 .btn.icono{padding:7px}
 
 /* ---------- escenario y marcos ---------- */
-.stage{min-width:0; min-height:0; overflow:auto; display:flex; flex-direction:column; padding:24px 16px}
-/* aviso de que la dirección del sitio es ilustrativa (el dominio de ejemplo podría existir) */
-.url-aviso{flex:none; display:flex; align-items:flex-start; gap:8px; max-width:520px; margin:0 auto 12px; padding:8px 12px; border:1px solid var(--line); border-radius:10px; background:var(--panel); color:var(--muted); font-size:12.5px; line-height:1.45}
-.url-aviso svg{flex:none; margin-top:2px}
-.url-aviso b{color:var(--ink); font-family:var(--f-mono); font-weight:500; overflow-wrap:anywhere}
+.stage{min-width:0; min-height:0; overflow:auto; display:flex; padding:24px 16px}
 .escala{margin:auto; width:380px; max-width:100%; flex:none}
 .marco{background:var(--bezel); box-shadow:var(--shadow); display:flex; flex-direction:column; overflow:hidden}
 .pantalla{flex:1; min-height:0; background:#FBFAF7; overflow:hidden}
@@ -110,11 +97,6 @@ button{cursor:pointer}
 .marco.celular .pantalla{border-radius:36px}
 .marco.celular .pantalla::before{content:""; position:absolute; top:10px; left:50%; width:96px; height:26px; transform:translateX(-50%); background:var(--bezel); border-radius:999px; z-index:3}
 .marco.celular .barra-nav{display:none}
-/* celular: sin barra de desplazamiento, como en un teléfono de verdad (se arrastra; ver arrastrable en muestra.js) */
-.marco.celular .sitio,.marco.celular .s-doc,.marco.celular .s-chat-msgs{scrollbar-width:none}
-.marco.celular .sitio::-webkit-scrollbar,.marco.celular .s-doc::-webkit-scrollbar,.marco.celular .s-chat-msgs::-webkit-scrollbar{display:none}
-.marco.celular .sitio,.marco.celular .s-doc{cursor:grab; -webkit-user-select:none; user-select:none}
-.marco.celular .arrastrando{cursor:grabbing}
 
 /* computadora: ventana de navegador de 1100×680 que muestra.js escala para que quepa */
 .marco.escritorio{width:1100px; height:680px; border-radius:12px; transform-origin:top left; background:#E4E2EA}
@@ -127,7 +109,7 @@ button{cursor:pointer}
 
 /* ---------- sitio de prueba (siempre claro) ---------- */
 .pantalla{
-  --brand:#448ACA; --s-bg:#FBFAF7; --s-card:#FFFFFF; --s-ink:#1C1E1D; --s-muted:#5C605D; --s-line:#E6E3DC;
+  --brand:#B8392A; --s-bg:#FBFAF7; --s-card:#FFFFFF; --s-ink:#1C1E1D; --s-muted:#5C605D; --s-line:#E6E3DC;
   --brand-soft:color-mix(in srgb, var(--brand) 11%, #FBFAF7);
   --brand-deep:color-mix(in srgb, var(--brand) 82%, #000);
   position:relative; color:var(--s-ink); font-family:var(--f-ui)
@@ -139,75 +121,15 @@ button{cursor:pointer}
 .s-btn.suave{background:var(--brand-soft); color:var(--brand-deep)}
 .s-etq{display:inline-block; font-size:11px; font-weight:700; letter-spacing:.04em; text-transform:uppercase; padding:2px 8px; border-radius:999px; background:var(--s-line); color:var(--s-muted)}
 
-/* barra de arriba: logo a la izquierda, ES/EN a la derecha; se queda fija al bajar */
-.s-barra{position:sticky; top:0; z-index:2; display:flex; align-items:center; justify-content:space-between; gap:12px; padding:12px 16px; background:var(--s-card); border-bottom:2px solid var(--brand)}
-/* celular: la barra va a la altura de la cámara (logo a la izquierda, ES/EN a la derecha) para que ocupe poco */
-.marco.celular .s-barra{padding:8px 14px 6px}
-.marco.celular .s-logo-img{height:34px}
-.marco.celular .s-idioma button{padding:3px 10px; font-size:12px}
-.s-logo{margin:0; min-width:0; padding:5px 12px; border:2px solid var(--brand); border-radius:999px; color:var(--brand); font:400 17px/1.2 'Young Serif', Georgia, serif; white-space:nowrap; overflow:hidden; text-overflow:ellipsis}
-.s-logo-img{display:block; height:54px; width:auto; min-width:0}
-
-/* portada: elegir sucursal */
-.s-portada{display:flex; flex-direction:column; gap:12px; padding:6px 0 10px}
-.s-portada h2{margin:0; font:400 26px/1.2 'Young Serif', Georgia, serif; color:var(--brand-deep)}
-.s-portada p{margin:0 0 4px; font-size:14px; color:var(--s-muted)}
-.s-suc-btn{display:flex; align-items:center; gap:14px; width:100%; padding:16px; border:2px solid var(--brand); border-radius:16px; background:var(--s-card); color:var(--s-ink); text-align:left; box-shadow:0 2px 8px rgba(0,0,0,.05)}
-.s-suc-num{flex:none; display:grid; place-items:center; width:40px; height:40px; border-radius:50%; background:var(--brand); color:#fff; font:400 20px 'Young Serif', Georgia, serif}
-.s-suc-txt{flex:1; min-width:0; display:flex; flex-direction:column; gap:2px}
-.s-suc-txt b{font-size:15.5px; line-height:1.25}
-.s-suc-txt small{font-size:13px; color:var(--s-muted)}
-.s-suc-txt em{font-style:normal; font-size:12px; font-weight:600; color:#177A43}
-.s-suc-txt em.no{color:#B0413E}
-.s-suc-flecha{flex:none; font-size:28px; line-height:1; color:var(--brand)}
-
-/* subpágina: nombre de la sucursal y regreso a la portada */
-.s-suc-cab{display:flex; flex-direction:column; align-items:flex-start; gap:2px}
-.s-suc-cab h2{margin:0; font:400 24px/1.2 'Young Serif', Georgia, serif; color:var(--brand-deep)}
-.s-suc-cab span{font-size:13.5px; color:var(--s-muted)}
-.s-volver{margin-bottom:6px; border:0; background:var(--brand-soft); color:var(--brand-deep); border-radius:999px; padding:6px 12px; font-size:13px; font-weight:700}
-.s-idioma{flex:none; display:flex; border:2px solid var(--brand); border-radius:999px; overflow:hidden}
-.s-idioma button{border:0; background:transparent; color:var(--brand); padding:5px 12px; font-size:13px; font-weight:700}
-.s-idioma button + button{border-left:2px solid var(--brand)}
-.s-idioma button[aria-pressed="true"]{background:var(--brand); color:#fff}
-
-.s-abierto{justify-self:start; display:inline-flex; align-items:center; gap:7px; padding:5px 6px 5px 12px; border-radius:999px; background:var(--brand-soft); color:var(--brand-deep); font-size:13px; font-weight:600}
-.s-abierto i{width:8px; height:8px; border-radius:50%; background:#1FA855}
-.s-abierto.cerrado i{background:#D9534F}
-
-/* × para quitar una función desde la muestra */
-.s-quitar{flex:none; width:26px; height:26px; padding:0; border:1px solid var(--s-line); border-radius:50%; background:var(--s-bg); color:var(--s-muted); font-size:17px; line-height:1; display:grid; place-items:center}
-.s-sec > .s-quitar{position:absolute; top:12px; right:12px}
-.s-abierto .s-quitar{width:20px; height:20px; font-size:14px; background:transparent; border-color:transparent; color:inherit}
-.s-flot{position:relative}
-.s-flot .s-quitar{position:absolute; top:-8px; left:-8px; width:22px; height:22px; font-size:14px; background:#fff; box-shadow:0 2px 6px rgba(0,0,0,.2)}
-
-/* menú: cada categoría se abre para ver sus platillos */
-.s-menu h3{font-size:28px; margin-bottom:12px}
-.s-cats{display:grid; gap:10px}
-.s-cat{border:2px solid var(--brand); border-radius:12px; background:var(--s-card)}
-.s-cat summary{display:flex; align-items:center; justify-content:space-between; gap:10px; padding:14px 16px; cursor:pointer; list-style:none; font-weight:700; color:var(--brand-deep)}
-.s-cat summary::-webkit-details-marker{display:none}
-.s-cat summary small{display:inline-grid; place-items:center; min-width:24px; height:24px; padding:0 6px; border-radius:999px; background:var(--brand-soft); font-size:12px}
-.s-cat summary::after{content:""; flex:none; width:8px; height:8px; border-right:2px solid currentColor; border-bottom:2px solid currentColor; transform:rotate(45deg); margin:-4px 4px 0 0; transition:transform .15s}
-.s-cat[open] summary::after{transform:rotate(-135deg); margin-top:4px}
-.s-cat summary span{flex:1}
-.s-cat .s-lista{padding:0 16px 12px}
-.s-marca{display:inline-block; font-style:normal; font-size:10.5px; font-weight:700; padding:1px 6px; border-radius:999px; background:#E6F1F8; color:#0B5A87; vertical-align:1px}
-.s-marca.picante{background:#FBE9E7; color:#A5311F}
-.s-btn-wa{flex:none; background:#1FA855}
+.s-cab{background:var(--brand); color:#fff; padding:52px 22px 28px; text-align:center}
+.s-nombre{margin:0; font:400 30px/1.15 'Young Serif', Georgia, serif; overflow-wrap:anywhere}
+.s-lema{margin:8px 0 0; opacity:.9; font-size:14.5px}
+.s-abierto{display:inline-flex; align-items:center; gap:7px; margin-top:14px; padding:5px 12px; border-radius:999px; background:rgba(255,255,255,.16); font-size:13px; font-weight:600}
+.s-abierto i{width:8px; height:8px; border-radius:50%; background:#6EE08A}
+.s-abierto.cerrado i{background:#FFB4A8}
 
 .s-cuerpo{flex:1; display:grid; gap:14px; padding:18px 16px 96px; align-content:start}
-.s-sec{position:relative; background:var(--s-card); border:1px solid var(--s-line); border-radius:16px; padding:16px 18px; min-width:0}
-.s-sec > h3{padding-right:32px}
-/* animalito: tan alto como la sección, pegado a la derecha y cortado a la mitad por el borde del recuadro.
-   Va detrás del contenido y un poco transparente para que el texto se siga leyendo. */
-.s-sec.con-animal{overflow:hidden}
-.s-animal{position:absolute; top:0; right:0; z-index:0; height:100%; width:auto; max-width:none; transform:translateX(50%); opacity:.35; pointer-events:none; user-select:none}
-.s-sec.con-animal > :not(.s-animal):not(.s-quitar){position:relative; z-index:1}
-.s-sec.con-animal > .s-quitar{z-index:2}
-/* el pez mira a la derecha: se voltea para que en la mitad que se ve quede su cara y no la cola */
-.s-sec[data-funcion="productos"] > .s-animal{transform:translateX(50%) scaleX(-1)}
+.s-sec{background:var(--s-card); border:1px solid var(--s-line); border-radius:16px; padding:16px 18px; min-width:0}
 .s-lista li{display:flex; justify-content:space-between; gap:12px; padding:7px 0; border-top:1px solid var(--s-line); font-size:14px}
 .s-lista li:first-child{border-top:0; padding-top:0}
 .s-lista span{color:var(--s-muted)}
@@ -215,67 +137,15 @@ button{cursor:pointer}
 .s-nota{margin:10px 0 0; font-size:13px; color:var(--s-muted)}
 
 .s-dias,.s-horas{display:flex; gap:6px; overflow-x:auto; padding-bottom:4px; margin-bottom:10px}
-.s-horas{flex-wrap:wrap; overflow:visible}
 .s-dias button,.s-horas button{flex:none; border:1px solid var(--s-line); background:var(--s-bg); border-radius:10px; padding:7px 10px; font-size:13px; line-height:1.2; text-align:center}
 .s-dias button b{display:block; font-size:16px}
 .s-dias button[aria-pressed="true"],.s-horas button[aria-pressed="true"]{background:var(--brand); border-color:var(--brand); color:#fff}
 
-/* galería de platillos: cada foto se abre en grande en el visor */
-.s-galeria{display:grid; grid-template-columns:repeat(2, 1fr); gap:12px 10px}
-.s-foto{display:flex; flex-direction:column; gap:6px; border:0; background:none; padding:0; text-align:left; color:var(--s-ink); cursor:zoom-in}
-.s-foto img{display:block; width:100%; aspect-ratio:4 / 5; object-fit:cover; border-radius:12px; background:var(--s-line)}
-.s-foto span{font-size:13px; font-weight:700; line-height:1.3}
-
-/* especial de la semana */
-.s-especial{display:grid; grid-template-columns:112px minmax(0,1fr); gap:14px; align-items:start}
-.s-especial > div{display:flex; flex-direction:column; gap:3px}
-.s-especial-t{align-self:flex-start; font-size:11px; font-weight:700; letter-spacing:.04em; text-transform:uppercase; padding:2px 8px; border-radius:999px; background:var(--brand); color:#fff}
-.s-especial b{font-size:15.5px}
-.s-especial span:not(.s-especial-t){font-size:13.5px; color:var(--s-muted)}
-.s-especial small{margin-top:4px; font-size:12px; color:var(--s-muted)}
-
-/* promociones, eventos y especialidades */
-.s-tabs{display:flex; gap:4px; padding:4px; margin-bottom:14px; border-radius:12px; background:var(--brand-soft)}
-.s-tabs button{flex:1; min-width:0; border:0; border-radius:9px; padding:7px 4px; background:transparent; color:var(--brand-deep); font-size:12.5px; font-weight:700}
-.s-tabs button[aria-selected="true"]{background:var(--s-card); box-shadow:0 1px 3px rgba(0,0,0,.12)}
-.s-promos{display:grid; gap:14px}
-.s-especial.sin-foto{grid-template-columns:64px minmax(0,1fr)}
-.s-promo-ico{display:grid; place-items:center; width:64px; height:64px; border-radius:14px; background:var(--brand-soft); color:var(--brand-deep); font-size:28px; font-weight:700}
-.s-especial .s-etq{align-self:flex-start; margin-top:4px}
-
-/* redes con sus seguidores */
-.s-red{display:flex; align-items:center; gap:12px; width:100%; padding:10px 12px; border:1px solid var(--s-line); border-radius:12px; background:var(--s-bg); color:var(--s-ink); text-align:left}
-.s-red-ico{flex:none; display:grid; place-items:center; width:36px; height:36px; border-radius:10px; color:#fff; font-weight:800; font-size:16px}
-.s-red-ico.instagram{background:linear-gradient(135deg, #F58529, #DD2A7B 55%, #8134AF)}
-.s-red-ico.facebook{background:#1877F2}
-.s-red-txt{flex:1; min-width:0; display:flex; flex-direction:column}
-.s-red-txt b{font-size:14px}
-.s-red-txt small{font-size:12px; color:var(--s-muted); overflow:hidden; text-overflow:ellipsis; white-space:nowrap}
-.s-red-num{flex:none; display:flex; flex-direction:column; align-items:flex-end; line-height:1.2}
-.s-red-num b{font-size:15px}
-.s-red-num small{font-size:11px; color:var(--s-muted)}
-
-/* avisos de la muestra (precios de ejemplo, reseñas de ejemplo) */
-.s-aviso-muestra{margin:10px 0 0; padding:9px 11px; border-left:3px solid var(--brand); border-radius:6px; background:var(--brand-soft); font-size:12.5px; line-height:1.45; color:var(--s-ink)}
-
-/* reservación: pasos, mesas libres y ocupadas */
-.s-paso{margin:4px 0 6px; font-size:13px; font-weight:700; color:var(--s-muted)}
-.s-apartado{margin:4px 0 12px; padding:12px; border:1px solid var(--s-line); border-radius:14px; background:var(--s-bg)}
-.s-apartado .s-leyenda{margin-bottom:0}
-.s-nota-mesa{margin:0 0 8px}
-.s-mesas{display:grid; grid-template-columns:repeat(5, 1fr); gap:6px; margin-bottom:8px}
-.s-mesas.espera .s-mesa{opacity:.55; cursor:default}
-.s-mesa{border:1px solid var(--s-line); background:var(--s-bg); border-radius:10px; padding:6px 2px; font-size:17px; font-weight:700; line-height:1.1; color:var(--s-ink)}
-.s-mesa small{display:block; font-size:10px; font-weight:600; color:var(--s-muted)}
-.s-mesa.ocupada{background:#ECEBE7; color:#A9A7A1; text-decoration:line-through; cursor:not-allowed}
-.s-mesa.ocupada small{color:inherit}
-.s-mesa[aria-pressed="true"]{background:var(--brand); border-color:var(--brand); color:#fff}
-.s-mesa[aria-pressed="true"] small{color:#fff}
-.s-leyenda{display:flex; flex-wrap:wrap; gap:4px 14px; margin:0 0 12px; font-size:12px; color:var(--s-muted)}
-.s-leyenda span{display:inline-flex; align-items:center; gap:5px}
-.s-leyenda i{width:11px; height:11px; border-radius:3px; border:1px solid var(--s-line); background:var(--s-bg)}
-.s-leyenda i.ocupada{background:#DAD8D2}
-.s-leyenda i.tuya{background:var(--brand); border-color:var(--brand)}
+.s-galeria{display:grid; grid-template-columns:repeat(3, 1fr); gap:6px}
+.s-galeria div{aspect-ratio:1; border-radius:10px; display:grid; place-items:end start; padding:6px; font-size:10.5px; color:#fff;
+  background:linear-gradient(135deg, color-mix(in srgb, var(--brand) 55%, #fff), var(--brand-deep))}
+.s-galeria div:nth-child(3n+2){background:linear-gradient(135deg, #E9C46A, #B5723A)}
+.s-galeria div:nth-child(3n){background:linear-gradient(135deg, #8AB6A5, #3E6B5C)}
 
 .s-resena{padding:10px 0; border-top:1px solid var(--s-line)}
 .s-resena:first-of-type{border-top:0; padding-top:0}
@@ -298,18 +168,16 @@ button{cursor:pointer}
 .s-mapa{height:130px; border-radius:12px; display:grid; place-items:center; font-size:12.5px; color:var(--s-muted); margin-bottom:10px;
   background:repeating-linear-gradient(0deg, transparent 0 22px, var(--s-line) 22px 24px), repeating-linear-gradient(90deg, var(--brand-soft) 0 30px, var(--s-line) 30px 32px)}
 .s-mapa span{background:var(--s-card); padding:4px 10px; border-radius:999px}
-.s-mapa-img{display:block; width:100%; height:auto; border-radius:12px; border:1px solid var(--s-line); margin-bottom:10px}
 .s-suc{display:flex; justify-content:space-between; align-items:center; gap:10px; padding:9px 0; border-top:1px solid var(--s-line)}
 .s-suc:first-of-type{border-top:0; padding-top:0}
 .s-suc b{display:block; font-size:14.5px}
 .s-suc span{font-size:13px; color:var(--s-muted)}
 
-.s-redes{display:flex; flex-direction:column; gap:8px}
+.s-redes{display:flex; flex-wrap:wrap; gap:8px}
 .s-qr{display:flex; align-items:center; gap:14px}
 .s-qr-img{flex:none; width:96px; height:96px; padding:6px; background:#fff; border:1px solid var(--s-line); border-radius:8px; display:grid; grid-template-columns:repeat(21, 1fr)}
 .s-qr-img i.n{background:#1C1E1D}
 .s-qr p{margin:0; font-size:13px; color:var(--s-muted)}
-.s-qr-real{flex:none; width:120px; height:120px; padding:6px; background:#fff; border:1px solid var(--s-line); border-radius:8px}
 
 .s-pie{padding:18px 16px 22px; text-align:center; font-size:12.5px; color:var(--s-muted); border-top:1px solid var(--s-line); display:flex; flex-direction:column; gap:6px}
 .s-pie nav{display:flex; justify-content:center; flex-wrap:wrap; gap:6px 14px}
@@ -318,25 +186,6 @@ button{cursor:pointer}
 .s-contacto b{color:var(--s-ink); font-size:13.5px}
 .s-enlace{border:0; background:none; padding:0; font:inherit; color:var(--brand-deep); text-decoration:underline}
 .s-evento small{display:block; margin-top:3px; font-size:12px; color:var(--s-muted)}
-/* nota del pie: avisa al negocio que es una muestra */
-.s-muestra{margin:8px 0 0; padding:12px 14px; border:1px dashed color-mix(in srgb, var(--brand) 45%, #fff); border-radius:12px; background:var(--brand-soft); color:var(--s-ink); text-align:left; font-size:12.5px; line-height:1.5}
-.s-muestra b{display:block; margin-bottom:2px; color:var(--brand-deep); font-size:13px}
-
-/* visor de fotos: en celular el texto va abajo; en computadora, a la derecha */
-.s-visor{position:absolute; inset:0; z-index:6; display:grid; place-items:center; padding:48px 14px 20px; background:rgba(10,20,30,.78); container-type:inline-size}
-.s-visor-caja{position:relative; width:100%; max-height:100%; display:flex; flex-direction:column; background:var(--s-card); border-radius:16px; overflow:hidden; box-shadow:0 20px 50px rgba(0,0,0,.4)}
-.s-visor-caja img{display:block; width:100%; min-height:0; flex:0 1 auto; object-fit:cover}
-.s-visor-txt{padding:14px 16px 18px}
-.s-visor-txt h2{margin:0 0 6px; font:400 20px/1.25 'Young Serif', Georgia, serif; color:var(--brand)}
-.s-visor-txt p{margin:0; font-size:14px; color:var(--s-muted)}
-.s-visor-x{position:absolute; top:10px; right:10px; z-index:1; width:34px; height:34px; border:0; border-radius:50%; background:rgba(255,255,255,.92); color:var(--s-ink); font-size:22px; line-height:1; box-shadow:0 2px 8px rgba(0,0,0,.25)}
-@container (min-width: 600px){
-  .s-visor-caja{flex-direction:row; max-width:860px; height:min(100%, 560px)}
-  .s-visor-caja img{width:58%; height:100%}
-  .s-visor-txt{flex:1; align-self:center; padding:24px 28px}
-  .s-visor-txt h2{font-size:26px}
-  .s-visor-txt p{font-size:15.5px}
-}
 
 /* documentos legales del negocio: cubren la pantalla como si fueran otra página */
 .s-doc{position:absolute; inset:0; z-index:5; overflow-y:auto; background:var(--s-bg); font-size:14px; line-height:1.55}
@@ -368,12 +217,11 @@ button{cursor:pointer}
 
 /* el sitio responde al ancho del marco, no al de la ventana */
 @container (min-width: 700px){
-  .s-barra{padding:14px 40px}
-  .s-sec.ancha .s-cats{grid-template-columns:repeat(2, 1fr); align-items:start}
-  /* 2 columnas iguales; dense acomoda las secciones para no dejar huecos (ver la clase completa en muestra.js) */
-  .s-cuerpo{grid-template-columns:repeat(2, minmax(0, 1fr)); grid-auto-flow:row dense; gap:20px; padding:32px 40px 96px}
-  .s-cuerpo > :not(.s-sec), .s-sec.ancha, .s-sec.completa{grid-column:1 / -1}
-  .s-sec.ancha .s-galeria{grid-template-columns:repeat(3, 1fr)}
+  .s-cab{padding:64px 40px 48px}
+  .s-nombre{font-size:44px}
+  .s-cuerpo{grid-template-columns:repeat(auto-fill, minmax(300px, 1fr)); gap:20px; padding:32px 40px 96px}
+  .s-sec.ancha{grid-column:1 / -1}
+  .s-sec.ancha .s-galeria{grid-template-columns:repeat(6, 1fr)}
 }
 
 /* ---------- aviso y modal ---------- */
@@ -384,21 +232,16 @@ button{cursor:pointer}
 .modal-cab h2{margin:0; font-size:17px}
 .modal textarea{width:100%; border:1px solid var(--line); background:var(--panel-2); border-radius:10px; padding:10px 12px; font:12.5px/1.5 var(--f-mono); resize:vertical}
 .modal-acciones{display:flex; justify-content:flex-end; gap:8px; margin-top:12px}
-.btn.wa{margin-top:10px; padding:12px 16px; background:#1FA855; border-color:#1FA855; color:#fff; font-size:14.5px; text-decoration:none}
 
 /* ---------- celular (se enseña desde el teléfono) ---------- */
-/* muestra.js le pone .vertical al body cuando la ventana es angosta o muy vertical (un celular):
-   primero se ve el teléfono y el panel sale desde la izquierda con el botón "Ábreme…" */
-.vertical .app{height:auto; min-height:100%}
-.vertical .main{grid-template-columns:minmax(0,1fr)}
-.vertical .stage{overflow:hidden; padding:16px 16px 32px}
-.vertical .marco.celular{height:680px}
-.vertical .panel{position:fixed; top:0; bottom:0; left:0; z-index:40; width:min(360px, 88vw); border-right:1px solid var(--line);
-  padding-top:calc(18px + env(safe-area-inset-top, 0px)); padding-bottom:calc(32px + env(safe-area-inset-bottom, 0px));
-  transform:translateX(-102%); visibility:hidden; transition:transform .25s ease, visibility 0s linear .25s; box-shadow:var(--shadow)}
-.vertical.panel-abierto .panel{transform:none; visibility:visible; transition:transform .25s ease}
-.vertical .btn.panel-cerrar{display:inline-flex}
-.vertical .abrir-panel{display:flex}
-.vertical .seg-lugar{display:flex; justify-content:center; margin-bottom:12px}
-.velo{position:fixed; inset:0; z-index:35; background:rgba(10,8,16,.5)}
-.vertical.panel-abierto{overflow:hidden}
+@media (max-width: 820px){
+  .app{height:auto; min-height:100%}
+  .main{grid-template-columns:minmax(0,1fr)}
+  .panel{border-right:0; border-bottom:1px solid var(--line); overflow:visible}
+  .stage{overflow:hidden; padding:20px 16px 32px}
+  .marco.celular{height:680px}
+  .seg button span{display:none}
+  .seg button{padding:7px 12px}
+  .ir-muestra{display:inline-flex; position:fixed; left:50%; bottom:calc(16px + env(safe-area-inset-bottom, 0px)); transform:translateX(-50%); z-index:30; box-shadow:var(--shadow); padding:11px 20px; border-radius:999px}
+  .ir-muestra[hidden]{display:none!important}
+}

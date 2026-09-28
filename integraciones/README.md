@@ -15,7 +15,7 @@ Se configura una sola vez, con la cuenta **185changarroweb@gmail.com**.
 5. Arriba a la derecha, **Implementar > Nueva implementación**:
    - Tipo: **Aplicación web**.
    - Ejecutar como: **Yo** (185changarroweb@gmail.com).
-   - Quién tiene acceso: **Cualquier usuario**. Es necesario para que Render pueda entrar; sin el `SECRETO`, el script no hace nada.
+   - Quién tiene acceso: **Cualquier usuario** (en inglés, **Anyone**). No elijas "Cualquier usuario con cuenta de Google" (**Anyone with a Google account**): con esa opción Google le pide a Render iniciar sesión y no llega nada a la Hoja. Es necesario para que Render pueda entrar; sin el `SECRETO`, el script no hace nada.
    - Pica **Implementar**, autoriza los permisos y copia la **URL de la aplicación web** (termina en `/exec`).
 
 ## 2. Configurar Render

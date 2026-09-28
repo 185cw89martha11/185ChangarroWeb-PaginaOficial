@@ -24,7 +24,7 @@
               defaults     funciones prendidas o apagadas al elegir este giro
   FEATURES  interruptores del panel. locked:true = no se puede apagar.
   EXTRAS    funciones que se ofrecen "para después" (solo se muestran como etiquetas).
-  PLANS     paquetes de la pestaña Propuesta (precios sugeridos; se pueden editar en pantalla).
+  PLANS     paquetes de la pestaña Propuesta (los mismos precios de planes.js; solo se cambian aquí, en el código).
   MANT, NEED, APARTE  listas de la pestaña Propuesta.
 */
 window.VITRINA_DATA = (function(){
@@ -104,9 +104,9 @@ window.VITRINA_DATA = (function(){
   var EXTRAS = ['Pedidos para llevar','Catálogo con carrito','Liga de pago','Cupones','Bolsa de trabajo','Menú en inglés','Noticias o blog','Sesión de fotos del local'];
   var PLANS = [
     {id:'esencial', name:'Esencial', forx:'Para que lo encuentren, le escriban y aparten.', inst:1800, mes:199, time:'Lista en 3 a 5 días hábiles',
-      inc:['Página con servicios y precios','Botón de WhatsApp con mensaje listo','Mapa, horarios y aviso de "abierto ahora"','Enlace para redes y QR para imprimir','Dominio propio a nombre del negocio','Agenda de citas o reservas','Galería de fotos y reseñas','Eventos y promociones','Aviso de privacidad (cuando la página pide datos)']},
+      inc:['Página con servicios y precios','Botón de WhatsApp con mensaje listo','Mapa, horarios y aviso de "abierto ahora"','Enlace para redes y QR para imprimir','Dominio propio a nombre del negocio','Agenda de citas o reservas','Galería de fotos','Eventos y promociones','Aviso de privacidad (cuando la página pide datos)']},
     {id:'negocio', name:'Negocio', forx:'Para que la página trabaje y conteste por usted.', inst:2800, mes:299, time:'Lista en 5 a 7 días hábiles', featured:true,
-      inc:['Todo lo de Esencial','Preguntas frecuentes','Alta y arreglo de su ficha en Google Maps, con QR para pedir reseñas','Asistente en la página que contesta con sus datos','Hasta 10 funciones del catálogo']},
+      inc:['Todo lo de Esencial','Preguntas frecuentes','Alta y arreglo de su ficha en Google Maps, con QR para pedir reseñas','Asistente en la página que contesta con sus datos','Reseñas de clientes en la página','Hasta 10 funciones del catálogo']},
     {id:'pro', name:'Negocio + Asistente Pro', forx:'Para tener a alguien que le ayuda a vender cada mes.', inst:3900, mes:449, time:'Lista en 7 a 10 días hábiles',
       inc:['Todo lo de Negocio','Hasta 15 funciones del catálogo','WhatsApp Business configurado: bienvenida, ausencia, respuestas rápidas y catálogo','Pedidos con anticipo y liga de pago externa','Reporte mensual detallado','2 diseños de promoción al mes','Hasta 3 cambios pequeños al día']}
   ];

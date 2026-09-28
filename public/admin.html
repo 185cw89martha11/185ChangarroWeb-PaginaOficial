@@ -46,7 +46,9 @@ button{cursor:pointer}
 /* Candado */
 .lock{min-height:100vh; display:grid; place-items:center; padding:16px}
 .lock form{width:100%; max-width:360px; background:var(--panel); border:1px solid var(--line); border-radius:18px; padding:24px; display:flex; flex-direction:column; gap:14px}
-.lock .logo{height:56px; margin:0 auto}
+.home{display:block; flex:none; border-radius:8px}
+.lock .home{margin:0 auto}
+.lock .logo{height:56px}
 .lock h1{margin:0; font-size:20px; text-align:center}
 .lock label{font-size:13px; font-weight:600}
 .lock input{width:100%; border:1px solid var(--line); background:var(--panel-2); border-radius:10px; padding:11px 12px; font-family:var(--f-mono); letter-spacing:.1em}
@@ -116,7 +118,7 @@ pre{white-space:pre-wrap; overflow-wrap:anywhere; background:var(--panel-2); bor
 
 <main class="lock" id="lock">
   <form id="lock-form" autocomplete="off">
-    <img class="logo" src="logo.png" alt="185ChangarroWeb" width="85" height="56">
+    <a class="home" href="index.html" aria-label="Ir al inicio de 185ChangarroWeb"><img class="logo" src="logo.png" alt="" width="85" height="56"></a>
     <h1>Panel de administración</h1>
     <div>
       <label for="clave">Clave</label>
@@ -131,7 +133,7 @@ pre{white-space:pre-wrap; overflow-wrap:anywhere; background:var(--panel-2); bor
 <div id="app" hidden>
   <header class="top">
     <div class="top-in">
-      <img class="logo" src="logo.png" alt="" width="61" height="40">
+      <a class="home" href="index.html" aria-label="Ir al inicio de 185ChangarroWeb"><img class="logo" src="logo.png" alt="" width="61" height="40"></a>
       <h1>Solicitudes de acceso</h1>
       <button class="btn" type="button" id="btn-buscar">Buscar nuevas</button>
       <button class="btn" type="button" id="btn-salir">Cerrar</button>

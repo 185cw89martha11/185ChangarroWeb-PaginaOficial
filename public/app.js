@@ -7,7 +7,6 @@
   var STORE = 'vitrina-local-v1';
   var S = {giro:'restaurante', name:'', color:'chile', wa:'33 0000 0000', addr:'Av. Juárez 145, Centro', f:null};
   var A = {day:0, slot:null, done:false, err:''};
-  var prices = {}; var offer = true;
   var chatState = {started:false};
 
   function $(s){ return document.querySelector(s); }
@@ -22,11 +21,9 @@
       var raw = localStorage.getItem(STORE); if(!raw) return;
       var d = JSON.parse(raw);
       if(d.S){ ['giro','name','color','wa','addr'].forEach(function(k){ if(typeof d.S[k]==='string') S[k]=d.S[k]; }); if(d.S.f && typeof d.S.f==='object') S.f=d.S.f; }
-      if(d.prices && typeof d.prices==='object') prices = d.prices;
-      if(typeof d.offer==='boolean') offer = d.offer;
     }catch(e){}
   }
-  function save(){ try{ localStorage.setItem(STORE, JSON.stringify({S:S, prices:prices, offer:offer})); }catch(e){} }
+  function save(){ try{ localStorage.setItem(STORE, JSON.stringify({S:S})); }catch(e){} }
 
   load();
   if(!GIROS[S.giro]) S.giro='restaurante';
@@ -420,12 +417,9 @@
 
   /* ---------- propuesta ---------- */
   function fmt(n){ return Number(n||0).toLocaleString('es-MX'); }
-  function priceOf(p, key){ return (prices[p.id] && prices[p.id][key] != null) ? prices[p.id][key] : p[key]; }
   function renderProposal(){
     var g = G(), pn = $('#p-name');
     pn.textContent = bizName(); pn.style.fontFamily = FONTS[g.font];
-    $('#offer-toggle').checked = offer; $('#offer').hidden = !offer;
-    var editing = document.body.classList.contains('editing');
     var box = $('#plans'); box.innerHTML = '';
     PLANS.forEach(function(p){
       var art = document.createElement('article'); art.className = 'plan' + (p.featured ? ' featured' : '');
@@ -433,29 +427,14 @@
       art.innerHTML = '<div class="plan-top"><h3>' + esc(p.name) + '</h3>' + (p.featured ? '<span class="badge">Recomendado</span>' : '') + '</div>'
         + '<p class="plan-for">' + esc(p.forx) + '</p>'
         + '<div class="price-row">'
-        + '<div class="price"><label for="pr-' + p.id + '-inst">Instalación</label><div class="pin">$<input id="pr-' + p.id + '-inst" data-p="' + p.id + '" data-k="inst" inputmode="numeric" value="' + fmt(priceOf(p,'inst')) + '"' + (editing ? '' : ' readonly') + '></div><small>pago único</small></div>'
-        + '<div class="price"><label for="pr-' + p.id + '-mes">Mensualidad</label><div class="pin">$<input id="pr-' + p.id + '-mes" data-p="' + p.id + '" data-k="mes" inputmode="numeric" value="' + fmt(priceOf(p,'mes')) + '"' + (editing ? '' : ' readonly') + '></div><small>al mes</small></div>'
+        + '<div class="price"><label>Instalación</label><div class="pin">$<span>' + fmt(p.inst) + '</span></div><small>pago único</small></div>'
+        + '<div class="price"><label>Mensualidad</label><div class="pin">$<span>' + fmt(p.mes) + '</span></div><small>al mes</small></div>'
         + '</div><ul class="checks">' + inc + '</ul><p class="plan-time">' + esc(p.time) + '</p>';
       box.appendChild(art);
-    });
-    box.querySelectorAll('input').forEach(function(inp){
-      inp.addEventListener('input', function(){
-        var n = parseInt(inp.value.replace(/[^0-9]/g,''), 10); if(isNaN(n)) n = 0;
-        prices[inp.dataset.p] = prices[inp.dataset.p] || {}; prices[inp.dataset.p][inp.dataset.k] = n; save();
-      });
-      inp.addEventListener('blur', function(){ var v = prices[inp.dataset.p] && prices[inp.dataset.p][inp.dataset.k]; if(v != null) inp.value = fmt(v); });
     });
   }
   function fillList(id, arr){ $(id).innerHTML = arr.map(function(x){ return '<li>' + esc(x) + '</li>'; }).join(''); }
   fillList('#l-mant', MANT); fillList('#l-need', NEED); fillList('#l-extra', APARTE);
-  $('#offer-toggle').addEventListener('change', function(e){ offer = e.target.checked; $('#offer').hidden = !offer; save(); });
-  $('#btn-edit').addEventListener('click', function(){
-    var on = !document.body.classList.contains('editing');
-    document.body.classList.toggle('editing', on);
-    $('#btn-edit').textContent = on ? 'Guardar precios' : 'Editar precios';
-    document.querySelectorAll('.pin input').forEach(function(i){ i.readOnly = !on; });
-    if(on){ var first = document.querySelector('.pin input'); if(first) first.focus(); }
-  });
 
   buildPanel();
   renderSite();

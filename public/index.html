@@ -198,7 +198,7 @@ ul.checks{list-style:none; margin:0; padding:0; display:flex; flex-direction:col
   if(WHATSAPP) wa.href = 'https://wa.me/' + WHATSAPP + '?text=' + encodeURIComponent(MENSAJE); else wa.hidden = true;
   if(CORREO) mail.href = 'mailto:' + CORREO + '?subject=' + encodeURIComponent(ASUNTO) + '&body=' + encodeURIComponent(MENSAJE); else mail.hidden = true;
 
-  // Planes: siempre los precios oficiales de planes.js (no los editados en Tarifas).
+  // Planes: los precios oficiales de planes.js.
   function fmt(n){ return Number(n||0).toLocaleString('es-MX'); }
   var box = document.getElementById('plans');
   window.PLANES_185.PLANS.forEach(function(p){

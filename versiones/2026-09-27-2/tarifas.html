@@ -31,6 +31,8 @@ body{margin:0}[hidden]{display:none!important}
 }
 *{box-sizing:border-box}
 body{background:var(--bg); color:var(--ink); font-family:var(--f-ui); font-size:15px; line-height:1.45}
+button,input{font:inherit; color:inherit}
+button{cursor:pointer}
 :focus-visible{outline:2px solid var(--accent); outline-offset:2px}
 .wrap{max-width:1080px; margin:0 auto; padding-block:28px 56px; padding-inline:16px; display:flex; flex-direction:column; gap:22px}
 
@@ -40,7 +42,12 @@ body{background:var(--bg); color:var(--ink); font-family:var(--f-ui); font-size:
 .eyebrow{margin:0; font-size:11px; font-weight:700; letter-spacing:.14em; text-transform:uppercase; color:var(--muted)}
 h1{margin:2px 0 0; font-size:30px; line-height:1.1; letter-spacing:-.015em; font-weight:800; text-wrap:balance}
 .lead{margin:0; color:var(--muted); max-width:60ch}
-.home{display:block; flex:none; border-radius:8px}
+.tools{display:flex; flex-wrap:wrap; gap:8px 14px; align-items:center}
+.btn{border:1px solid var(--line); background:var(--panel); padding:8px 14px; border-radius:10px; font-weight:600; font-size:13px}
+.check{display:inline-flex; gap:8px; align-items:center; font-size:13.5px; color:var(--muted)}
+
+.offer{background:var(--accent-soft); border:1px solid color-mix(in srgb, var(--accent) 35%, transparent); border-radius:14px; padding:13px 16px; font-size:14.5px}
+.offer b{color:var(--accent)}
 
 .plans{display:grid; grid-template-columns:repeat(3, minmax(0,1fr)); gap:14px; align-items:start}
 .plan{background:var(--panel); border:1px solid var(--line); border-radius:16px; padding:18px; display:flex; flex-direction:column; gap:14px}
@@ -53,7 +60,8 @@ h1{margin:2px 0 0; font-size:30px; line-height:1.1; letter-spacing:-.015em; font
 .price{background:var(--panel-2); border-radius:12px; padding:9px 11px; min-width:0}
 .price label{display:block; font-size:10.5px; font-weight:700; letter-spacing:.09em; text-transform:uppercase; color:var(--muted)}
 .pin{display:flex; align-items:baseline; font-family:var(--f-mono); font-size:22px; font-weight:500}
-.pin span{font-variant-numeric:tabular-nums}
+.pin input{width:100%; min-width:0; border:0; background:transparent; padding:0; font-family:var(--f-mono); font-size:22px; font-weight:500; font-variant-numeric:tabular-nums; border-bottom:1px dashed transparent}
+body.editing .pin input{border-bottom-color:var(--accent)}
 .price small{font-size:12px; color:var(--muted)}
 .facts{display:grid; grid-template-columns:1fr 1fr; gap:8px}
 .fact{border:1px solid var(--line); border-radius:10px; padding:7px 10px}
@@ -99,11 +107,17 @@ ul.checks{list-style:none; margin:0; padding:0; display:flex; flex-direction:col
 <div class="wrap">
   <header class="head">
     <div>
-      <div class="brand"><a class="home" href="index.html" aria-label="Ir al inicio de 185ChangarroWeb"><img class="logo" src="logo.png" alt="" width="61" height="40"></a><div><p class="eyebrow">185ChangarroWeb</p><h1>Páginas web para negocios</h1></div></div>
+      <div class="brand"><img class="logo" src="logo.png" alt="" width="61" height="40"><div><p class="eyebrow">185ChangarroWeb</p><h1>Páginas web para negocios</h1></div></div>
+    </div>
+    <div class="tools">
+      <button class="btn" id="btn-edit" type="button">Editar precios</button>
+      <label class="check"><input type="checkbox" id="offer-toggle" checked> Oferta de apertura</label>
     </div>
   </header>
   <p class="lead">Tres planes con mantenimiento desde el primer día. El dominio y las cuentas siempre quedan a nombre del negocio.</p>
-  <p class="lead" style="font-size:13px">Versión del 28 de septiembre de 2026.</p>
+  <p class="lead" style="font-size:13px">Versión del 27 de septiembre de 2026.</p>
+
+  <div class="offer" id="offer"><b>Oferta de apertura.</b> Los primeros 3 negocios reciben 30% de descuento en la instalación (no aplica a la mensualidad), a cambio de una opinión por escrito y permiso para mostrar su página como ejemplo. Si retira el permiso antes de 2 meses, paga el descuento recibido.</div>
 
   <section class="plans" id="plans" aria-label="Planes"></section>
 
@@ -145,13 +159,12 @@ ul.checks{list-style:none; margin:0; padding:0; display:flex; flex-direction:col
         <li>La primera mensualidad se paga un mes después de publicada la página. Si el mes no tiene ese día, se cobra el último día del mes.</li>
         <li>Subir de plan cuesta $1,300 por nivel, o $2,400 de Esencial a Negocio + Asistente Pro. Bajar de plan no tiene costo. En ambos casos se pide 7 días antes del pago; el día de pago no cambia y desde el siguiente pago se cobra la mensualidad del nuevo plan.</li>
         <li>Al bajar de plan, las funciones que ya no incluye se deshabilitan de inmediato y se guardan 1 mes: si regresa en ese plazo, no paga el cambio. Después se borran definitivamente.</li>
-        <li>Cualquier cambio en los precios de 185ChangarroWeb (instalación, mensualidad, cambio de plan y dominio) se avisa con 15 días de anticipación. No se refiere a los precios de su menú, productos o servicios, que usted decide.</li>
+        <li>Cualquier cambio de precio se avisa con 15 días de anticipación.</li>
         <li>Sin plazo forzoso: se puede cancelar con 30 días de aviso.</li>
         <li>Si el pago se atrasa más de 15 días, la página se pausa. No se borra.</li>
         <li>Si dejamos de dar el servicio, avisamos con 30 días de anticipación, se cancelan las mensualidades y le entregamos los archivos de su página.</li>
         <li>Si pasamos el servicio a otra persona, avisamos con 30 días de anticipación. Se respetan los mismos términos y precios, y si no quiere seguir, puede cancelar sin penalización.</li>
-        <li>Solo mostramos su página como ejemplo de nuestro trabajo si usted nos da permiso, y puede retirarlo cuando quiera.</li>
-        <li>La contratación se confirma aceptando por escrito, por WhatsApp o correo electrónico, el plan y los Términos y Condiciones.</li>
+        <li>La contratación se confirma aceptando por escrito el plan y los Términos y Condiciones.</li>
       </ul>
     </section>
 
@@ -172,7 +185,6 @@ ul.checks{list-style:none; margin:0; padding:0; display:flex; flex-direction:col
     <div class="legend"><span>Negocio elige hasta 10 · Pro elige hasta 15</span><span><span class="tag x2">×2</span> cuenta como 2 funciones</span><span><span class="tag dat">datos</span> pide datos: lleva aviso de privacidad</span></div>
     <div class="catalog" id="catalog"></div>
     <p class="note">Cualquier función fuera de este catálogo, o más del límite del plan, se cotiza por separado según la complejidad del trabajo. Lo mismo para proyectos especiales como modelos 3D, animaciones complejas o experiencias interactivas, que se pueden entregar por etapas.</p>
-    <p class="note"><b>Funciones de cortesía:</b> a veces 185ChangarroWeb regala alguna función del catálogo o algún extra, por ejemplo, la versión en inglés. Se avisa por escrito cuáles son de cortesía; no tienen costo y no cuentan dentro del límite de funciones del plan.</p>
     <p class="note"><b>Software para el negocio:</b> también se ofrecen programas a la medida, como inventarios, turnos del personal o registro de platillos. No vienen incluidos en ningún plan y se cobran aparte, solo si el negocio los pide. No todos cuestan lo mismo: el precio varía según el pedido y la dificultad del trabajo.</p>
   </section>
 
@@ -184,7 +196,11 @@ ul.checks{list-style:none; margin:0; padding:0; display:flex; flex-direction:col
 <script>
 (function(){
   var PLANS = window.PLANES_185.PLANS, CATALOG = window.PLANES_185.CATALOG;
+  var STORE = 'vitrina-tarifas-v1', prices = {}, offer = true;
+  try{ var d = JSON.parse(localStorage.getItem(STORE) || '{}'); if(d.prices) prices = d.prices; if(typeof d.offer === 'boolean') offer = d.offer; }catch(e){}
+  function save(){ try{ localStorage.setItem(STORE, JSON.stringify({prices:prices, offer:offer})); }catch(e){} }
   function fmt(n){ return Number(n||0).toLocaleString('es-MX'); }
+  function val(p,k){ return (prices[p.id] && prices[p.id][k] != null) ? prices[p.id][k] : p[k]; }
 
   var box = document.getElementById('plans');
   PLANS.forEach(function(p){
@@ -192,13 +208,17 @@ ul.checks{list-style:none; margin:0; padding:0; display:flex; flex-direction:col
     a.innerHTML = '<div class="plan-top"><h2>' + p.name + '</h2>' + (p.featured ? '<span class="badge">Recomendado</span>' : '') + '</div>'
       + '<p class="for">' + p.forx + '</p>'
       + '<div class="prices">'
-      + '<div class="price"><label>Instalación</label><div class="pin">$<span>' + fmt(p.inst) + '</span></div><small>pago único</small></div>'
-      + '<div class="price"><label>Mensualidad</label><div class="pin">$<span>' + fmt(p.mes) + '</span></div><small>al mes</small></div>'
+      + '<div class="price"><label for="pr-' + p.id + '-inst">Instalación</label><div class="pin">$<input id="pr-' + p.id + '-inst" data-p="' + p.id + '" data-k="inst" inputmode="numeric" readonly value="' + fmt(val(p,'inst')) + '"></div><small>pago único</small></div>'
+      + '<div class="price"><label for="pr-' + p.id + '-mes">Mensualidad</label><div class="pin">$<input id="pr-' + p.id + '-mes" data-p="' + p.id + '" data-k="mes" inputmode="numeric" readonly value="' + fmt(val(p,'mes')) + '"></div><small>al mes</small></div>'
       + '</div>'
       + '<div class="facts"><div class="fact"><b>' + p.funcs + '</b><span>funciones del catálogo</span></div><div class="fact"><b>' + p.sla + '</b><span>respuesta a fallas</span></div></div>'
       + '<ul class="checks">' + p.inc.map(function(x){ return '<li' + (x.indexOf('<b>Todo') === 0 ? ' class="all"' : '') + '><span>' + x + '</span></li>'; }).join('') + '</ul>'
       + '<p class="for" style="margin:0">Lista en ' + p.time + '</p>';
     box.appendChild(a);
+  });
+  box.querySelectorAll('input').forEach(function(inp){
+    inp.addEventListener('input', function(){ var n = parseInt(inp.value.replace(/[^0-9]/g,''),10); if(isNaN(n)) n = 0; prices[inp.dataset.p] = prices[inp.dataset.p] || {}; prices[inp.dataset.p][inp.dataset.k] = n; save(); });
+    inp.addEventListener('blur', function(){ var v = prices[inp.dataset.p] && prices[inp.dataset.p][inp.dataset.k]; if(v != null) inp.value = fmt(v); });
   });
 
   var cat = document.getElementById('catalog'), n = 0;
@@ -206,6 +226,17 @@ ul.checks{list-style:none; margin:0; padding:0; display:flex; flex-direction:col
     var html = '<div class="cat"><h4>' + g[0] + '</h4><ol start="' + (n+1) + '">';
     g[1].forEach(function(f){ n++; html += '<li>' + f[0] + (f[1] ? '<span class="tag x2">×2</span>' : '') + (f[2] ? '<span class="tag dat">datos</span>' : '') + '</li>'; });
     cat.insertAdjacentHTML('beforeend', html + '</ol></div>');
+  });
+
+  var ot = document.getElementById('offer-toggle'), of = document.getElementById('offer');
+  ot.checked = offer; of.hidden = !offer;
+  ot.addEventListener('change', function(){ offer = ot.checked; of.hidden = !offer; save(); });
+  document.getElementById('btn-edit').addEventListener('click', function(e){
+    var on = !document.body.classList.contains('editing');
+    document.body.classList.toggle('editing', on);
+    e.currentTarget.textContent = on ? 'Guardar precios' : 'Editar precios';
+    box.querySelectorAll('input').forEach(function(i){ i.readOnly = !on; });
+    if(on) box.querySelector('input').focus();
   });
 })();
 </script>

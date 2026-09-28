@@ -6,14 +6,14 @@ Herramienta de ventas para el servicio de páginas web de 185ChangarroWeb. Es un
 
 - Escribe el nombre del negocio, elige el giro y el color, y prende o apaga funciones. El sitio del cliente cambia en vivo dentro de un marco de teléfono, con su propia URL arriba.
 - El botón **Presentar** oculta el panel para que el cliente vea solo su página.
-- La pestaña **Propuesta** muestra 3 paquetes con precios editables, el mantenimiento desde el día uno, lo que se necesita del cliente y lo que se cobra aparte.
+- La pestaña **Propuesta** muestra 3 paquetes con sus precios, el mantenimiento desde el día uno, lo que se necesita del cliente y lo que se cobra aparte.
 
 Esto es el muestrario, no la página final de un cliente. Generar sitios reales está en las ideas pendientes.
 
 ## Cómo correrlo
 
 - Abre `public/index.html` (portada) o `public/demo.html` (demo) directo en el navegador. Funciona con `file://`, sin servidor.
-- Con Node (20 o más nuevo): `npm start` y abre http://localhost:3000. Las páginas son `/` (portada), `/demo`, `/tarifas`, `/terminos`, `/privacidad` y `/admin`. Para probarlo en el celular dentro de la misma red, usa la IP de la computadora con el puerto 3000.
+- Con Node (20 o más nuevo): `npm start` y abre http://localhost:3000. Las páginas son `/` (portada), `/demo`, `/muestra`, `/tarifas`, `/terminos`, `/privacidad` y `/admin`. Para probarlo en el celular dentro de la misma red, usa la IP de la computadora con el puerto 3000.
 - Se publica en Render.com como Web Service de Node con `render.yaml` (build `npm install`, start `npm start`, health check `/salud`). Los pasos están en `README.md`.
 
 ## Estructura
@@ -22,7 +22,8 @@ Esto es el muestrario, no la página final de un cliente. Generar sitios reales 
 |---|---|
 | `public/index.html` | Portada pública de 185ChangarroWeb: nombre, quiénes somos, planes (de `planes.js`), sección Contratar con enlaces a Tarifas, Términos y Aviso, y botones de WhatsApp y correo. Los datos de contacto están al inicio de su `<script>`. |
 | `public/demo.html` | Demo de ventas. Marcado: barra superior, panel de ajustes, marco de teléfono con el sitio del cliente, asistente, pestaña Propuesta. |
-| `public/tarifas.html` | Página de planes, precios editables, tiempos de respuesta y catálogo de funciones. |
+| `public/muestra.html`, `muestra.css`, `muestra.js`, `muestra-datos.js` | Muestra por cliente (es la base que se copia por negocio, ver "Cómo hacer la muestra de un negocio"): interruptores con todo lo que incluyen los planes (sin las funciones del catálogo), agrupados por plan y con el plan que cubre lo prendido; vista previa en celular o computadora (botón arriba a la derecha); botón que exporta un mensaje para Claude Code con lo que decidió el cliente. `muestra-datos.js` es la plantilla: `FUNCIONES` (qué se prende) y `NEGOCIO` (el contenido de ejemplo). Nombres y precios de planes salen de `planes.js`. Si cambia lo que incluye un plan en `planes.js`, actualiza también `FUNCIONES`. |
+| `public/tarifas.html` | Página de planes, precios, tiempos de respuesta y catálogo de funciones. |
 | `public/planes.js` | Planes y catálogo de funciones (`window.PLANES_185`). Los usan `tarifas.html` e `index.html`. |
 | `public/styles.css` | Tokens de la herramienta (claro y oscuro) y estilos del sitio del cliente. El sitio del cliente es siempre claro; sus colores viven en `.screen`. |
 | `public/data.js` | Todo el contenido: giros, colores, fuentes, funciones y paquetes. Expone `window.VITRINA_DATA`. El comentario del inicio explica cada campo. |
@@ -43,15 +44,40 @@ Esto es el muestrario, no la página final de un cliente. Generar sitios reales 
 - Todo en español de México. En el sitio del cliente se le habla de "tú" al cliente final. En el panel y la propuesta se le habla de "usted" al dueño del negocio.
 - Tiene que verse bien a 390 px de ancho, porque se enseña desde el celular. Nada de scroll horizontal.
 - La herramienta usa tokens en `:root` con modo oscuro. El sitio del cliente no cambia con el tema.
-- `localStorage` solo para comodidad (último negocio configurado, precios editados), siempre dentro de `try/catch`. La demo tiene que funcionar sin él.
+- `localStorage` solo para comodidad (último negocio configurado), siempre dentro de `try/catch`. La demo tiene que funcionar sin él.
+- Los precios y textos no se editan desde la página (sin botones de "Editar precios" ni campos editables): solo se cambian en el código. La excepción es la muestra de Mariscos 8 Tostadas, que se deja como está.
+- En todas las páginas, el logo de 185ChangarroWeb es un enlace a la portada (`index.html`, o `../index.html` en las muestras que viven en su propia carpeta).
 - El asistente contesta solo con datos de `data.js` y, si no sabe algo, manda a WhatsApp. No debe inventar respuestas. No lo conectes a una IA sin que 185ChangarroWeb lo pida, porque eso tiene costo.
 - Las reseñas de ejemplo siempre llevan la etiqueta "Ejemplo". En sitios reales de clientes van solo reseñas reales.
 - El QR es decorativo a propósito y no se puede escanear: el dominio de ejemplo podría existir y llevar al negocio de otra persona. Cámbialo por un QR real solo cuando exista el dominio del cliente.
 - Los botones de WhatsApp, Llamar y mapa muestran un aviso en pantalla en vez de abrir enlaces, porque el número y la dirección son de ejemplo.
-- El aviso de privacidad siempre va incluido. Es obligatorio cuando la página pide datos personales.
+- El aviso de privacidad siempre va incluido. Es obligatorio cuando la página pide datos personales. Lo demás que va por ley está en "Base legal de la página del cliente".
 - La clave del panel nunca va escrita en el código ni en el repositorio. El servidor solo tiene su huella PBKDF2 en `ADMIN_CLAVE_HASH` (Render > Environment, o `.env.local` en esta computadora, que no se sube). El panel no la guarda: la pide cada vez que se abre y se bloquea tras 15 minutos sin uso.
 - Las solicitudes solo pasan por el buzón (Hoja de Google) hasta que el panel las descarga; después se borran de ahí y viven cifradas en IndexedDB del navegador del panel. Si cambian los datos que pide el formulario de aceptación, actualiza `solicitudes.js`, `admin.js` (`CAMPOS`) y las secciones 2 y 4 del Aviso de Privacidad.
 - La huella SHA-256 no impide editar un PDF exportado; sirve para notar si se editó, comparándolo con la solicitud original del panel.
+
+## Base legal de la página del cliente (va en todos los planes)
+
+La muestra ya trae esto. No se quita en ninguna copia ni en la página final:
+
+- **Datos del negocio en el pie:** nombre, dirección, teléfono y correo, siempre visibles (Ley Federal de Protección al Consumidor, art. 76 bis). Función `contacto`, fija.
+- **Aviso de privacidad a nombre del negocio:** el responsable es el negocio (`titular`); 185ChangarroWeb solo maneja los datos por encargo (sección 12 de nuestros Términos). Se arma solo con lo prendido: qué datos pide la página, para qué, el pago externo si hay pedidos y el conteo de visitas si va el reporte mensual. Función `privacidad`, fija.
+- **Leyenda de precios:** "Precios en pesos mexicanos, con IVA incluido" y la fecha desde la que valen. Profeco pide el precio total.
+- **Promociones con vigencia y condiciones.**
+- **Términos y Condiciones del negocio:** opcionales, pero obligatorios si la página recibe pedidos o pagos (`obligatoriaCon: ['pedidos']`). Llevan precios, formas de pago, anticipo, cancelaciones, devoluciones, promociones y la mención de Profeco.
+
+Los textos llevan la etiqueta "Ejemplo" en la muestra. Son una base, no asesoría legal: antes de usarlos con clientes de verdad, que los revise un abogado.
+
+Pendiente por giro (cuando se agreguen): un consultorio pone su cédula profesional en la publicidad (Ley General de Salud); un negocio que vende alcohol lleva las leyendas obligatorias y no le anuncia a menores.
+
+## Cómo hacer la muestra de un negocio
+
+La muestra es la base. Para cada negocio que todavía no contrata:
+
+1. Copia a una carpeta nueva `muestra.html`, `muestra.css`, `muestra.js`, `muestra-datos.js`, `planes.js`, `logo.png` e `icono.png`. Con eso funciona sola, también con `file://`. En la copia, cambia el enlace del logo de `index.html` a `../index.html` para que regrese a la portada.
+2. Cambia solo `muestra-datos.js`: `negocioEjemplo` y los datos de `NEGOCIO` (titular, dirección, teléfono, correo, productos, horario, promociones con vigencia y condiciones, términos). No hace falta tocar el código.
+3. Lo que se guarda en el navegador va aparte por carpeta, así que una copia no hereda lo de otra.
+4. Si la base cambia (una función nueva, algo legal), las copias viejas no se actualizan solas.
 
 ## Cómo agregar un giro
 
