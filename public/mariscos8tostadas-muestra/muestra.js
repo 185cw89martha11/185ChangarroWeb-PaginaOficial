@@ -288,8 +288,11 @@
   function quitar(id) {
     return '<button type="button" class="s-quitar" data-accion="quitar" data-f="' + id + '" aria-label="Quitar ' + esc(nombreFuncion(id)) + '">×</button>';
   }
+  // N.animales[id]: animalito decorativo a la derecha del título de esa sección
   function seccion(id, titulo, cuerpo, clase) {
-    return '<section class="s-sec' + (clase ? ' ' + clase : '') + '" data-funcion="' + id + '">' + quitar(id) +
+    var animal = N.animales && N.animales[id];
+    return '<section class="s-sec' + (clase ? ' ' + clase : '') + (animal ? ' con-animal' : '') + '" data-funcion="' + id + '">' + quitar(id) +
+      (animal ? '<img class="s-animal" src="' + esc(animal) + '" alt="" aria-hidden="true">' : '') +
       '<h3>' + esc(titulo) + '</h3>' + cuerpo + '</section>';
   }
   function direccionDe(s) {
@@ -551,6 +554,10 @@
     var scroll = sitio.scrollTop;
     sitio.innerHTML = html;
     sitio.scrollTop = scroll;
+
+    // en computadora las secciones van en 2 columnas: si quedan en número impar, la última ocupa todo el ancho para no dejar hueco
+    var mitades = [].slice.call(sitio.querySelectorAll('.s-cuerpo > .s-sec:not(.ancha)'));
+    if (mitades.length % 2) mitades[mitades.length - 1].classList.add('completa');
 
     $('url').textContent = 'https://www.' + dominio() + (portadaVisible || !on('sucursales') ? '' : '/' + s.slug);
     $('url-aviso-dom').textContent = 'www.' + dominio();

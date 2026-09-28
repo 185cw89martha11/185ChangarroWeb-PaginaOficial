@@ -75,7 +75,7 @@ button{cursor:pointer}
 /* nombre del negocio (fijo) y botón para cerrar el panel, que solo se ve en pantallas verticales */
 .panel-cab{display:flex; align-items:flex-start; justify-content:space-between; gap:10px}
 .negocio-fijo{margin:0; font-size:17px; font-weight:700}
-.panel-cerrar{display:none}
+.btn.panel-cerrar{display:none}
 /* botón "Ábreme…" y lugar del selector Celular/Computadora: solo en pantallas verticales */
 .abrir-panel{display:none; align-items:center; gap:10px; width:100%; max-width:520px; margin:0 auto 12px; padding:12px 16px; border:0; border-radius:14px;
   background:var(--grad); color:var(--grad-ink); font-weight:700; font-size:14.5px; line-height:1.3; text-align:left; box-shadow:var(--shadow); text-shadow:0 1px 2px rgba(40,20,70,.35)}
@@ -199,6 +199,9 @@ button{cursor:pointer}
 .s-cuerpo{flex:1; display:grid; gap:14px; padding:18px 16px 96px; align-content:start}
 .s-sec{position:relative; background:var(--s-card); border:1px solid var(--s-line); border-radius:16px; padding:16px 18px; min-width:0}
 .s-sec > h3{padding-right:32px}
+/* animalito a la derecha del título, a un lado de la × */
+.s-animal{position:absolute; top:6px; right:42px; height:58px; width:auto; pointer-events:none; user-select:none}
+.s-sec.con-animal > h3{min-height:52px; padding-right:118px; display:flex; align-items:center}
 .s-lista li{display:flex; justify-content:space-between; gap:12px; padding:7px 0; border-top:1px solid var(--s-line); font-size:14px}
 .s-lista li:first-child{border-top:0; padding-top:0}
 .s-lista span{color:var(--s-muted)}
@@ -361,8 +364,9 @@ button{cursor:pointer}
 @container (min-width: 700px){
   .s-barra{padding:14px 40px}
   .s-sec.ancha .s-cats{grid-template-columns:repeat(2, 1fr); align-items:start}
-  .s-cuerpo{grid-template-columns:repeat(auto-fill, minmax(300px, 1fr)); gap:20px; padding:32px 40px 96px}
-  .s-sec.ancha{grid-column:1 / -1}
+  /* 2 columnas iguales; dense acomoda las secciones para no dejar huecos (ver la clase completa en muestra.js) */
+  .s-cuerpo{grid-template-columns:repeat(2, minmax(0, 1fr)); grid-auto-flow:row dense; gap:20px; padding:32px 40px 96px}
+  .s-cuerpo > :not(.s-sec), .s-sec.ancha, .s-sec.completa{grid-column:1 / -1}
   .s-sec.ancha .s-galeria{grid-template-columns:repeat(3, 1fr)}
 }
 
@@ -387,7 +391,7 @@ button{cursor:pointer}
   padding-top:calc(18px + env(safe-area-inset-top, 0px)); padding-bottom:calc(32px + env(safe-area-inset-bottom, 0px));
   transform:translateX(-102%); visibility:hidden; transition:transform .25s ease, visibility 0s linear .25s; box-shadow:var(--shadow)}
 .vertical.panel-abierto .panel{transform:none; visibility:visible; transition:transform .25s ease}
-.vertical .panel-cerrar{display:inline-flex}
+.vertical .btn.panel-cerrar{display:inline-flex}
 .vertical .abrir-panel{display:flex}
 .vertical .seg-lugar{display:flex; justify-content:center; margin-bottom:12px}
 .velo{position:fixed; inset:0; z-index:35; background:rgba(10,8,16,.5)}

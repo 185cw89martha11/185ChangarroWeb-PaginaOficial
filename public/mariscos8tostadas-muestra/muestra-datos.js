@@ -46,13 +46,13 @@ window.MUESTRA_DATOS = {
     { id: 'agenda', plan: 'esencial', nombre: 'Reservación de mesas', descripcion: 'El cliente elige día, hora y mesa. Esto ocupará de un panel de administrador y de que el negocio mantenga al día qué mesas están ocupadas y cuáles libres, en el momento y en lo reservado.', activa: true,
       nota: 'necesita un panel de administrador; el negocio es responsable de mantener al día qué mesas están ocupadas y cuáles libres' },
     { id: 'galeria', plan: 'esencial', nombre: 'Galería de platillos', descripcion: 'Fotos de los platillos; se agrandan al tocarlas.', activa: true },
-    { id: 'resenas', plan: 'esencial', nombre: 'Reseñas', descripcion: 'Opiniones de clientes.', activa: true },
     { id: 'eventos', plan: 'esencial', nombre: 'Eventos y promociones', descripcion: 'Ofertas y fechas especiales.', activa: true },
     { id: 'dominio', plan: 'esencial', nombre: 'Dominio propio', descripcion: 'La dirección .com.mx a nombre del negocio.', activa: true, servicio: true },
     { id: 'privacidad', plan: 'esencial', nombre: 'Aviso de privacidad', descripcion: 'Siempre va. Es obligatorio si la página pide datos.', activa: true, fija: true },
     { id: 'contacto', plan: 'esencial', nombre: 'Datos del negocio en el pie', descripcion: 'Dirección, teléfono y correo. La ley pide que quien vende diga quién es y cómo contactarlo.', activa: true, fija: true },
     { id: 'terminos', plan: 'esencial', nombre: 'Términos y Condiciones', descripcion: 'Opcional, salvo que la página reciba pedidos o pagos: ahí son obligatorios.', activa: false, opcional: true, obligatoriaCon: ['pedidos'] },
 
+    { id: 'resenas', plan: 'negocio', nombre: 'Reseñas', descripcion: 'Opiniones de clientes.', activa: true },
     { id: 'faq', plan: 'negocio', nombre: 'Preguntas frecuentes', descripcion: 'Respuestas a lo que más preguntan.', activa: false },
     { id: 'google', plan: 'negocio', nombre: 'Ficha de Google Maps', descripcion: 'Alta y arreglo de la ficha, con QR para pedir reseñas.', activa: false },
     { id: 'asistente', plan: 'negocio', nombre: 'Asistente en la página', descripcion: 'Contesta con los datos del negocio.', activa: false },
@@ -97,6 +97,8 @@ window.MUESTRA_DATOS = {
     // hasta media hora antes de cerrar). Las mesas ocupadas de la muestra son inventadas (mesaOcupada en muestra.js)
     mesas: 10,
     logo: 'img/logo-negocio.jpg',
+    // animalitos recortados que van a la derecha del título de estas secciones (id de la función: imagen)
+    animales: { productos: 'img/animales/pez.png', eventos: 'img/animales/camaron.png', resenas: 'img/animales/pulpo.png', horario: 'img/animales/cangrejo.png' },
     // QR real: lleva directo a esta muestra en nuestro sitio (https://one85changarroweb.onrender.com/mariscos8tostadas-muestra/).
     // Se generó sin servicios intermedios, así que no caduca. ?v= obliga al navegador a bajar la imagen nueva si se cambia.
     qr: 'img/qr.png?v=2',
