@@ -101,4 +101,4 @@ Si en algún momento se pide conectar un agente a WhatsApp:
 4. **Más giros:** gimnasio, consultorio, papelería, ferretería, estética.
 5. **QR real** cuando exista el dominio del cliente.
 
-Los precios oficiales están en `public/planes.js` (los muestran Tarifas y la portada) y en la sección 3 de `public/terminos.html`. `PLANS` de `data.js` debe usar los mismos nombres y precios.
+Los precios oficiales están en `public/planes.js` (los muestran Tarifas, la portada y la Propuesta de la demo, que los toma de ahí) y en la sección 3 de `public/terminos.html`. Las funciones del catálogo no deben repetir algo que ya incluye un plan, y `EXTRAS` de `data.js` solo lista funciones que existen en el catálogo.

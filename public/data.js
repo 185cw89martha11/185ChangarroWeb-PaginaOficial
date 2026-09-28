@@ -23,8 +23,9 @@
               pay          respuesta del asistente sobre formas de pago
               defaults     funciones prendidas o apagadas al elegir este giro
   FEATURES  interruptores del panel. locked:true = no se puede apagar.
-  EXTRAS    funciones que se ofrecen "para después" (solo se muestran como etiquetas).
-  PLANS     paquetes de la pestaña Propuesta (los mismos precios de planes.js; solo se cambian aquí, en el código).
+  EXTRAS    funciones del catálogo de Tarifas que se pueden agregar después (solo se muestran como etiquetas).
+            Deben existir en CATALOG de planes.js.
+  PLANS     paquetes de la pestaña Propuesta. Salen de planes.js, para que digan lo mismo que Tarifas.
   MANT, NEED, APARTE  listas de la pestaña Propuesta.
 */
 window.VITRINA_DATA = (function(){
@@ -101,18 +102,14 @@ window.VITRINA_DATA = (function(){
     {id:'faq', t:'Preguntas frecuentes', d:'Contesta lo que siempre le preguntan.'},
     {id:'privacidad', t:'Aviso de privacidad', d:'Obligatorio si la página pide datos. Siempre incluido.', locked:true}
   ];
-  var EXTRAS = ['Pedidos para llevar','Catálogo con carrito','Liga de pago','Cupones','Bolsa de trabajo','Menú en inglés','Noticias o blog','Sesión de fotos del local'];
-  var PLANS = [
-    {id:'esencial', name:'Esencial', forx:'Para que lo encuentren, le escriban y aparten.', inst:1800, mes:199, time:'Lista en 3 a 5 días hábiles',
-      inc:['Página con servicios y precios','Botón de WhatsApp con mensaje listo','Mapa, horarios y aviso de "abierto ahora"','Enlace para redes y QR para imprimir','Dominio propio a nombre del negocio','Agenda de citas o reservas','Galería de fotos','Eventos y promociones','Aviso de privacidad (cuando la página pide datos)']},
-    {id:'negocio', name:'Negocio', forx:'Para que la página trabaje y conteste por usted.', inst:2800, mes:299, time:'Lista en 5 a 7 días hábiles', featured:true,
-      inc:['Todo lo de Esencial','Preguntas frecuentes','Alta y arreglo de su ficha en Google Maps, con QR para pedir reseñas','Asistente en la página que contesta con sus datos','Reseñas de clientes en la página','Hasta 10 funciones del catálogo']},
-    {id:'pro', name:'Negocio + Asistente Pro', forx:'Para tener a alguien que le ayuda a vender cada mes.', inst:3900, mes:449, time:'Lista en 7 a 10 días hábiles',
-      inc:['Todo lo de Negocio','Hasta 15 funciones del catálogo','WhatsApp Business configurado: bienvenida, ausencia, respuestas rápidas y catálogo','Pedidos con anticipo y liga de pago externa','Reporte mensual detallado','2 diseños de promoción al mes','Hasta 3 cambios pequeños al día']}
-  ];
-  var MANT = ['Hosting y candado de seguridad (https) siempre activos','Precios y horarios se pueden actualizar diariamente','Hasta 3 cambios al mes en lo que ya existe: fotos, textos o promociones','Cambios listos en máximo 48 horas hábiles','Respaldo mensual de la página','Reporte mensual de visitas y clics a WhatsApp'];
+  var EXTRAS = ['Versión en inglés','Cupones con código de descuento','Tarjeta de fidelidad virtual con sellos','Promo del día u "hora feliz" con cuenta regresiva','Catálogo con buscador y filtros','Menú o especial del día automático','Bolsa de trabajo con formulario','Noticias o blog'];
+  var PLANS = window.PLANES_185.PLANS.map(function(p){
+    return {id:p.id, name:p.name, forx:p.forx, inst:p.inst, mes:p.mes, time:'Lista en ' + p.time, featured:!!p.featured,
+      inc:p.inc.map(function(x){ return x.replace(/<[^>]+>/g, ''); })};
+  });
+  var MANT = ['Hosting y candado de seguridad (https) siempre activos','Precios y horarios se pueden actualizar diariamente','Hasta 3 cambios al mes en lo que ya existe: fotos, textos o promociones','Respaldo mensual de la página','Reporte mensual de visitas y clics a WhatsApp'];
   var NEED = ['Logo (si no tiene, se hace uno sencillo)','Fotos del local, productos o trabajos (opcionales, pero ayudan mucho)','Lista de servicios o productos con precios','Horarios, dirección y número de WhatsApp','Sus redes sociales, si las tiene'];
-  var APARTE = ['Rediseño completo o secciones nuevas','Sesión de fotos del local y productos','Publicidad pagada en Google o Facebook','Tienda en línea con pagos'];
+  var APARTE = ['Renovación anual del dominio: $500, o $1,000 para .com y .com.mx','Funciones fuera del catálogo o más de las que incluye el plan','Secciones o páginas nuevas','Proyectos especiales, como modelos 3D o animaciones complejas','Programas a la medida: inventarios, turnos del personal o registro de platillos','Correo profesional en el plan Negocio','Licencias de terceros y comisiones de plataformas de pago (las paga el negocio directo)'];
 
   return {COLORS:COLORS, FONTS:FONTS, GIROS:GIROS, FEATURES:FEATURES, EXTRAS:EXTRAS, PLANS:PLANS, MANT:MANT, NEED:NEED, APARTE:APARTE};
 })();

@@ -1,4 +1,4 @@
-/* 185ChangarroWeb — planes y catálogo de funciones. Los usan tarifas.html e index.html.
+/* 185ChangarroWeb — planes y catálogo de funciones. Los usan tarifas.html, index.html y la demo (data.js).
    Si cambias algo aquí, revisa también la sección 3 y la lista PLANES de terminos.html, y PLANS de data.js.
    PLANS: id, name, forx (para quién es), inst (instalación), mes (mensualidad), funcs, sla, time, featured, inc (lo que incluye, admite HTML).
    CATALOG: [categoría, [[función, cuenta como 2 (1/0), pide datos (1/0)], ...]] */
@@ -13,8 +13,8 @@ window.PLANES_185 = {
   ],
   CATALOG: [
     ['Fidelización y promociones', [['Tarjeta de fidelidad virtual con sellos',1,1],['Cupones con código de descuento',0,0],['Programa "trae a un amigo"',0,1],['Club de cumpleañeros',0,1],['Promo del día u "hora feliz" con cuenta regresiva',0,0],['Combos o paquetes armables',0,0],['Tarjetas de regalo con liga de pago',1,0]]],
-    ['Catálogo y pedidos', [['Catálogo con buscador y filtros',1,0],['Pedido para llevar que llega listo por WhatsApp',0,0],['Cotizador aproximado',0,0],['Apartado de productos',0,1],['Menú o especial del día automático',0,0],['Etiquetas de "agotado" o "nuevo"',0,0],['Seguimiento de pedido o servicio',1,1]]],
-    ['Citas y atención', [['Elegir empleado al agendar',0,1],['Lista de espera',0,1],['Recordatorio de cita por correo',0,1],['Formulario de cotización con fotos',0,1],['Encuesta de satisfacción',0,1],['Botón para dejar reseña en Google',0,0]]],
-    ['Contenido y confianza', [['Deslizador de "antes y después"',0,0],['Sección "Conoce al equipo"',0,0],['Noticias o blog',0,0],['Calendario de clases o eventos con cupo',1,1],['Bolsa de trabajo con formulario',0,1],['Versión en inglés',1,0],['Horarios especiales automáticos',0,0],['Varias sucursales con mapa',0,0]]]
+    ['Catálogo y pedidos', [['Catálogo con buscador y filtros',1,0],['Cotizador aproximado',0,0],['Apartado de productos',0,1],['Menú o especial del día automático',0,0],['Etiquetas de "agotado" o "nuevo"',0,0],['Seguimiento de pedido o servicio',1,1]]],
+    ['Citas y atención', [['Elegir empleado al agendar',0,1],['Lista de espera',0,1],['Formulario de cotización con fotos',0,1],['Encuesta de satisfacción',0,1]]],
+    ['Contenido y confianza', [['Deslizador de "antes y después"',0,0],['Sección "Conoce al equipo"',0,0],['Noticias o blog',0,0],['Calendario de clases o eventos con cupo',1,1],['Bolsa de trabajo con formulario',0,1],['Versión en inglés',1,0],['Horarios especiales automáticos',0,0]]]
   ]
 };
