@@ -6,11 +6,21 @@
 <!-- muestra para enseñarle al negocio: que no aparezca en buscadores ni se confunda con su página -->
 <meta name="robots" content="noindex, nofollow">
 <link rel="icon" type="image/png" href="icono.png">
-<title>Muestra Mariscos 8 Tostadas</title>
+<title>Muestra Salón San Miguel</title>
+<!-- vista previa al mandar el enlace por WhatsApp o redes. La imagen va con la dirección completa porque WhatsApp no entiende rutas relativas. -->
+<meta name="description" content="Muestra de la página web de Salón de Eventos San Miguel, en La Primavera, Zapopan. Preparada por 185ChangarroWeb.">
+<meta property="og:type" content="website">
+<meta property="og:locale" content="es_MX">
+<meta property="og:title" content="Salón de Eventos San Miguel · Muestra de su página web">
+<meta property="og:description" content="Fotos del salón, fechas disponibles, recorrido y paquetes. Preparada por 185ChangarroWeb.">
+<meta property="og:url" content="https://one85changarroweb.onrender.com/salondeeventossanmiguel-muestra/">
+<meta property="og:image" content="https://one85changarroweb.onrender.com/salondeeventossanmiguel-muestra/img/entrada.jpg?v=2">
+<meta property="og:image:width" content="986">
+<meta property="og:image:height" content="546">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Figtree:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&family=Young+Serif&display=swap">
-<link rel="stylesheet" href="muestra.css?v=2026-09-28b">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Figtree:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&family=Playfair+Display:wght@400;600&display=swap">
+<link rel="stylesheet" href="muestra.css?v=2026-09-28s12">
 </head>
 <body>
 <div class="app">
@@ -43,26 +53,23 @@
       </div>
       <div>
         <h2>Funciones</h2>
-        <p class="hint">Prende o apaga cada una. Lo que esté prendido aparece en la muestra. Las funciones del catálogo (las 10 o 15 de cada plan) se eligen aparte.</p>
-        <div class="plan-sugerido" id="plan-sugerido" aria-live="polite"></div>
-        <div class="presets" role="group" aria-label="Prender todo lo de un plan">
-          <span>Llenar como:</span>
-          <button type="button" class="chip-btn" data-preset="esencial">Esencial</button>
-          <button type="button" class="chip-btn" data-preset="negocio">Negocio</button>
-          <button type="button" class="chip-btn" data-preset="pro">Pro</button>
-          <button type="button" class="chip-btn" data-preset="">Nada</button>
-        </div>
+        <p class="hint">Prende o apaga cada una. Lo que esté prendido aparece en la muestra, tal como se vería en la página final.</p>
+        <p class="plan-sugerido" id="aviso-precio"><b>El precio depende de lo que usted elija.</b> Esta muestra no incluye planes ni precios: el costo final varía según las funciones que decida el negocio.</p>
         <div id="grupos"></div>
       </div>
       <div>
-        <h2>Su petición</h2>
+        <h2>Su cotización</h2>
         <div class="field">
           <label for="notas">Notas (opcional)</label>
           <textarea id="notas" rows="3" placeholder="Lo que quiere cambiar, colores, dudas…"></textarea>
         </div>
         <button class="btn solid wide" id="btn-exportar" type="button">
           <svg width="14" height="14" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 4h14v12H9l-4 4z" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/><path d="M9 9h6M9 12h4" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
-          Generar petición
+          Pedir cotización de esta página
+        </button>
+        <button class="btn wide" id="btn-compartir" type="button" style="margin-top:8px">
+          <svg width="14" height="14" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3a9 9 0 0 0-7.8 13.5L3 21l4.6-1.2A9 9 0 1 0 12 3Z" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/></svg>
+          Compartir esta muestra por WhatsApp
         </button>
       </div>
     </aside>
@@ -115,12 +122,12 @@
 
 <dialog class="modal" id="modal" aria-labelledby="modal-titulo">
   <div class="modal-cab">
-    <h2 id="modal-titulo">Su petición</h2>
+    <h2 id="modal-titulo">Su cotización</h2>
     <button class="btn icono" id="modal-cerrar" type="button" aria-label="Cerrar">
       <svg width="16" height="16" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 6l12 12M18 6 6 18" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
     </button>
   </div>
-  <p class="hint">Este es el mensaje con lo que eligió. Puede cambiarlo antes de enviarlo por WhatsApp a 185ChangarroWeb.</p>
+  <p class="hint">Este es el mensaje con lo que eligió; con él 185ChangarroWeb le manda su cotización. Puede cambiarlo antes de enviarlo por WhatsApp a 185ChangarroWeb.</p>
   <textarea id="mensaje" rows="14"></textarea>
   <div class="modal-acciones">
     <button class="btn" id="btn-copiar" type="button">Copiar</button>
@@ -132,8 +139,7 @@
 </dialog>
 
 <!-- ?v= obliga a bajar los archivos nuevos: cámbiala cada vez que se publiquen cambios (el HTML no se guarda en caché, pero estos sí, una hora) -->
-<script src="planes.js?v=2026-09-28b"></script>
-<script src="muestra-datos.js?v=2026-09-28b"></script>
-<script src="muestra.js?v=2026-09-28b"></script>
+<script src="muestra-datos.js?v=2026-09-28s12"></script>
+<script src="muestra.js?v=2026-09-28s12"></script>
 </body>
 </html>
