@@ -98,7 +98,7 @@ window.MUESTRA_DATOS = {
     mesas: 10,
     logo: 'img/logo-negocio.jpg',
     // animalitos recortados que van a la derecha del título de estas secciones (id de la función: imagen)
-    animales: { productos: 'img/animales/pez.png', eventos: 'img/animales/camaron.png', resenas: 'img/animales/pulpo.png', horario: 'img/animales/cangrejo.png' },
+    animales: { productos: 'img/animales/pez.png?v=2', eventos: 'img/animales/camaron.png?v=2', resenas: 'img/animales/pulpo.png?v=2', horario: 'img/animales/cangrejo.png?v=2' },
     // QR real: lleva directo a esta muestra en nuestro sitio (https://one85changarroweb.onrender.com/mariscos8tostadas-muestra/).
     // Se generó sin servicios intermedios, así que no caduca. ?v= obliga al navegador a bajar la imagen nueva si se cambia.
     qr: 'img/qr.png?v=2',

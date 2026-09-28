@@ -199,9 +199,14 @@ button{cursor:pointer}
 .s-cuerpo{flex:1; display:grid; gap:14px; padding:18px 16px 96px; align-content:start}
 .s-sec{position:relative; background:var(--s-card); border:1px solid var(--s-line); border-radius:16px; padding:16px 18px; min-width:0}
 .s-sec > h3{padding-right:32px}
-/* animalito a la derecha del título, a un lado de la × */
-.s-animal{position:absolute; top:6px; right:42px; height:58px; width:auto; pointer-events:none; user-select:none}
-.s-sec.con-animal > h3{min-height:52px; padding-right:118px; display:flex; align-items:center}
+/* animalito: tan alto como la sección, pegado a la derecha y cortado a la mitad por el borde del recuadro.
+   Va detrás del contenido y un poco transparente para que el texto se siga leyendo. */
+.s-sec.con-animal{overflow:hidden}
+.s-animal{position:absolute; top:0; right:0; z-index:0; height:100%; width:auto; max-width:none; transform:translateX(50%); opacity:.35; pointer-events:none; user-select:none}
+.s-sec.con-animal > :not(.s-animal):not(.s-quitar){position:relative; z-index:1}
+.s-sec.con-animal > .s-quitar{z-index:2}
+/* el pez mira a la derecha: se voltea para que en la mitad que se ve quede su cara y no la cola */
+.s-sec[data-funcion="productos"] > .s-animal{transform:translateX(50%) scaleX(-1)}
 .s-lista li{display:flex; justify-content:space-between; gap:12px; padding:7px 0; border-top:1px solid var(--s-line); font-size:14px}
 .s-lista li:first-child{border-top:0; padding-top:0}
 .s-lista span{color:var(--s-muted)}
