@@ -50,9 +50,12 @@ const server = http.createServer((req, res) => {
   res.setHeader('X-Content-Type-Options', 'nosniff');
   res.setHeader('Referrer-Policy', 'strict-origin-when-cross-origin');
 
-  let pathname;
-  try { pathname = decodeURIComponent(new URL(req.url, 'http://localhost').pathname); }
-  catch (e) { return send(res, 400, 'Dirección no válida'); }
+  let pathname, search;
+  try {
+    const url = new URL(req.url, 'http://localhost');
+    pathname = decodeURIComponent(url.pathname);
+    search = url.search;
+  } catch (e) { return send(res, 400, 'Dirección no válida'); }
 
   if (pathname.startsWith('/api/')) return solicitudes.manejar(req, res, pathname);
 
@@ -67,6 +70,22 @@ const server = http.createServer((req, res) => {
   if (!file.startsWith(PUBLIC + path.sep)) return send(res, 403, 'Prohibido');
 
   fs.stat(file, (err, st) => {
+    // Una carpeta (por ejemplo, la muestra de un negocio en /mariscos8tostadas-muestra) se abre con su
+    // index.html o muestra.html. Sin la diagonal final se redirige, para que sus archivos se carguen de la carpeta.
+    if (!err && st.isDirectory()) {
+      if (!pathname.endsWith('/')) {
+        res.writeHead(301, { Location: encodeURI(pathname) + '/' + search });
+        return res.end();
+      }
+      const index = path.join(file, 'index.html');
+      return entregar(req, res, fs.existsSync(index) ? index : path.join(file, 'muestra.html'));
+    }
+    entregar(req, res, file);
+  });
+});
+
+function entregar(req, res, file) {
+  fs.stat(file, (err, st) => {
     if (err || !st.isFile()) return send(res, 404, 'No se encontró la página');
     const ext = path.extname(file).toLowerCase();
     res.writeHead(200, {
@@ -77,7 +96,7 @@ const server = http.createServer((req, res) => {
     if (req.method === 'HEAD') return res.end();
     fs.createReadStream(file).pipe(res);
   });
-});
+}
 
 server.listen(PORT, HOST, () => {
   console.log('185ChangarroWeb lista en http://localhost:' + PORT);
