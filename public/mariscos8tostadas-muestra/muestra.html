@@ -19,7 +19,8 @@
       <img class="bm-logo" src="logo.png" alt="" width="52" height="34">
       <div><strong>185ChangarroWeb</strong><small>Muestra para cliente</small></div>
     </div>
-    <div class="seg" role="group" aria-label="Vista previa">
+    <!-- en pantallas verticales muestra.js mueve este selector arriba del aviso de la dirección -->
+    <div class="seg" id="seg" role="group" aria-label="Vista previa">
       <button type="button" id="ver-celular" aria-pressed="true">
         <svg width="14" height="14" viewBox="0 0 24 24" aria-hidden="true"><rect x="6" y="2" width="12" height="20" rx="2.5" fill="none" stroke="currentColor" stroke-width="2"/><path d="M10.5 18.5h3" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
         <span>Celular</span>
@@ -32,13 +33,16 @@
   </header>
 
   <main class="main">
-    <aside class="panel" aria-label="Funciones de la muestra">
-      <div>
-        <h2>Cliente</h2>
-        <div class="field">
-          <label for="negocio">Nombre del negocio</label>
-          <input id="negocio" type="text" autocomplete="off" maxlength="60">
+    <!-- en pantallas verticales el panel sale desde la izquierda con el botón "Ábreme…" -->
+    <aside class="panel" id="panel" aria-label="Funciones de la muestra">
+      <div class="panel-cab">
+        <div>
+          <h2>Negocio</h2>
+          <p class="negocio-fijo" id="negocio-fijo"></p>
         </div>
+        <button class="btn icono panel-cerrar" id="panel-cerrar" type="button" aria-label="Cerrar el panel">
+          <svg width="16" height="16" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 6l12 12M18 6 6 18" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+        </button>
       </div>
       <div>
         <h2>Funciones</h2>
@@ -67,6 +71,11 @@
     </aside>
 
     <section class="stage" id="stage" aria-label="Vista previa">
+      <button class="abrir-panel" id="abrir-panel" type="button" aria-controls="panel" aria-expanded="false">
+        <svg class="flecha" width="22" height="22" viewBox="0 0 24 24" aria-hidden="true"><path d="M19 12H5m0 0 6-6m-6 6 6 6" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        <span>Ábreme para ver y modificar la muestra a tu preferencia</span>
+      </button>
+      <div class="seg-lugar" id="seg-lugar"></div>
       <p class="url-aviso" id="url-aviso">
         <svg width="14" height="14" viewBox="0 0 24 24" aria-hidden="true"><path d="M10 14a4 4 0 0 0 5.7 0l3-3a4 4 0 0 0-5.7-5.7l-1 1M14 10a4 4 0 0 0-5.7 0l-3 3a4 4 0 0 0 5.7 5.7l1-1" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
         <span><b id="url-aviso-dom"></b> Esta dirección es ilustrativa: no aseguramos que el sitio web esté disponible ni que se vea así.</span>
@@ -104,7 +113,7 @@
   </main>
 </div>
 
-<button class="btn solid ir-muestra" id="ir-muestra" type="button">Ver muestra ↓</button>
+<div class="velo" id="velo" hidden></div>
 <div class="aviso" id="aviso" role="status" aria-live="polite" hidden></div>
 
 <dialog class="modal" id="modal" aria-labelledby="modal-titulo">

@@ -10,6 +10,8 @@
   // cada copia de la carpeta guarda aparte, para que la muestra de un negocio no herede lo de otro
   var GUARDADO = 'muestra185.v3:' + location.pathname;
   var ANCHO_PC = 1100, ALTO_PC = 680;
+  // ventana angosta o muy vertical (un celular): el teléfono va primero y el panel se abre aparte
+  var VERTICAL = window.matchMedia('(max-width: 820px), (max-aspect-ratio: 3/4)');
   var DIAS = ['domingo', 'lunes', 'martes', 'miércoles', 'jueves', 'viernes', 'sábado'];
   var DIAS_CORTOS = ['Dom', 'Lun', 'Mar', 'Mié', 'Jue', 'Vie', 'Sáb'];
   var DAYS = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
@@ -66,7 +68,8 @@
     for (var i = 0; i < D.FUNCIONES.length; i++) if (D.FUNCIONES[i].id === id) return D.FUNCIONES[i].nombre;
     return id;
   }
-  function nombre() { return estado.negocio.trim() || D.negocioEjemplo; }
+  // el nombre es el del negocio de esta muestra y no se cambia desde el panel
+  function nombre() { return D.negocioEjemplo; }
   function slug() {
     return nombre().toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g, '')
       .replace(/[^a-z0-9]+/g, '').slice(0, 30) || 'minegocio';
@@ -493,9 +496,14 @@
     }
 
     if (on('qr')) {
-      partes.push(seccion('qr', tx({ es: 'Comparte nuestra página', en: 'Share our website' }), '<div class="s-qr"><div class="s-qr-img" aria-hidden="true">' + qrFalso() +
-        '</div><p>' + tx({ es: 'Este QR va impreso en el mostrador, volantes y tarjetas.', en: 'This QR code goes on the counter, flyers and business cards.' }) +
-        ' <span class="s-etq">' + tx({ es: 'QR de ejemplo', en: 'Sample QR' }) + '</span></p></div>'));
+      // N.qr: QR real que lleva a esta muestra en nuestro sitio. Sin él, se usa el decorativo que no se puede escanear.
+      partes.push(seccion('qr', tx({ es: 'Comparte nuestra página', en: 'Share our website' }), N.qr
+        ? '<div class="s-qr"><img class="s-qr-real" src="' + esc(N.qr) + '" alt="' + tx({ es: 'Código QR de esta muestra', en: 'QR code for this sample' }) + '" loading="lazy">' +
+          '<p>' + tx({ es: 'Escanéalo para abrir esta muestra en tu celular. En la página final, el QR llevará a la dirección del negocio y se imprime para el mostrador, volantes y tarjetas.',
+                      en: 'Scan it to open this sample on your phone. On the final website, the QR code will lead to the restaurant\'s own address and can be printed for the counter, flyers and business cards.' }) + '</p></div>'
+        : '<div class="s-qr"><div class="s-qr-img" aria-hidden="true">' + qrFalso() +
+          '</div><p>' + tx({ es: 'Este QR va impreso en el mostrador, volantes y tarjetas.', en: 'This QR code goes on the counter, flyers and business cards.' }) +
+          ' <span class="s-etq">' + tx({ es: 'QR de ejemplo', en: 'Sample QR' }) + '</span></p></div>'));
     }
 
     return partes;
@@ -748,13 +756,7 @@
     pintarSitio();
   }
 
-  var campoNegocio = $('negocio');
-  campoNegocio.value = estado.negocio;
-  campoNegocio.placeholder = D.negocioEjemplo;
-  campoNegocio.addEventListener('input', function () {
-    estado.negocio = campoNegocio.value;
-    cambio();
-  });
+  $('negocio-fijo').textContent = nombre();
 
   var campoNotas = $('notas');
   campoNotas.value = estado.notas;
@@ -776,7 +778,7 @@
     var altoLibre = stage.clientHeight - parseFloat(cs.paddingTop) - parseFloat(cs.paddingBottom) - $('url-aviso').offsetHeight - 12;
     var s = Math.min(1, anchoLibre / ANCHO_PC);
     // en pantalla grande también cuida el alto; en celular el escenario crece hacia abajo
-    if (window.matchMedia('(min-width: 821px)').matches && altoLibre > 200) s = Math.min(s, altoLibre / ALTO_PC);
+    if (!VERTICAL.matches && altoLibre > 200) s = Math.min(s, altoLibre / ALTO_PC);
     escala.style.width = Math.floor(ANCHO_PC * s) + 'px';
     escala.style.height = Math.floor(ALTO_PC * s) + 'px';
     marco.style.transform = 'scale(' + s + ')';
@@ -822,12 +824,31 @@
   if (window.ResizeObserver) new ResizeObserver(ajustarEscala).observe(stage);
   else window.addEventListener('resize', ajustarEscala);
 
-  // en el celular el panel va arriba: este botón lleva a la muestra y se esconde cuando ya se ve
-  var irMuestra = $('ir-muestra');
-  irMuestra.addEventListener('click', function () { stage.scrollIntoView({ behavior: 'smooth', block: 'start' }); });
-  if (window.IntersectionObserver) {
-    new IntersectionObserver(function (e) { irMuestra.hidden = e[0].isIntersecting; }, { threshold: 0.25 }).observe(stage);
+  // ---------- pantalla vertical (celulares que abren la muestra) ----------
+  // Primero se ve el teléfono; el panel sale desde la izquierda con el botón "Ábreme…" y el selector
+  // Celular/Computadora baja arriba del aviso de la dirección. En pantallas anchas todo queda como siempre.
+  var panel = $('panel'), velo = $('velo'), abrirPanel = $('abrir-panel'), seg = $('seg');
+  function ponerPanel(abierto) {
+    document.body.classList.toggle('panel-abierto', abierto);
+    velo.hidden = !abierto;
+    abrirPanel.setAttribute('aria-expanded', String(abierto));
+    if (abierto) $('panel-cerrar').focus(); else if (VERTICAL.matches) abrirPanel.focus();
   }
+  function modoVertical() {
+    var vertical = VERTICAL.matches;
+    document.body.classList.toggle('vertical', vertical);
+    if (vertical) $('seg-lugar').appendChild(seg); else document.querySelector('.top').appendChild(seg);
+    if (!vertical && document.body.classList.contains('panel-abierto')) ponerPanel(false);
+    ajustarEscala();
+  }
+  abrirPanel.addEventListener('click', function () { ponerPanel(true); });
+  $('panel-cerrar').addEventListener('click', function () { ponerPanel(false); });
+  velo.addEventListener('click', function () { ponerPanel(false); });
+  document.addEventListener('keydown', function (e) {
+    if (e.key === 'Escape' && document.body.classList.contains('panel-abierto')) ponerPanel(false);
+  });
+  if (VERTICAL.addEventListener) VERTICAL.addEventListener('change', modoVertical); else VERTICAL.addListener(modoVertical);
+  modoVertical();
 
   // ---------- petición: el negocio la manda por WhatsApp a 185ChangarroWeb ----------
   function fechaHoy() {
