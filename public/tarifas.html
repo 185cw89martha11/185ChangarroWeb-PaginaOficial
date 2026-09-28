@@ -42,6 +42,12 @@ h1{margin:2px 0 0; font-size:30px; line-height:1.1; letter-spacing:-.015em; font
 .lead{margin:0; color:var(--muted); max-width:60ch}
 .home{display:block; flex:none; border-radius:8px}
 
+.sencilla{background:var(--accent-soft); border:2px solid var(--accent); border-radius:16px; padding:16px 18px; display:flex; flex-wrap:wrap; align-items:center; justify-content:space-between; gap:12px 18px}
+.sencilla h2{margin:0 0 4px; font-size:18px; color:var(--accent)}
+.sencilla p{margin:0; font-size:14.5px; max-width:62ch}
+.sencilla .acciones{display:flex; flex-wrap:wrap; gap:8px}
+.sencilla a{display:inline-flex; align-items:center; border-radius:10px; padding:9px 14px; font-weight:700; font-size:14px; text-decoration:none; border:1px solid var(--accent); color:var(--accent); background:var(--panel)}
+.sencilla a.pri{background:var(--grad); color:var(--grad-ink); border-color:transparent}
 .plans{display:grid; grid-template-columns:repeat(3, minmax(0,1fr)); gap:14px; align-items:start}
 .plan{background:var(--panel); border:1px solid var(--line); border-radius:16px; padding:18px; display:flex; flex-direction:column; gap:14px}
 .plan.featured{border-color:var(--accent); box-shadow:0 0 0 1px var(--accent)}
@@ -106,6 +112,17 @@ ul.checks{list-style:none; margin:0; padding:0; display:flex; flex-direction:col
   <p class="lead" style="font-size:13px">Versión del 28 de septiembre de 2026.</p>
 
   <section class="plans" id="plans" aria-label="Planes"></section>
+
+  <section class="sencilla" aria-labelledby="sencilla-t">
+    <div>
+      <h2 id="sencilla-t">¿Necesita algo más sencillo que Esencial?</h2>
+      <p>También hacemos páginas con menos cosas que el plan Esencial. Escríbanos por WhatsApp o correo electrónico, díganos qué necesita y le damos el precio: depende de lo que pida.</p>
+    </div>
+    <div class="acciones">
+      <a class="pri" href="https://wa.me/523151260581?text=Hola%2C%20185ChangarroWeb.%20Quiero%20cotizar%20una%20p%C3%A1gina%20m%C3%A1s%20sencilla%20que%20el%20plan%20Esencial." target="_blank" rel="noopener">WhatsApp</a>
+      <a href="mailto:185changarroweb@gmail.com?subject=Cotizaci%C3%B3n%20de%20p%C3%A1gina%20sencilla">Correo</a>
+    </div>
+  </section>
 
   <div class="grid2">
     <section class="card">

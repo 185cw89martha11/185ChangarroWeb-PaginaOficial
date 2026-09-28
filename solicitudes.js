@@ -17,7 +17,7 @@ const MAX_BODY = 16 * 1024;
 const SESION_MS = 30 * 60 * 1000;
 const ARCHIVO = path.join(__dirname, 'datos', 'solicitudes.json');
 
-const PLANES = ['Esencial', 'Negocio', 'Negocio + Asistente Pro'];
+const PLANES = ['Esencial', 'Negocio', 'Negocio + Asistente Pro', 'Página sencilla (con cotización)'];
 const MEDIOS = ['WhatsApp', 'Llamada o SMS', 'Correo', 'Facebook', 'Instagram', 'Otra red social'];
 
 // ---------- almacén ----------

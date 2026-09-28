@@ -74,6 +74,7 @@
         <li>Precios en pesos mexicanos. Los precios ya incluyen IVA; no se cobra aparte. Por ahora 185ChangarroWeb no emite facturas (CFDI).</li>
         <li>Lo que incluye cada plan es lo que aparece en la página de <a href="tarifas.html">Tarifas</a> el día en que se contrata. 185ChangarroWeb guarda una copia con fecha de cada versión de Tarifas, y el mensaje de aceptación incluye la lista de lo que trae el plan elegido.</li>
         <li>Cualquier función fuera del catálogo, o más funciones de las que permite el plan, se cotiza por separado según la complejidad del trabajo.</li>
+        <li><b>Páginas más sencillas que el plan Esencial:</b> el Negocio puede pedir una Página con menos cosas de las que incluye el plan Esencial, escribiendo por WhatsApp o correo electrónico. El precio de instalación y de mensualidad depende de lo que se pida y se entrega en una cotización por escrito antes de empezar, junto con la lista de lo que incluye. Esa cotización es la que vale para esa Página; en todo lo demás se aplican estos términos como al plan Esencial, incluidos sus tiempos de entrega y de respuesta a fallas.</li>
         <li><b>Proyectos especiales:</b> los modelos 3D, las animaciones complejas, las experiencias interactivas y las conexiones con servicios externos que no están incluidas en los planes tienen un costo aparte, según su complejidad. Se pueden entregar por etapas, en el orden que elija el Negocio y con los tiempos que se acuerden por escrito en la cotización.</li>
         <li><b>Software para el Negocio:</b> 185ChangarroWeb también ofrece programas a la medida para el funcionamiento interno del Negocio, por ejemplo, control de inventario, turnos del personal, registro de platillos o productos, pedidos, clientes o ventas. Estos programas <b>no vienen incluidos en ningún plan</b> y se cobran aparte, solo si el Negocio los pide. No todos cuestan lo mismo: el precio de cada uno varía según lo que se pida y la dificultad del trabajo, y se entrega en una cotización por escrito antes de empezar, con sus tiempos de entrega y, si aplica, su costo de mantenimiento.</li>
         <li>La renovación anual del dominio se paga aparte, como indica la sección 10.</li>
@@ -303,6 +304,7 @@
             <option>Esencial</option>
             <option>Negocio</option>
             <option>Negocio + Asistente Pro</option>
+            <option>Página sencilla (con cotización)</option>
           </select>
         </div>
         <div class="acc-field"><label for="acc-via">¿Por dónde le avisamos?</label>
@@ -355,7 +357,8 @@
   var PLANES = {
     'Esencial': {precio:'$1,800 de instalación y $199 al mes', inc:ESENCIAL},
     'Negocio': {precio:'$2,800 de instalación y $299 al mes', inc:NEGOCIO.slice(1).concat(ESENCIAL)},
-    'Negocio + Asistente Pro': {precio:'$3,900 de instalación y $449 al mes', inc:PRO.slice(1).concat(NEGOCIO.slice(1), ESENCIAL)}
+    'Negocio + Asistente Pro': {precio:'$3,900 de instalación y $449 al mes', inc:PRO.slice(1).concat(NEGOCIO.slice(1), ESENCIAL)},
+    'Página sencilla (con cotización)': {precio:'el de la cotización por escrito', inc:['Lo que dice la cotización por escrito que me envió 185ChangarroWeb']}
   };
 
   var form = document.getElementById('acc-form'), err = document.getElementById('acc-err');
