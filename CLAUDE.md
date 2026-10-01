@@ -32,6 +32,8 @@ Esto es el muestrario, no la página final de un cliente. Generar sitios reales 
 | `solicitudes.js` | API `/api/...`: recibe las aceptaciones de `terminos.html`, las deja en el buzón (Hoja de Google vía Apps Script, o `datos/solicitudes.json` en esta computadora) y da acceso al panel con la clave. |
 | `integraciones/` | Código del Apps Script de la Hoja de Google y pasos para configurarlo. |
 | `server.js` | Servidor de Node sin dependencias. Entrega solo lo que está en `public/`, con rutas limpias, `/salud` y `/api/`. Escucha en `process.env.PORT` y `0.0.0.0`, como pide Render. |
+| `public/amueblarte-muestra/` | Muestra de AmueblArte (copia de la base de Mariscos con código propio): menú de 4 páginas, catálogo de 6 categorías con galería, lista de cotización por WhatsApp (se recuerda en el navegador), "Cómo trabajamos", acabados, "Combina con", aviso de privacidad y Términos de ejemplo, resumen imprimible de la petición y visor 3D/AR (model-viewer, se baja de jsDelivr solo al abrir un 3D; los .glb no cargan con `file://`, hace falta servidor). Datos en `muestra-datos.js`. |
+| `herramientas/amueblarte-modelos.js` | Genera los 13 .glb de demostración de `modelos/` (`node herramientas/amueblarte-modelos.js`). |
 | `package.json`, `render.yaml`, `.node-version` | Configuración de Node y de Render. |
 
 ## Reglas del proyecto

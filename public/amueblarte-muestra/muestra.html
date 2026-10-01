@@ -1,0 +1,142 @@
+<!doctype html>
+<html lang="es-MX">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<!-- muestra para enseñarle al negocio: que no aparezca en buscadores ni se confunda con su página -->
+<meta name="robots" content="noindex, nofollow">
+<link rel="icon" type="image/png" href="icono.png">
+<title>Muestra AmueblArte</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Figtree:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&family=Young+Serif&display=swap">
+<link rel="stylesheet" href="muestra.css?v=2026-10-01b">
+</head>
+<body>
+<div class="app">
+  <header class="top">
+    <div class="brandmark">
+      <a class="home" href="../index.html" aria-label="Ir al inicio de 185ChangarroWeb"><img class="bm-logo" src="logo.png" alt="" width="52" height="34"></a>
+      <div><strong>185ChangarroWeb</strong><small>Muestra para cliente</small></div>
+    </div>
+    <!-- en pantallas verticales muestra.js mueve este selector arriba del aviso de la dirección -->
+    <div class="seg" id="seg" role="group" aria-label="Vista previa">
+      <button type="button" id="ver-celular" aria-pressed="true">
+        <svg width="14" height="14" viewBox="0 0 24 24" aria-hidden="true"><rect x="6" y="2" width="12" height="20" rx="2.5" fill="none" stroke="currentColor" stroke-width="2"/><path d="M10.5 18.5h3" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+        <span>Celular</span>
+      </button>
+      <button type="button" id="ver-escritorio" aria-pressed="false">
+        <svg width="14" height="14" viewBox="0 0 24 24" aria-hidden="true"><rect x="2.5" y="4" width="19" height="12.5" rx="1.5" fill="none" stroke="currentColor" stroke-width="2"/><path d="M8 20h8M12 16.5V20" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+        <span>Computadora</span>
+      </button>
+    </div>
+  </header>
+
+  <main class="main">
+    <!-- en pantallas verticales el panel sale desde la izquierda con el botón "Ábreme…" -->
+    <aside class="panel" id="panel" aria-label="Funciones de la muestra">
+      <div class="panel-cab">
+        <p class="negocio-fijo" id="negocio-fijo"></p>
+        <button class="btn icono panel-cerrar" id="panel-cerrar" type="button" aria-label="Cerrar el panel">
+          <svg width="16" height="16" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 6l12 12M18 6 6 18" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+        </button>
+      </div>
+      <div>
+        <h2>Funciones</h2>
+        <p class="hint">Prende o apaga cada una. Lo que esté prendido aparece en la muestra. Las funciones del catálogo (las 10 o 15 de cada plan) se eligen aparte. Los extras cotizables (3D y AR) se pagan una sola vez.</p>
+        <div class="plan-sugerido" id="plan-sugerido" aria-live="polite"></div>
+        <div class="presets" role="group" aria-label="Prender todo lo de un plan">
+          <span>Llenar como:</span>
+          <button type="button" class="chip-btn" data-preset="esencial">Esencial</button>
+          <button type="button" class="chip-btn" data-preset="negocio">Negocio</button>
+          <button type="button" class="chip-btn" data-preset="pro">Pro</button>
+          <button type="button" class="chip-btn" data-preset="">Nada</button>
+        </div>
+        <div id="grupos"></div>
+      </div>
+      <div>
+        <h2>Su petición</h2>
+        <div class="field">
+          <label for="notas">Notas (opcional)</label>
+          <textarea id="notas" rows="3" placeholder="Lo que quiere cambiar, colores, dudas…"></textarea>
+        </div>
+        <button class="btn solid wide" id="btn-exportar" type="button">
+          <svg width="14" height="14" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 4h14v12H9l-4 4z" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/><path d="M9 9h6M9 12h4" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+          Generar petición
+        </button>
+      </div>
+    </aside>
+
+    <section class="stage" id="stage" aria-label="Vista previa">
+      <button class="abrir-panel" id="abrir-panel" type="button" aria-controls="panel" aria-expanded="false">
+        <svg class="flecha" width="22" height="22" viewBox="0 0 24 24" aria-hidden="true"><path d="M19 12H5m0 0 6-6m-6 6 6 6" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        <span>Ábreme para ver y modificar la muestra a tu preferencia</span>
+      </button>
+      <div class="seg-lugar" id="seg-lugar"></div>
+      <p class="url-aviso" id="url-aviso">
+        <svg width="14" height="14" viewBox="0 0 24 24" aria-hidden="true"><path d="M10 14a4 4 0 0 0 5.7 0l3-3a4 4 0 0 0-5.7-5.7l-1 1M14 10a4 4 0 0 0-5.7 0l-3 3a4 4 0 0 0 5.7 5.7l1-1" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+        <span><b id="url-aviso-dom"></b> Esta dirección es ilustrativa: no aseguramos que el sitio web esté disponible ni que se vea así.</span>
+      </p>
+      <div class="escala" id="escala">
+      <div class="marco celular" id="marco">
+        <div class="barra-nav" aria-hidden="true">
+          <span class="puntos"><i></i><i></i><i></i></span>
+          <span class="url" id="url"></span>
+        </div>
+        <div class="pantalla">
+          <div class="sitio" id="sitio"></div>
+          <div class="s-doc" id="s-doc" hidden></div>
+          <div class="s-visor" id="s-visor" hidden></div>
+          <div class="s-flotantes">
+            <div class="s-chat" id="s-chat" hidden></div>
+            <div class="s-flot" id="f-asis">
+              <button class="s-asis" type="button" id="s-asis" data-funcion="asistente" aria-label="Abrir asistente" aria-expanded="false">
+                <svg width="20" height="20" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 5h16v11H9l-5 4z" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/><path d="M8.5 10.5h.01M12 10.5h.01M15.5 10.5h.01" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"/></svg>
+              </button>
+              <button class="s-quitar" type="button" data-accion="quitar" data-f="asistente" aria-label="Quitar asistente">×</button>
+            </div>
+            <div class="s-flot" id="f-wa">
+              <button class="s-wa" type="button" id="s-wa" data-funcion="whatsapp">
+                <svg width="18" height="18" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3a9 9 0 0 0-7.8 13.5L3 21l4.6-1.2A9 9 0 1 0 12 3Z" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/></svg>
+                <span id="s-wa-txt">Escríbenos</span>
+              </button>
+              <button class="s-quitar" type="button" data-accion="quitar" data-f="whatsapp" aria-label="Quitar botón de WhatsApp">×</button>
+            </div>
+          </div>
+        </div>
+      </div>
+      </div>
+    </section>
+  </main>
+</div>
+
+<div class="hoja-impresion" id="hoja-impresion" aria-hidden="true"></div>
+<div class="velo" id="velo" hidden></div>
+<div class="aviso" id="aviso" role="status" aria-live="polite" hidden></div>
+
+<dialog class="modal" id="modal" aria-labelledby="modal-titulo">
+  <div class="modal-cab">
+    <h2 id="modal-titulo">Su petición</h2>
+    <button class="btn icono" id="modal-cerrar" type="button" aria-label="Cerrar">
+      <svg width="16" height="16" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 6l12 12M18 6 6 18" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+    </button>
+  </div>
+  <p class="hint">Este es el mensaje con lo que eligió. Puede cambiarlo antes de enviarlo por WhatsApp a 185ChangarroWeb.</p>
+  <div class="resumen" id="resumen" aria-label="Resumen de lo elegido"></div>
+  <textarea id="mensaje" rows="14"></textarea>
+  <div class="modal-acciones">
+    <button class="btn" id="btn-copiar" type="button">Copiar</button>
+    <button class="btn" id="btn-imprimir" type="button">Imprimir o guardar PDF</button>
+  </div>
+  <a class="btn wa wide" id="btn-whatsapp" href="#" target="_blank" rel="noopener">
+    <svg width="16" height="16" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3a9 9 0 0 0-7.8 13.5L3 21l4.6-1.2A9 9 0 1 0 12 3Z" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/></svg>
+    Enviar por WhatsApp
+  </a>
+</dialog>
+
+<!-- ?v= obliga a bajar los archivos nuevos: cámbiala cada vez que se publiquen cambios (el HTML no se guarda en caché, pero estos sí, una hora) -->
+<script src="planes.js?v=2026-10-01b"></script>
+<script src="muestra-datos.js?v=2026-10-01b"></script>
+<script src="muestra.js?v=2026-10-01b"></script>
+</body>
+</html>

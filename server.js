@@ -39,7 +39,8 @@ const TYPES = {
   '.jpeg': 'image/jpeg',
   '.webp': 'image/webp',
   '.ico': 'image/x-icon',
-  '.woff2': 'font/woff2'
+  '.woff2': 'font/woff2',
+  '.glb': 'model/gltf-binary'
 };
 
 function send(res, status, body, type) {
