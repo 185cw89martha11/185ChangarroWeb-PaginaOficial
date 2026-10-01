@@ -76,7 +76,7 @@
     return nombre().toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g, '')
       .replace(/[^a-z0-9]+/g, '').slice(0, 30) || 'minegocio';
   }
-  // AmueblArte ya tiene su dominio (amueblarte.com): es el que se ve en la barra de la muestra
+  // dominio ilustrativo de la barra de la muestra (no se sabe si el negocio ya tiene uno)
   function dominio() { return N.dominioPropio || slug() + '.com.mx'; }
 
   // ---------- panel: interruptores agrupados por plan ----------
@@ -380,7 +380,7 @@
   }
 
   // la etiqueta dice AR solo si el extra de realidad aumentada está prendido
-  function etiqueta3d() { return on('ar') ? '3D · AR' : '3D'; }
+  function etiqueta3d() { return '3D'; }
 
   function tarjeta(p) {
     var foto = on('galeria'), en3d = on('modelos3d') && p.modelo, dentro = !!enLista(p.id);
@@ -433,7 +433,7 @@
     var cuerpo = '';
     if (on('buscador')) {
       cuerpo += '<label class="s-busca"><svg width="18" height="18" viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="6.5" fill="none" stroke="currentColor" stroke-width="2"/><path d="m16 16 4.5 4.5" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>' +
-        '<input type="search" data-accion="buscar" placeholder="Buscar un mueble: mesa, silla, base…" value="' + esc(busqueda) + '" aria-label="Buscar un mueble" autocomplete="off"></label>' +
+        '<input type="search" data-accion="buscar" placeholder="Buscar un mueble: recámara, sala, comedor…" value="' + esc(busqueda) + '" aria-label="Buscar un mueble" autocomplete="off"></label>' +
         '<div class="s-chips" role="group" aria-label="Categorías"><button type="button" class="s-chip" data-accion="cat" data-id="" aria-pressed="' + (!estado.cat) + '">Todas</button>' +
         N.categorias.map(function (c) {
           return '<button type="button" class="s-chip" data-accion="cat" data-id="' + c.id + '" aria-pressed="' + (estado.cat === c.id) + '">' + esc(c.nombre) + '</button>';
@@ -463,7 +463,7 @@
 
   function paginaInicio() {
     var partes = [];
-    partes.push('<section class="s-hero"><div class="s-hero-txt"><span class="s-hero-desde">Fabricantes desde ' + N.desde + '</span>' +
+    partes.push('<section class="s-hero"><div class="s-hero-txt"><span class="s-hero-desde">' + esc(N.portada.etiqueta) + '</span>' +
       '<h2>' + esc(N.lema) + '</h2>' +
       '<p>' + esc(N.portada.texto) + '</p>' +
       '<div class="s-hero-botones">' +
@@ -473,19 +473,18 @@
       '</div></div>' +
       (on('galeria') ? '<img class="s-hero-foto" src="' + esc(N.portada.foto) + '" alt="' + esc(N.portada.fotoAlt) + '">' : '') + '</section>');
 
-    var anios = new Date().getFullYear() - N.desde;
     partes.push('<section class="s-sec ancha s-ventajas"><div class="s-vent-grid">' + N.ventajas.map(function (v) {
-      return '<div><b>' + esc(v.t.replace('{anios}', anios)) + '</b><span>' + esc(v.d) + '</span></div>';
+      return '<div><b>' + esc(v.t) + '</b><span>' + esc(v.d) + '</span></div>';
     }).join('') + '</div></section>');
 
     if (on('modelos3d')) {
-      partes.push(seccion('modelos3d', on('ar') ? 'Míralo en tu local antes de comprar' : 'Míralo en 3D antes de comprar',
-        '<p class="s-dir">Gira el mueble en 3D, mira sus medidas y cámbiale el color' + (on('ar') ? ' y, desde tu celular, colócalo en tu espacio con la cámara, a tamaño real.' : '.') + '</p>' +
+      partes.push(seccion('modelos3d', 'Míralo en 3D antes de comprar',
+        '<p class="s-dir">Gira el mueble en 3D, mira sus medidas y cámbiale el color.</p>' +
         '<div class="s-mini">' + N.productos.filter(function (p) { return p.modelo; }).map(function (p) {
           return '<button type="button" class="s-mini-btn" data-accion="producto" data-id="' + p.id + '" data-modo="3d">' +
             (on('galeria') ? '<img src="' + esc(p.img) + '" alt="" loading="lazy">' : '') + '<span>' + esc(p.nombre) + '</span><em>' + etiqueta3d() + '</em></button>';
         }).join('') + '</div>' +
-        '<p class="s-nota">Modelos de demostración. Los del negocio se hacen con sus muebles y medidas reales.' + (on('ar') ? ' La realidad aumentada es solo una idea: se aplica en la página oficial si el negocio la contrata.' : '') + '</p>', 'ancha'));
+        '<p class="s-nota">Modelos de demostración. Los del negocio se hacen con sus muebles y medidas reales.' + '</p>', 'ancha'));
     }
 
     if (on('productos')) {
@@ -505,20 +504,20 @@
     var s = suc();
     var partes = [];
     partes.push('<section class="s-sec ancha s-nosotros"><h3>¿Quiénes somos?</h3>' +
-      '<p class="s-lema">Fabricantes desde ' + N.desde + '</p>' +
+      '<p class="s-lema">' + esc(N.portada.etiqueta) + '</p>' +
       '<p>' + esc(nombre()) + ' ' + esc(N.nosotros.texto) + ' <i>«' + esc(N.lema) + '.»</i></p>' +
-      '<div class="s-datos"><div><b>' + N.desde + '</b><span>Fabricando muebles</span></div><div><b>' + esc(N.nosotros.ciudad) + '</b><span>' + esc(s.zona) + '</span></div></div>' +
+      '<div class="s-datos">' + N.nosotros.datos.map(function (x) { return '<div><b>' + esc(x.n) + '</b><span>' + esc(x.t) + '</span></div>'; }).join('') + '</div>' +
       '<p class="s-aviso-muestra"><span class="s-etq">Ejemplo</span> ' + esc(N.nosotros.aviso) + '</p></section>');
     partes.push('<section class="s-sec ancha"><h3>Cómo trabajamos</h3><ol class="s-pasos">' + N.proceso.map(function (p, i) {
       return '<li><i>' + (i + 1) + '</i><div><b>' + esc(p.t) + '</b><span>' + esc(p.d) + '</span></div></li>';
     }).join('') + '</ol><p class="s-aviso-muestra"><span class="s-etq">Ejemplo</span> Los pasos se confirman con el negocio antes de publicar.</p></section>');
     if (on('galeria') && N.trabajos.length) {
-      partes.push('<section class="s-sec ancha"><h3>Nuestros muebles en servicio</h3><div class="s-mini">' + N.trabajos.map(function (t) {
+      partes.push('<section class="s-sec ancha"><h3>Algunos de nuestros diseños</h3><div class="s-mini">' + N.trabajos.map(function (t) {
         return '<button type="button" class="s-mini-btn" data-accion="producto" data-id="' + t.id + '"><img src="' + esc(t.img) + '" alt="" loading="lazy"><span>' + esc(t.t) + '</span></button>';
       }).join('') + '</div></section>');
     }
-    partes.push('<section class="s-sec ancha"><h3>Acabados a tu gusto</h3><p class="s-dir">Elige el color del tapiz, de la cubierta y de la base.</p>' +
-      [['tapiz', 'Tapiz'], ['cubierta', 'Cubierta'], ['base', 'Base']].map(function (g) {
+    partes.push('<section class="s-sec ancha"><h3>Acabados a tu gusto</h3><p class="s-dir">Elige el acabado: chapa de parota, melamina o tapiz.</p>' +
+      [['madera', 'Madera y chapa'], ['tapiz', 'Tapiz']].map(function (g) {
         return '<div class="s-acab"><span>' + g[1] + '</span><div>' + N.PALETAS[g[0]].map(function (c) {
           return '<i style="background:' + c.c + '" title="' + esc(c.n) + '" aria-label="' + esc(g[1] + ' ' + c.n) + '"></i>';
         }).join('') + '</div></div>';
@@ -543,6 +542,7 @@
         return '<li><span>Correo</span><button type="button" class="s-enlace" data-accion="aviso" data-texto="' + esc('Aquí se abriría tu correo para escribir a ' + c + '.') + '">' + esc(c) + '</button></li>';
       }).join('') +
       (N.facebook ? '<li><span>Facebook</span><a class="s-enlace" href="' + esc(N.facebook) + '" target="_blank" rel="noopener">AmueblArte en Facebook</a></li>' : '') +
+      (N.instagram ? '<li><span>Instagram</span><a class="s-enlace" href="' + esc(N.instagram) + '" target="_blank" rel="noopener">@amueblarte_oficial</a></li>' : '') +
       '<li><span>Dirección</span><b>' + esc(s.direccion) + '</b></li></ul></section>');
 
     if (on('whatsapp')) {
@@ -586,15 +586,16 @@
     var enlaces = [];
     if (on('privacidad')) enlaces.push('<button type="button" data-accion="doc" data-doc="privacidad">Aviso de privacidad</button>');
     if (N.facebook) enlaces.push('<a href="' + esc(N.facebook) + '" target="_blank" rel="noopener">Facebook</a>');
+    if (N.instagram) enlaces.push('<a href="' + esc(N.instagram) + '" target="_blank" rel="noopener">Instagram</a>');
     if (on('terminos')) enlaces.push('<button type="button" data-accion="doc" data-doc="terminos">Términos y Condiciones</button>');
     html += '<footer class="s-pie"><div class="s-contacto"><b>' + esc(n) + '</b><span>' + esc(s.direccion) + '</span>' +
-      '<span>Tel. ' + esc(telefonos()) + '</span><span>' + esc(correosHtml().join(' · ')) + '</span></div>' +
+      '<span>Tel. ' + esc(telefonos()) + '</span>' + (correosHtml().length ? '<span>' + esc(correosHtml().join(' · ')) + '</span>' : '') + '</div>' +
       (enlaces.length ? '<nav>' + enlaces.join('') + '</nav>' : '') +
       '<span>© ' + new Date().getFullYear() + ' ' + esc(n) + '</span>' +
       // aviso para el negocio: esto es una muestra, no la página final
       '<p class="s-muestra"><b>Página de muestra</b>Esta es una muestra de cómo podría verse la página de ' + esc(n) +
       '. La versión final no quedará exactamente igual: cada cambio que el negocio decida se acordará por mensaje o correo. ' +
-      'Las fotos vienen de su página actual' + (on('modelos3d') ? ' y los modelos 3D son de demostración' : '') + '. ' + (on('ar') ? 'La realidad aumentada es solo una idea: se aplica en la página oficial si el negocio la contrata. ' : '') +
+      'Las fotos vienen de sus redes sociales' + (on('modelos3d') ? ' y los modelos 3D son de demostración' : '') + '. ' + (on('ar') ? 'La realidad aumentada es solo una idea: se aplica en la página oficial si el negocio la contrata. ' : '') +
       'Si el negocio decide no contratar el servicio, 185ChangarroWeb eliminará esta muestra y no la usará para ningún otro fin ' +
       'que el de presentársela.</p></footer>';
 
@@ -661,7 +662,7 @@
       '<h3>¿Qué datos se piden?</h3>' + li(datos) +
       '<h3>¿Para qué se usan?</h3>' + li(usos) +
       '<h3>¿Con quién se comparten?</h3>' + li(terceros) +
-      '<h3>¿Cómo ver, corregir o borrar tus datos?</h3><p>Escribe a <b>' + esc(N.correoDatos) + '</b> y dinos qué quieres hacer. Puedes pedir en cualquier momento que se corrijan o se borren, o dejar de recibir mensajes.</p>' +
+      '<h3>¿Cómo ver, corregir o borrar tus datos?</h3><p>' + (N.correoDatos ? 'Escribe a <b>' + esc(N.correoDatos) + '</b>' : 'Escríbenos por Facebook o Instagram, o llama al <b>' + esc(telefonos()) + '</b>') + ' y dinos qué quieres hacer. Puedes pedir en cualquier momento que se corrijan o se borren, o dejar de recibir mensajes.</p>' +
       '<h3>Cambios a este aviso</h3><p>Si cambia, se publicará en esta misma página.</p>' + docAviso();
   }
 
@@ -674,7 +675,7 @@
       (on('pedidos') ? '<h3>Anticipo</h3><p>Se pide un anticipo de ' + N.anticipo + '% del total. ' + esc(T.anticipo) + '</p>' : '') +
       '<h3>Cancelaciones</h3><p>' + esc(T.cancelacion) + '</p>' +
       '<h3>Devoluciones</h3><p>' + esc(T.devoluciones) + '</p>' +
-      '<h3>Quejas</h3><p>Si tienes una queja, escríbenos a ' + esc(N.correoDatos) + '. También puedes acudir a la Procuraduría Federal del Consumidor (Profeco).</p>' +
+      '<h3>Quejas</h3><p>Si tienes una queja, ' + (N.correoDatos ? 'escríbenos a ' + esc(N.correoDatos) : 'escríbenos por Facebook o Instagram, o llama al ' + esc(telefonos())) + '. También puedes acudir a la Procuraduría Federal del Consumidor (Profeco).</p>' +
       '<p>Son opcionales, salvo que la página reciba pedidos o pagos: en ese caso son obligatorios.</p>' + docAviso();
   }
 
@@ -720,13 +721,11 @@
       return 'Agrega los muebles con el botón "+ Cotizar", revisa tu lista en "Mi cotización" y envíala por WhatsApp.';
     } },
     { funcion: 'modelos3d', p: '¿Puedo verlos en 3D?', r: function () {
-      return on('ar')
-        ? 'Sí: los muebles con la etiqueta "3D · AR" se giran en 3D y, desde tu celular, se colocan en tu espacio con la cámara.'
-        : 'Sí: los muebles con la etiqueta "3D" se giran con el dedo, muestran sus medidas y puedes probar colores.';
+      return 'Sí: los muebles con la etiqueta "3D" se giran con el dedo, muestran sus medidas y puedes probar colores de ejemplo.';
     } },
-    { p: '¿Hacen reparaciones?', r: function () { return 'Sí, arreglamos sillas y mesas. Agrégalo a tu cotización y cuéntanos qué le pasa al mueble.'; } },
+    { p: '¿Hacen reparaciones?', r: function () { return 'Ese servicio es un ejemplo de esta muestra: el negocio confirma si lo ofrece.'; } },
     { p: '¿Cómo los contacto?', r: function () {
-      return 'Llámanos al ' + telefonos() + (N.facebook ? ' o escríbenos en nuestro Facebook' : '') + ', o manda tu cotización por WhatsApp.';
+      return 'Llámanos al ' + telefonos() + (N.facebook ? ' o escríbenos en nuestro Facebook' + (N.instagram ? ' o Instagram' : '') : '') + ', o manda tu cotización por WhatsApp.';
     } },
     { p: '¿Dónde están?', r: function () { return 'Estamos en ' + suc().direccion + '.'; } },
     { p: 'Otra pregunta', r: function () { return 'Eso mejor pregúntalo por WhatsApp y te contestamos en persona.'; } }
@@ -857,22 +856,19 @@
     var p = productoPor(vis.id);
     var m = p.modelo && on('modelos3d') ? p.modelo : null;
     var es3d = vis.modo === '3d' && m;
-    var conAR = on('ar');
     var media = es3d
       ? '<div class="s-visor-media s-mv-caja"><model-viewer class="s-mv" src="' + esc(m.glb) + '" alt="Modelo 3D: ' + esc(p.nombre) + '" camera-controls touch-action="pan-y" auto-rotate rotation-per-second="18deg" interaction-prompt="none" ' +
-        (conAR ? 'ar ar-modes="webxr scene-viewer quick-look" ar-scale="fixed" ar-placement="floor" ' : '') +
-        'shadow-intensity="1" shadow-softness="0.9" exposure="1.05" environment-image="neutral" camera-orbit="35deg 72deg auto">' +
-        (conAR ? '<button type="button" slot="ar-button" class="s-ar-btn">Ver en mi espacio</button>' : '') +
+                'shadow-intensity="1" shadow-softness="0.9" exposure="1.05" environment-image="neutral" camera-orbit="35deg 72deg auto">' +
         '</model-viewer><p class="s-mv-estado">Cargando 3D…</p></div>'
       : '<div class="s-visor-media"><img class="' + (p.contener ? 'contener' : '') + '" src="' + esc(p.img) + '" alt="' + esc(p.nombre) + '"></div>';
-    var tabs = m ? '<div class="s-tabs" role="tablist">' + [['foto', 'Foto'], ['3d', conAR ? '3D y AR' : '3D']].map(function (t) {
+    var tabs = m ? '<div class="s-tabs" role="tablist">' + [['foto', 'Foto'], ['3d', '3D']].map(function (t) {
       return '<button type="button" role="tab" data-accion="modo" data-m="' + t[0] + '" aria-selected="' + (t[0] === vis.modo) + '">' + t[1] + '</button>';
     }).join('') + '</div>' : '';
     visor.innerHTML = '<div class="s-visor-caja" role="dialog" aria-modal="true" aria-label="' + esc(p.nombre) + '">' +
       '<button type="button" class="s-visor-x" data-accion="foto-cerrar" aria-label="Cerrar">×</button>' + media +
       '<div class="s-visor-txt">' + tabs + '<h2>' + esc(p.nombre) + '</h2><p>' + esc(p.desc) + '</p>' +
       (es3d ? '<p class="s-medidas"><b>Medidas del modelo de ejemplo:</b> ' + esc(m.medidas) + '.</p>' + opcionesHtml(p) +
-        (conAR ? '<p class="s-ar-ayuda"><b>Idea para la página oficial:</b> con realidad aumentada, en tu celular tocarías <b>Ver en mi espacio</b> y apuntarías la cámara al piso. Solo se aplica si el negocio contrata su página.</p>' : '') : '') +
+        '<p class="s-ar-ayuda"><b>Sobre la realidad aumentada (AR):</b> es una opción extra de cotización y en la muestra no aparece. El AR permite visualizar el modelo 3D desde la cámara de tu celular, para verlo en tu casa a tamaño real. Se aplica en la página oficial si el negocio la contrata.</p>': '') +
       (p.cats.indexOf('arreglo') >= 0 && !es3d ? antesDespuesHtml() : '') +
       (on('whatsapp') ? '<button type="button" class="s-btn s-visor-cot" data-accion="cotizar-visor">' + (es3d ? '+ Agregar con estos colores' : '+ Agregar a mi cotización') + '</button>' : '') + combinaHtml(p) +
       '</div></div>';
@@ -889,7 +885,7 @@
     vis.modo = modo === '3d' && p.modelo && on('modelos3d') ? '3d' : 'foto';
     if (!vis.sel[id] && p.modelo) {
       vis.sel[id] = {};
-      p.modelo.opciones.forEach(function (o) { vis.sel[id][o.mat] = 0; });
+      p.modelo.opciones.forEach(function (o) { vis.sel[id][o.mat] = o.ini || 0; });
     }
     pintarVisor();
     visor.querySelector('.s-visor-x').focus();

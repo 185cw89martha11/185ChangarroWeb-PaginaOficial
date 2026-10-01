@@ -105,7 +105,8 @@ function armarGlb(nombre, mats) {
     meshes: [{ name: nombre, primitives: prims }],
     materials: mats.map(m => ({
       name: m.nombre,
-      pbrMetallicRoughness: { baseColorFactor: aLineal(m.color).concat(1), metallicFactor: m.metal, roughnessFactor: m.rugoso }
+      pbrMetallicRoughness: { baseColorFactor: aLineal(m.color).concat(m.alpha == null ? 1 : m.alpha), metallicFactor: m.metal, roughnessFactor: m.rugoso },
+      ...(m.alpha == null ? {} : { alphaMode: 'BLEND', doubleSided: true })
     })),
     buffers: [{ byteLength: largo }],
     bufferViews: vistas,
@@ -124,188 +125,95 @@ function armarGlb(nombre, mats) {
 }
 
 // ---------- muebles ----------
-// patas y travesaños de una silla o un banco. a = ancho, f = fondo, hAsiento = altura del asiento terminado.
-// Se puede poner en otro lugar (ox, oz) y mirando al otro lado (sz = -1), para armar juegos de mesa con sillas.
-function sillaEn(estructura, asiento, o, ox, oz, sz) {
-  ox = ox || 0; oz = oz || 0; sz = sz || 1;
-  const C = (m, w, h, d, x, y, z) => caja(m, w, h, d, ox + x, y, oz + sz * z);
-  const g = o.grueso || 0.028, dx = o.a / 2 - g / 2, dz = o.f / 2 - g / 2;
-  const marco = o.hAsiento - 0.05;
-  // patas de adelante (hasta el asiento) y de atrás (siguen hasta arriba, son el respaldo)
-  [-1, 1].forEach(s => {
-    C(estructura, g, marco, g, s * dx, 0, dz);
-    C(estructura, g, o.hTotal, g, s * dx, 0, -dz);
-  });
-  // marco del asiento y cojín
-  C(estructura, o.a, 0.03, o.f, 0, marco - 0.03, 0);
-  C(asiento, o.a - 0.02, 0.05, o.f - 0.02, 0, marco, 0);
-  // travesaños: a los lados y adelante, a la altura que pida cada mueble
-  o.travesanos.forEach(y => {
-    [-1, 1].forEach(s => C(estructura, 0.018, 0.03, o.f - g, s * dx, y, 0));
-    C(estructura, o.a - g, 0.03, 0.018, 0, y, dz);
-    if (o.travesanosAtras) C(estructura, o.a - g, 0.03, 0.018, 0, y, -dz);
-  });
-  // tablillas del respaldo
-  o.tablillas.forEach(y => C(estructura, o.a - g * 2, 0.07, 0.018, 0, y, -dz));
-  // brazos (sillones)
-  if (o.brazos) [-1, 1].forEach(s => C(estructura, 0.05, 0.03, o.f - 0.04, s * (o.a / 2 + 0.005), o.hAsiento + 0.17, 0));
-}
-function silla(o) {
-  const estructura = new Malla(), asiento = new Malla();
-  sillaEn(estructura, asiento, o);
+// Todo son cajas, a tamaño real y en metros, con el origen en el piso. Son una idea simple de cada mueble,
+// no una copia exacta: sirven para girarlos, ver sus medidas y probar colores.
+const mat = (nombre, color, malla, metal, rugoso, alpha) => ({ nombre, color, metal: metal || 0, rugoso: rugoso == null ? 0.7 : rugoso, malla, alpha });
+
+// Recámara: cama con cabecera, dos burós y una cómoda. cab = 'ancha' (panel de pared) o 'angosta' (del ancho de la cama).
+function recamara(c) {
+  const madera = new Malla(), cabecera = new Malla(), base = new Malla(), colchon = new Malla();
+  caja(base, 1.70, 0.30, 2.05, 0, 0, 0);
+  caja(colchon, 1.60, 0.22, 1.95, 0, 0.30, 0.03);
+  if (c.cab === 'ancha') caja(cabecera, 2.70, 1.15, 0.08, 0, 0.12, -1.065);
+  else caja(cabecera, 1.90, 1.10, 0.10, 0, 0.12, -1.075);
+  [-1, 1].forEach(s => caja(madera, 0.45, 0.50, 0.42, s * 1.18, 0.10, -0.83));
+  caja(madera, 1.40, 0.85, 0.45, 0, 0, 2.10);
   return [
-    { nombre: 'estructura', color: '#6B4423', metal: 0.1, rugoso: 0.55, malla: estructura },
-    { nombre: 'asiento', color: '#7A1020', metal: 0, rugoso: 0.85, malla: asiento }
+    mat('madera', c.madera, madera, 0.05, 0.55),
+    mat('cabecera', c.cabecera, cabecera, 0, c.tapizada ? 0.9 : 0.55),
+    mat('base', c.base, base, 0, c.tapizada ? 0.9 : 0.55),
+    mat('colchon', '#F2F0EA', colchon, 0, 0.9)
   ];
 }
 
-function mesaCuadrada() {
-  const cubierta = new Malla(), base = new Malla(), nivelador = new Malla();
-  caja(cubierta, 0.80, 0.03, 0.80, 0, 0.72, 0);
-  caja(base, 0.22, 0.012, 0.22, 0, 0.708, 0);
-  cilindro(base, 0.04, 0.666, 0, 0.042, 0);
-  caja(base, 0.56, 0.03, 0.06, 0, 0.012, 0);
-  caja(base, 0.06, 0.03, 0.56, 0, 0.012, 0);
-  [[-1, 0], [1, 0], [0, -1], [0, 1]].forEach(([sx, sz]) => cilindro(nivelador, 0.022, 0.012, sx * 0.25, 0, sz * 0.25));
-  return [
-    { nombre: 'cubierta', color: '#6B4423', metal: 0, rugoso: 0.5, malla: cubierta },
-    { nombre: 'base', color: '#1C1C1C', metal: 0.6, rugoso: 0.45, malla: base },
-    { nombre: 'nivelador', color: '#111111', metal: 0, rugoso: 0.9, malla: nivelador }
-  ];
+// Sala en L: sillón largo con respaldo y un chaise a la derecha.
+function sala() {
+  const tapizado = new Malla(), madera = new Malla();
+  caja(madera, 3.10, 0.06, 0.90, 0, 0, -0.02);
+  caja(madera, 0.80, 0.06, 1.20, 1.15, 0, 1.075);
+  caja(tapizado, 3.20, 0.40, 0.95, 0, 0.06, -0.025);
+  caja(tapizado, 0.90, 0.40, 1.25, 1.15, 0.06, 1.075);
+  caja(tapizado, 3.00, 0.45, 0.22, 0, 0.46, -0.39);
+  caja(tapizado, 0.20, 0.28, 0.95, -1.50, 0.46, -0.025);
+  caja(tapizado, 0.20, 0.28, 1.25, 1.50, 0.46, 1.075);
+  return [mat('tapizado', '#E4DCCB', tapizado, 0, 0.92), mat('madera', '#6B4423', madera, 0.05, 0.55)];
 }
 
-function mesaRedonda() {
-  const cubierta = new Malla(), base = new Malla();
-  cilindro(cubierta, 0.40, 0.03, 0, 0.72, 0, 48);
-  caja(base, 0.14, 0.012, 0.14, 0, 0.708, 0);
-  cilindro(base, 0.04, 0.668, 0, 0.04, 0);
-  cilindro(base, 0.22, 0.04, 0, 0, 0, 40);
-  return [
-    { nombre: 'cubierta', color: '#6B4423', metal: 0, rugoso: 0.5, malla: cubierta },
-    { nombre: 'base', color: '#1C1C1C', metal: 0.6, rugoso: 0.45, malla: base }
-  ];
+// Comedor: mesa de pedestal con 6 sillas (2 por lado largo y 1 por cabecera).
+function comedor(c) {
+  const cubierta = new Malla(), estructura = new Malla(), asiento = new Malla();
+  caja(cubierta, 1.60, 0.04, 0.90, 0, 0.72, 0);
+  caja(estructura, 0.50, 0.72, 0.50, 0, 0, 0);
+  // silla: (cx, cz) es su centro; eje 'z' o 'x' es el lado de la mesa; s = +1 / -1 decide hacia dónde mira
+  const sillaS = (cx, cz, eje, s) => {
+    const C = (m, w, h, d, lx, y, lz) => eje === 'z'
+      ? caja(m, w, h, d, cx + lx, y, cz + s * lz)
+      : caja(m, d, h, w, cx + s * lz, y, cz + lx);
+    C(asiento, 0.46, 0.06, 0.46, 0, 0.42, 0);
+    C(asiento, 0.46, 0.42, 0.05, 0, 0.48, -0.205);
+    [[-1, -1], [-1, 1], [1, -1], [1, 1]].forEach(([a, b]) => C(estructura, 0.045, 0.42, 0.045, a * 0.20, 0, b * 0.20));
+  };
+  [-0.40, 0.40].forEach(x => { sillaS(x, 0.74, 'z', -1); sillaS(x, -0.74, 'z', 1); });
+  sillaS(1.06, 0, 'x', -1);
+  sillaS(-1.06, 0, 'x', 1);
+  return [mat('cubierta', c.cubierta, cubierta, 0, 0.45), mat('estructura', c.estructura, estructura, 0.05, 0.55), mat('asiento', c.asiento, asiento, 0, 0.92)];
 }
 
-function booth() {
-  const tapizado = new Malla(), base = new Malla();
-  caja(base, 1.40, 0.42, 0.60, 0, 0, 0.03);            // caja del asiento
-  caja(tapizado, 1.38, 0.10, 0.40, 0, 0.42, 0.13);      // cojín
-  caja(base, 1.40, 0.72, 0.03, 0, 0.42, -0.315);        // fondo del respaldo
-  for (let i = 0; i < 5; i++) caja(tapizado, 0.262, 0.50, 0.09, -0.56 + i * 0.28, 0.56, -0.255); // canales acojinados
-  caja(base, 1.40, 0.05, 0.12, 0, 1.07, -0.27);         // remate de madera
-  [-1, 1].forEach(s => caja(base, 0.04, 0.72, 0.66, s * 0.72, 0, 0));  // costados
-  return [
-    { nombre: 'tapizado', color: '#7A1020', metal: 0, rugoso: 0.8, malla: tapizado },
-    { nombre: 'base', color: '#6B4423', metal: 0.05, rugoso: 0.55, malla: base }
-  ];
+// Mesa de centro: dos bloques de madera abajo, dos tablones arriba y un cristal en medio.
+function mesaElegance() {
+  const madera = new Malla(), cristal = new Malla();
+  [-1, 1].forEach(s => caja(madera, 0.30, 0.30, 0.70, s * 0.40, 0, 0));
+  [-1, 1].forEach(s => caja(madera, 1.10, 0.12, 0.20, 0, 0.30, s * 0.25));
+  caja(cristal, 1.04, 0.012, 0.30, 0, 0.36, 0);
+  return [mat('madera', '#8A4B22', madera, 0.05, 0.5), mat('cristal', '#9FC5BE', cristal, 0.1, 0.1, 0.35)];
 }
 
-// mesita alta (de bar): cubierta redonda, columna tubular y cruceta de piso con niveladores
-function mesitaAlta() {
-  const cubierta = new Malla(), base = new Malla(), nivelador = new Malla();
-  cilindro(cubierta, 0.30, 0.03, 0, 1.02, 0, 40);
-  caja(base, 0.60, 0.03, 0.06, 0, 0.012, 0);
-  caja(base, 0.06, 0.03, 0.60, 0, 0.012, 0);
-  cilindro(base, 0.035, 0.96, 0, 0.042, 0);
-  cilindro(base, 0.09, 0.012, 0, 1.008, 0, 24);
-  [[-1, 0], [1, 0], [0, -1], [0, 1]].forEach(([sx, sz]) => cilindro(nivelador, 0.022, 0.012, sx * 0.27, 0, sz * 0.27));
-  return [
-    { nombre: 'cubierta', color: '#6B4423', metal: 0, rugoso: 0.5, malla: cubierta },
-    { nombre: 'base', color: '#1C1C1C', metal: 0.6, rugoso: 0.45, malla: base },
-    { nombre: 'nivelador', color: '#111111', metal: 0, rugoso: 0.9, malla: nivelador }
-  ];
-}
-
-// mesa larga con dos soportes de fierro fundido a la par (uno bajo cada extremo)
-function mesaDosSoportes() {
-  const cubierta = new Malla(), base = new Malla();
-  caja(cubierta, 1.60, 0.03, 0.70, 0, 0.72, 0);
-  [-0.5, 0.5].forEach(x => {
-    cilindro(base, 0.23, 0.03, x, 0, 0, 40);
-    cilindro(base, 0.06, 0.04, x, 0.03, 0, 32);
-    cilindro(base, 0.04, 0.58, x, 0.07, 0);
-    cilindro(base, 0.07, 0.03, x, 0.65, 0, 32);
-    caja(base, 0.30, 0.02, 0.30, x, 0.68, 0);
-  });
-  return [
-    { nombre: 'cubierta', color: '#6B4423', metal: 0, rugoso: 0.5, malla: cubierta },
-    { nombre: 'base', color: '#1C1C1C', metal: 0.7, rugoso: 0.4, malla: base }
-  ];
-}
-// mesa con cuatro patas tubulares
-function mesaPatas() {
-  const cubierta = new Malla(), base = new Malla();
-  caja(cubierta, 0.80, 0.03, 0.80, 0, 0.72, 0);
-  [[-1, -1], [-1, 1], [1, -1], [1, 1]].forEach(([sx, sz]) => cilindro(base, 0.019, 0.72, sx * 0.35, 0, sz * 0.35, 20));
-  caja(base, 0.70, 0.02, 0.02, 0, 0.62, -0.35);
-  caja(base, 0.70, 0.02, 0.02, 0, 0.62, 0.35);
-  caja(base, 0.02, 0.02, 0.70, -0.35, 0.62, 0);
-  caja(base, 0.02, 0.02, 0.70, 0.35, 0.62, 0);
-  return [
-    { nombre: 'cubierta', color: '#C9A26B', metal: 0, rugoso: 0.5, malla: cubierta },
-    { nombre: 'base', color: '#B5B8BC', metal: 0.85, rugoso: 0.25, malla: base }
-  ];
-}
-
-// dos sillas tapizadas, una junto a la otra
-function dosSillas() {
-  const estructura = new Malla(), asiento = new Malla();
-  const def = { a: 0.42, f: 0.42, hAsiento: 0.46, hTotal: 0.86, grueso: 0.024, travesanos: [0.18], tablillas: [0.60, 0.72] };
-  [-0.30, 0.30].forEach(x => sillaEn(estructura, asiento, def, x, 0, 1));
-  return [
-    { nombre: 'estructura', color: '#B5B8BC', metal: 0.8, rugoso: 0.3, malla: estructura },
-    { nombre: 'asiento', color: '#7A1020', metal: 0, rugoso: 0.85, malla: asiento }
-  ];
-}
-// perchero de pie: base redonda, poste y ganchos arriba
-function perchero() {
-  const base = new Malla();
-  cilindro(base, 0.20, 0.03, 0, 0, 0, 40);
-  cilindro(base, 0.02, 1.70, 0, 0.03, 0, 16);
-  [0, 1, 2, 3].forEach(i => {
-    const a = i * Math.PI / 2, x = Math.cos(a) * 0.07, z = Math.sin(a) * 0.07;
-    cilindro(base, 0.012, 0.10, x, 1.62, z, 10);
-    cilindro(base, 0.018, 0.02, x * 1.8, 1.70, z * 1.8, 10);
-  });
-  return [{ nombre: 'base', color: '#1C1C1C', metal: 0.6, rugoso: 0.45, malla: base }];
-}
-
-// mesa cuadrada de pedestal con dos sillas, una de cada lado
-function juego(c) {
-  const cubierta = new Malla(), base = new Malla(), estructura = new Malla(), asiento = new Malla();
-  caja(cubierta, 0.80, 0.03, 0.80, 0, 0.72, 0);
-  caja(base, 0.22, 0.012, 0.22, 0, 0.708, 0);
-  cilindro(base, 0.04, 0.666, 0, 0.042, 0);
-  caja(base, 0.56, 0.03, 0.06, 0, 0.012, 0);
-  caja(base, 0.06, 0.03, 0.56, 0, 0.012, 0);
-  const def = { a: 0.42, f: 0.42, hAsiento: 0.46, hTotal: 0.86, grueso: 0.024, travesanos: [0.18], tablillas: [0.60, 0.72] };
-  sillaEn(estructura, asiento, def, 0, 0.65, -1);
-  sillaEn(estructura, asiento, def, 0, -0.65, 1);
-  return [
-    { nombre: 'cubierta', color: c.cubierta, metal: 0, rugoso: 0.5, malla: cubierta },
-    { nombre: 'base', color: c.base, metal: 0.6, rugoso: 0.45, malla: base },
-    { nombre: 'estructura', color: c.estructura, metal: 0.6, rugoso: 0.45, malla: estructura },
-    { nombre: 'asiento', color: c.asiento, metal: 0, rugoso: 0.85, malla: asiento }
-  ];
+// Cama infantil con cabecera de picos y una cama nido que se jala hacia el frente.
+function camaPaulette() {
+  const tapizado = new Malla(), colchon = new Malla();
+  caja(tapizado, 1.00, 0.30, 1.95, 0, 0.05, 0);
+  caja(colchon, 0.90, 0.18, 1.85, 0, 0.35, 0.02);
+  [0.75, 1.0, 0.85, 1.25, 0.85, 1.0, 0.75].forEach((h, i) => caja(tapizado, 0.15, h, 0.08, (i - 3) * 0.15, 0.05, -1.03));
+  caja(tapizado, 0.90, 0.22, 1.90, 0, 0.03, 1.45);
+  caja(colchon, 0.82, 0.14, 1.80, 0, 0.25, 1.45);
+  return [mat('tapizado', '#D9A9AE', tapizado, 0, 0.92), mat('colchon', '#F2F0EA', colchon, 0, 0.9)];
 }
 
 const MUEBLES = {
-  'mesa-cruceta': mesaCuadrada,
-  'mesa-placa': mesaRedonda,
-  'silla-madera': () => silla({ a: 0.44, f: 0.44, hAsiento: 0.48, hTotal: 0.88, travesanos: [0.2], tablillas: [0.55, 0.66, 0.77] }),
-  'banco-4444': () => silla({ a: 0.42, f: 0.42, hAsiento: 0.76, hTotal: 1.10, travesanos: [0.30], travesanosAtras: true, tablillas: [0.86, 0.95, 1.03] }),
-  'booth-vino': booth,
-  'sillon-bar': () => silla({ a: 0.52, f: 0.50, hAsiento: 0.76, hTotal: 1.12, travesanos: [0.30], travesanosAtras: true, tablillas: [0.88, 0.97, 1.05], brazos: true }),
-  'bancos-pedestal': dosSillas,
-  'base-alta': mesitaAlta,
-  'juego-fierro': () => juego({ cubierta: '#1E1E1E', base: '#1C1C1C', estructura: '#1C1C1C', asiento: '#202020' }),
-  'cambridge': () => juego({ cubierta: '#F2F0EA', base: '#B5B8BC', estructura: '#B5B8BC', asiento: '#B5B8BC' }),
-  'mesa-patas': mesaPatas,
-  'base-2522': mesaDosSoportes,
-  'perchero': perchero
+  'recamara-bulgaria': () => recamara({ cab: 'ancha', madera: '#8A4B22', cabecera: '#8A4B22', base: '#8A4B22' }),
+  'recamara-venecia': () => recamara({ cab: 'angosta', tapizada: true, madera: '#5A3A24', cabecera: '#E4DCCB', base: '#E4DCCB' }),
+  'recamara-milan': () => recamara({ cab: 'ancha', madera: '#8A4B22', cabecera: '#8A4B22', base: '#8A4B22' }),
+  'recamara-monaco': () => recamara({ cab: 'angosta', madera: '#BDB09B', cabecera: '#BDB09B', base: '#BDB09B' }),
+  'sala-guinea': sala,
+  'comedor-berlin': () => comedor({ cubierta: '#8A4B22', estructura: '#5A3A24', asiento: '#E4DCCB' }),
+  'comedor-toledo': () => comedor({ cubierta: '#8A4B22', estructura: '#5A3A24', asiento: '#9A9A9C' }),
+  'mesa-elegance': mesaElegance,
+  'cama-paulette': camaPaulette
 };
 
 fs.mkdirSync(SALIDA, { recursive: true });
+// los modelos anteriores (de otro negocio) ya no se usan: se borran para que no se queden en la carpeta
+fs.readdirSync(SALIDA).filter(f => f.endsWith('.glb') && !MUEBLES[f.slice(0, -4)]).forEach(f => fs.unlinkSync(path.join(SALIDA, f)));
 Object.keys(MUEBLES).forEach(id => {
   const datos = armarGlb(id, MUEBLES[id]());
   fs.writeFileSync(path.join(SALIDA, id + '.glb'), datos);

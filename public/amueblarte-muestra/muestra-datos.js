@@ -1,5 +1,7 @@
 /*
-  Muestra de AmueblArte (copia de la base de Mariscos 8 Tostadas). muestra.js solo pinta lo que hay aquí.
+  Muestra de AmueblArte de OCOTLÁN, Jalisco (mueblería para el hogar). NO es la de AmueblArte de la CDMX (esa vende mobiliario
+  para restaurantes y es otro negocio). Copia de la base de Mariscos 8 Tostadas. muestra.js solo pinta lo que hay aquí.
+  Las fotos salen de sus redes (Facebook e Instagram); los datos que no se conocen quedan como ejemplo.
   Los nombres y precios de los planes salen de planes.js (window.PLANES_185).
 
   FUNCIONES: lo que incluyen los planes, sin las funciones del catálogo (esas se eligen aparte).
@@ -17,7 +19,7 @@
   - titular, direccion, telefonos, correos: van siempre en el pie (Ley Federal de Protección al Consumidor,
     art. 76 bis) y en el aviso de privacidad. correoDatos es donde el cliente final pide ver o borrar sus datos.
   - categorias: las 6 en que se reordenó el catálogo viejo. img es la foto de su tarjeta.
-  - productos: cada mueble va en una o más categorías (cats), porque varios sirven para bar, restaurante y cafetería.
+  - productos: cada mueble va en una o más categorías (cats), porque un mueble puede encajar en más de una (ahora cada uno va en una sola).
     Sin precio: se cotiza. modelo (opcional): archivo 3D en modelos/ (lo genera herramientas/amueblarte-modelos.js),
     sus medidas y qué materiales se pueden cambiar de color (opciones: material del .glb y paleta de PALETAS).
   - combina (opcional): ids de muebles que se enseñan como "Combina con" en el visor.
@@ -32,13 +34,13 @@ window.MUESTRA_DATOS = {
   WHATSAPP_185: '523151260581',
 
   FUNCIONES: [
-    { id: 'productos', plan: 'esencial', nombre: 'Catálogo por categorías', descripcion: 'Lo que fabrica, ordenado en Bar, Restaurante, Cafetería, Mesas y bases, Accesorios y Arreglo de muebles. Sin precios publicados: se cotiza.', activa: true },
+    { id: 'productos', plan: 'esencial', nombre: 'Catálogo por categorías', descripcion: 'Sus muebles ordenados en Recámaras, Salas, Comedores, Mesas, Camas y Reparación. Sin precios publicados: se cotiza.', activa: true },
     { id: 'galeria', plan: 'esencial', nombre: 'Galería de cada categoría', descripcion: 'Fotos de cada mueble; se agrandan al tocarlas.', activa: true },
     { id: 'whatsapp', plan: 'esencial', nombre: 'Botón de WhatsApp', descripcion: 'Botón fijo que abre el chat con un mensaje ya escrito. En el catálogo, cada mueble se agrega a una lista de cotización que se manda en ese mensaje.', activa: true,
       nota: 'necesita el número de WhatsApp del negocio' },
     { id: 'ubicacion', plan: 'esencial', nombre: 'Mapa y dirección', descripcion: 'Dirección, mapa y botón para llegar.', activa: true },
     { id: 'qr', plan: 'esencial', nombre: 'QR para imprimir', descripcion: 'Para el mostrador, volantes o tarjetas.', activa: true },
-    { id: 'dominio', plan: 'esencial', nombre: 'Dominio propio', descripcion: 'Ya tienen amueblarte.com: la página se conecta a ese dominio, o se registra un .com.mx.', activa: true, servicio: true },
+    { id: 'dominio', plan: 'esencial', nombre: 'Dominio propio', descripcion: 'Se registra un dominio propio (por ejemplo amueblarte.com.mx, si está disponible) y se conecta a la página.', activa: true, servicio: true },
     { id: 'privacidad', plan: 'esencial', nombre: 'Aviso de privacidad', descripcion: 'Siempre va. Es obligatorio si la página pide datos.', activa: true, fija: true },
     { id: 'contacto', plan: 'esencial', nombre: 'Datos del negocio en el pie', descripcion: 'Dirección, teléfono y correo. La ley pide que quien vende diga quién es y cómo contactarlo.', activa: true, fija: true },
     { id: 'terminos', plan: 'esencial', nombre: 'Términos y Condiciones', descripcion: 'Opcional, salvo que la página reciba pedidos o pagos: ahí son obligatorios.', activa: false, opcional: true, obligatoriaCon: ['pedidos'] },
@@ -55,13 +57,13 @@ window.MUESTRA_DATOS = {
     { id: 'disenos', plan: 'pro', nombre: '2 diseños de promoción al mes', descripcion: 'Para WhatsApp y redes.', activa: false, servicio: true },
     { id: 'respuestas', plan: 'pro', nombre: 'Respuestas a reseñas de Google', descripcion: 'Se las redactamos.', activa: false, servicio: true },
 
-    { id: 'buscador', plan: 'catalogo', nombre: 'Catálogo con buscador y filtros', descripcion: 'Caja de búsqueda y categorías para encontrar un mueble al instante, como el buscador de su página actual.', activa: true, peso: 2,
+    { id: 'buscador', plan: 'catalogo', nombre: 'Catálogo con buscador y filtros', descripcion: 'Caja de búsqueda y categorías para encontrar un mueble al instante.', activa: true, peso: 2,
       nota: 'función del catálogo, cuenta como 2' },
     // Extras cotizables: no vienen en ningún plan ni en el catálogo, se pagan una sola vez y no cuentan como funciones del plan.
     // opcional: "Llenar como" no los toca. Los precios y paquetes están en EXTRAS (más abajo).
     { id: 'modelos3d', plan: 'extras', nombre: 'Modelos 3D de sus muebles', descripcion: 'El cliente gira el mueble en 3D, ve sus medidas y le prueba colores antes de cotizar.', activa: true, opcional: true,
       obligatoriaCon: ['ar'], nota: 'extra cotizable, pago único: se cotiza por paquete de modelos' },
-    { id: 'ar', plan: 'extras', nombre: 'Realidad aumentada (AR)', descripcion: 'Con la cámara del celular, el cliente coloca el mueble en su local, a tamaño real. Necesita los modelos 3D. Es solo una idea: se aplica en la página oficial si el negocio la contrata.', activa: true, opcional: true,
+    { id: 'ar', plan: 'extras', nombre: 'Realidad aumentada (AR)', descripcion: 'Ver el modelo 3D desde la cámara del celular, para verlo en tu casa a tamaño real. Necesita los modelos 3D. Es una opción extra de cotización y no aparece en la muestra: se aplica en la página oficial si el negocio la contrata.', activa: true, opcional: true,
       nota: 'extra cotizable, pago único; requiere los modelos 3D' }
   ],
 
@@ -104,58 +106,65 @@ window.MUESTRA_DATOS = {
 
   NEGOCIO: {
     titular: 'Nombre del dueño o razón social',
-    correoDatos: 'info@amueblarte.com',
+    // no se conoce un correo del negocio: el aviso de privacidad manda a sus redes y a su teléfono (ver docPrivacidad)
+    correoDatos: '',
+    // su Facebook e Instagram (oficiales). El teléfono también viene de ahí.
+    facebook: 'https://www.facebook.com/profile.php?id=100091426114526',
+    instagram: 'https://www.instagram.com/amueblarte_oficial/',
     // QR real: lleva directo a esta muestra en nuestro sitio (https://one85changarroweb.onrender.com/amueblarte-muestra/).
     // Se generó sin servicios intermedios, así que no caduca. ?v= obliga a bajar la imagen nueva si se cambia.
     qr: 'img/qr.png?v=1',
-    // su Facebook (con el teléfono 392 121 4132, que también viene de ahí)
-    facebook: 'https://www.facebook.com/p/AmueblArte-100091426114526/',
-    // dominio que ya tiene el negocio (en la barra de la muestra y en el correo profesional)
-    dominioPropio: 'amueblarte.com',
-    // vino tinto de su página actual
-    color: '#6D0305',
+    // azul marino de su logo
+    color: '#1E3A6E',
     logo: 'img/logo-negocio.png',
-    mensajeWhatsapp: 'Hola, vi su página y quiero cotizar unos muebles.',
-    lema: 'La base de su negocio',
-    desde: 1986,
+    mensajeWhatsapp: 'Hola, vi su página y quiero cotizar unos muebles para mi casa.',
+    lema: 'Inspiración para tu hogar',
     leyendaPrecios: 'Precios en pesos mexicanos, con IVA incluido.',
     // porcentaje del anticipo que se enseña con la función "Pedidos con anticipo" (ejemplo: lo fija el negocio)
     anticipo: 50,
 
-    // portada: texto, foto (img/) y el mueble con 3D que abre el botón "Míralo en 3D" (id de un producto con modelo)
+    // portada: etiqueta chica, texto, foto (img/) y el mueble con 3D que abre el botón "Míralo en 3D" (id de un producto con modelo)
     portada: {
-      texto: 'Bases fundidas y tubulares, mesas, percheros, booths, sillas y bancos para cafeterías y restaurantes.',
-      foto: 'img/home-cambridge.jpg',
-      fotoAlt: 'Mesa cuadrada con cuatro sillas gris-plata',
-      destacado3d: 'mesa-cruceta'
+      etiqueta: 'Ocotlán, Jalisco',
+      texto: 'Recámaras, salas, comedores, mesas y camas para que tu casa se vea como la imaginas.',
+      foto: 'img/recamara-bulgaria.jpg',
+      fotoAlt: 'Recámara Bulgaria, con cabecera de madera y luces',
+      destacado3d: 'mesa-elegance'
     },
-    // ¿Quiénes somos?: texto (sigue al nombre del negocio), ciudad corta (para el dato grande) y el aviso de que el texto final lo da el dueño
+    // ¿Quiénes somos?: texto (sigue al nombre del negocio), dos datos grandes y el aviso de que el texto final lo da el dueño
     nosotros: {
-      texto: 'fabrica bases fundidas y tubulares, mesas, percheros, booths, sillas y bancos para cafeterías y restaurantes.',
-      ciudad: 'Ocotlán',
-      aviso: 'Aquí va la historia del negocio, su taller y su equipo, con lo que el dueño nos cuente. Por ahora solo usamos lo que dice su página actual.'
+      texto: 'es una mueblería de Ocotlán, Jalisco, con recámaras, salas, comedores, mesas y camas para tu hogar.',
+      datos: [{ n: 'Ocotlán', t: 'Jalisco' }, { n: 'Parota', t: 'Chapa, melamina y tapizados' }],
+      aviso: 'Aquí va la historia del negocio, su taller y su equipo, con lo que el dueño nos cuente. Por ahora solo usamos lo que se ve en sus redes.'
     },
     // "Cómo trabajamos": pasos de ejemplo. Se confirman con el negocio antes de publicar.
     proceso: [
-      { t: 'Cotización', d: 'Nos dices qué muebles, cuántos y para qué tipo de negocio.' },
-      { t: 'Acabados', d: 'Eliges el color del tapiz, de la cubierta y de la base.' },
-      { t: 'Fabricación', d: 'Los fabricamos con las medidas y acabados acordados.' },
-      { t: 'Entrega', d: 'Acordamos contigo cómo y cuándo recibirlos.' }
+      { t: 'Cotización', d: 'Nos dices qué muebles quieres y para qué espacio.' },
+      { t: 'Acabados', d: 'Eliges el acabado: chapa de parota, melamina o tapiz.' },
+      { t: 'Fabricación', d: 'Se hace con las medidas y acabados acordados.' },
+      { t: 'Entrega', d: 'Acordamos contigo cómo y cuándo recibirlo.' }
     ],
-    // fotos de muebles ya en servicio (portada de Nosotros); id = producto que abre al tocarla
+    // algunos diseños (portada de Nosotros); id = producto que abre al tocarla
     trabajos: [
-      { id: 'bancos-pedestal', img: 'img/home-bar.jpg', t: 'Bar' },
-      { id: 'booth-mesa', img: 'img/home-booth.jpg', t: 'Restaurante' },
-      { id: 'cambridge', img: 'img/home-cambridge.jpg', t: 'Cafetería' },
-      { id: 'mesa-cruceta', img: 'img/home-mesa-madera.jpg', t: 'Comedor' }
+      { id: 'sala-guinea', img: 'img/sala-guinea.jpg', t: 'Sala' },
+      { id: 'comedor-toledo', img: 'img/comedor-toledo.jpg', t: 'Comedor' },
+      { id: 'recamara-venecia', img: 'img/recamara-venecia.jpg', t: 'Recámara' },
+      { id: 'mesa-elegance', img: 'img/mesa-elegance.jpg', t: 'Mesa de centro' }
+    ],
+    // antes y después de la categoría "Reparación y retapizado". Es una reparación INVENTADA para la muestra (se marca como Ejemplo);
+    // en la página final van trabajos reales del negocio, con su permiso. antes/despues: imágenes en img/.
+    reparaciones: [
+      { titulo: 'Silla de comedor', antes: 'img/reparacion-antes.svg', despues: 'img/reparacion-despues.svg',
+        problema: 'El asiento estaba roto y sin relleno, y una pata se había aflojado.',
+        hecho: ['Se quitó el tapiz viejo y se cambió el relleno', 'Se retapizó el asiento en vino', 'Se reafirmó la pata floja', 'Se lijó y barnizó la estructura'] }
     ],
 
-    // razones para elegirlos (portada). {anios} se cambia por los años desde `desde`. Solo lo que ya dice su página actual.
+    // razones para elegirlos (portada). Solo lo que se ve en sus redes y lo que hace la página.
     ventajas: [
-      { t: '{anios} años fabricando', d: 'Bases, mesas, booths, sillas y bancos hechos por nosotros desde 1986.' },
-      { t: 'Acabados a tu gusto', d: 'Elige el color del tapiz, de la cubierta y de la base.' },
+      { t: 'Muebles para tu hogar', d: 'Recámaras, salas, comedores, mesas de centro y camas.' },
+      { t: 'Parota, melamina y tapiz', d: 'Elige el acabado que va con tu casa.' },
       { t: 'Cotización sin compromiso', d: 'Arma tu lista y te respondemos con los precios.' },
-      { t: 'También reparamos', d: 'Arreglamos tus sillas y mesas para que sigan en servicio.' }
+      { t: 'Inspiración para tu hogar', d: 'Muebles pensados para que tu casa se vea como la imaginas.' }
     ],
     // cómo cotizar (portada, con WhatsApp prendido)
     pasos: [
@@ -164,142 +173,98 @@ window.MUESTRA_DATOS = {
       { t: 'Envía', d: 'Mándanos tu lista por WhatsApp y te respondemos con precios.' }
     ],
 
-    // antes y después de la categoría "Arreglo de muebles". Es una reparación INVENTADA para la muestra (se marca como Ejemplo);
-    // en la página final van trabajos reales del negocio, con su permiso. antes/despues: imágenes en img/.
-    reparaciones: [
-      { titulo: 'Silla de restaurante', antes: 'img/reparacion-antes.svg', despues: 'img/reparacion-despues.svg',
-        problema: 'El asiento estaba roto y sin relleno, y una pata se había aflojado.',
-        hecho: ['Se quitó el tapiz viejo y se cambió el relleno', 'Se retapizó el asiento en vino', 'Se reafirmó la pata floja', 'Se lijó y barnizó la estructura'] }
-    ],
-
-    // 13 categorías del catálogo viejo → 6:
-    // Bar ← Bancos para Restaurantes y Bares · Sillones para Bar · Taburetes · Bases y Mesas Altas
-    // Restaurante ← Sillas para Restaurante · Booths · Juegos de Mesas
-    // Cafetería ← Sillas para Cafetería · Taburetes · Juegos de Mesas
-    // Mesas y bases ← Bases y Mesas (fierro fundido, aluminio, tubular) · Bases y Mesas Altas · Cubiertas
-    // Accesorios ← Niveladores · Percheros · Productos de Apoyo
-    // Arreglo de muebles ← Arreglo de muebles
     categorias: [
-      { id: 'bar', nombre: 'Bar', img: 'img/banco-madera.jpg', texto: 'Bancos, sillones y mesas altas para barra y botanero.' },
-      { id: 'restaurante', nombre: 'Restaurante', img: 'img/home-booth.jpg', texto: 'Sillas, booths y juegos de mesa para el comedor.' },
-      { id: 'cafeteria', nombre: 'Cafetería', img: 'img/home-cambridge.jpg', texto: 'Sillas, taburetes y mesas para cafeterías.' },
-      { id: 'mesas', nombre: 'Mesas y bases', img: 'img/mesa-placa.jpg', texto: 'Bases de fierro fundido, aluminio y tubular, y cubiertas.' },
-      { id: 'accesorios', nombre: 'Accesorios', img: 'img/perchero.jpg', texto: 'Niveladores, percheros y productos de apoyo.' },
-      { id: 'arreglo', nombre: 'Arreglo de muebles', img: 'img/arreglo-silla.jpg', texto: 'Reparación de muebles.',
-        aviso: 'Para cotizar una reparación, agrégala a tu lista y, en tus comentarios, cuéntanos qué mueble es, qué le pasa y cuántos son. Si tienes una foto, mándala por WhatsApp.' }
+      { id: 'recamaras', nombre: 'Recámaras', img: 'img/recamara-bulgaria.jpg', texto: 'Camas, cabeceras, burós y cómodas.' },
+      { id: 'salas', nombre: 'Salas', img: 'img/sala-guinea.jpg', texto: 'Salas y sillones tapizados.' },
+      { id: 'comedores', nombre: 'Comedores', img: 'img/comedor-berlin.jpg', texto: 'Mesas con sillas para el comedor.' },
+      { id: 'mesas', nombre: 'Mesas', img: 'img/mesa-elegance.jpg', texto: 'Mesas de centro.' },
+      { id: 'camas', nombre: 'Camas', img: 'img/cama-paulette.jpg', texto: 'Camas individuales y juveniles.' },
+      { id: 'arreglo', nombre: 'Reparación y retapizado', img: 'img/reparacion-despues.svg', texto: 'Dale otra vida a tus muebles.',
+        aviso: 'Servicio de ejemplo: el negocio confirma si lo ofrece. Para cotizar, agrégalo a tu lista y cuéntanos en tus comentarios qué mueble es, qué le pasa y cuántos son.' }
     ],
 
+    // colores de ejemplo para el 3D y para la sección de acabados. Los acabados reales los da el negocio.
     PALETAS: {
-      cubierta: [{ n: 'Nogal', c: '#6B4423' }, { n: 'Roble claro', c: '#C9A26B' }, { n: 'Negro', c: '#1E1E1E' }, { n: 'Blanco', c: '#F2F0EA' }, { n: 'Gris', c: '#8B8D8F' }],
-      base: [{ n: 'Negro', c: '#1C1C1C' }, { n: 'Gris-plata', c: '#B5B8BC' }, { n: 'Bronce', c: '#5A3D28' }],
-      madera: [{ n: 'Nogal', c: '#6B4423' }, { n: 'Roble claro', c: '#C9A26B' }, { n: 'Negro', c: '#1E1E1E' }, { n: 'Gris-plata', c: '#B5B8BC' }],
-      tapiz: [{ n: 'Vino', c: '#7A1020' }, { n: 'Negro', c: '#202020' }, { n: 'Crema', c: '#D9C9A8' }, { n: 'Gris', c: '#7E7E80' }, { n: 'Azul marino', c: '#1F2E4D' }]
+      madera: [{ n: 'Parota', c: '#8A4B22' }, { n: 'Nogal', c: '#5A3A24' }, { n: 'Roble claro', c: '#C9A26B' }, { n: 'Melamina arena', c: '#BDB09B' }, { n: 'Blanco', c: '#EFEDE8' }],
+      tapiz: [{ n: 'Crema', c: '#E4DCCB' }, { n: 'Gris', c: '#9A9A9C' }, { n: 'Rosa', c: '#D9A9AE' }, { n: 'Azul marino', c: '#1F2E4D' }, { n: 'Verde olivo', c: '#6E7A3A' }]
     },
 
+    // ini (opcional) en una opción: posición del color con el que empieza el 3D
     productos: [
-      { id: 'banco-4444', nombre: 'Banco mod. 4444', img: 'img/banco-madera.jpg', cats: ['bar'],
-        desc: 'Banco alto de madera con respaldo y asiento tapizado.',
-        modelo: { glb: 'modelos/banco-4444.glb', medidas: '42 × 42 cm, 1.10 m de alto, asiento a 76 cm',
-          opciones: [{ nombre: 'Asiento', mat: 'asiento', paleta: 'tapiz' }, { nombre: 'Estructura', mat: 'estructura', paleta: 'madera' }] } ,
-        combina: ['base-alta', 'bancos-pedestal'] },
-      { id: 'sillon-bar', nombre: 'Sillón para bar', img: 'img/sillon-bar.jpg', cats: ['bar'],
-        desc: 'Sillón alto de madera con respaldo de tablillas y asiento tapizado. En la foto, junto a una mesa alta con cubierta de cristal.',
-        modelo: { glb: 'modelos/sillon-bar.glb', medidas: '52 × 50 cm, 1.12 m de alto, asiento a 76 cm',
-          opciones: [{ nombre: 'Asiento', mat: 'asiento', paleta: 'tapiz' }, { nombre: 'Estructura', mat: 'estructura', paleta: 'madera' }] },
-        combina: ['banco-4444', 'base-alta'] },
-      { id: 'bancos-pedestal', nombre: 'Bancos tapizados', img: 'img/home-bar.jpg', cats: ['bar', 'cafeteria'],
-        desc: 'Bancos altos con asiento tapizado en vino y estructura gris-plata, junto a una mesa alta de pedestal.',
-        modelo: { glb: 'modelos/bancos-pedestal.glb', medidas: 'dos sillas de 42 × 42 cm, 86 cm de alto, asiento a 46 cm',
-          opciones: [{ nombre: 'Asiento', mat: 'asiento', paleta: 'tapiz' }, { nombre: 'Estructura', mat: 'estructura', paleta: 'madera' }] },
-        combina: ['base-alta', 'banco-4444'] },
-      { id: 'base-alta', nombre: 'Base alta tubular', img: 'img/base-alta.jpg', cats: ['bar', 'mesas'],
-        desc: 'Base alta para mesa de bar, en tubular con acabado negro y cruceta de piso.',
-        modelo: { glb: 'modelos/base-alta.glb', medidas: 'mesita alta de Ø 60 cm y 1.05 m de alto',
-          opciones: [{ nombre: 'Cubierta', mat: 'cubierta', paleta: 'cubierta' }, { nombre: 'Base', mat: 'base', paleta: 'base' }] },
-        combina: ['bancos-pedestal', 'cubiertas'] },
+      { id: 'recamara-bulgaria', nombre: 'Recámara Bulgaria', img: 'img/recamara-bulgaria.jpg', cats: ['recamaras'],
+        desc: 'Cabecera de paneles de madera con luces integradas, base, dos burós y cómoda con espejo.',
+        modelo: { glb: 'modelos/recamara-bulgaria.glb', medidas: 'cama de 1.70 × 2.05 m y cabecera de 2.70 m de ancho',
+          opciones: [{ nombre: 'Madera', mat: 'madera', paleta: 'madera' }, { nombre: 'Cabecera', mat: 'cabecera', paleta: 'madera' }, { nombre: 'Base', mat: 'base', paleta: 'madera' }] },
+        combina: ['recamara-milan', 'recamara-monaco'] },
+      { id: 'recamara-venecia', nombre: 'Recámara Venecia', img: 'img/recamara-venecia.jpg', cats: ['recamaras'],
+        desc: 'Cabecera y base tapizadas, con dos burós de madera.',
+        modelo: { glb: 'modelos/recamara-venecia.glb', medidas: 'cama de 1.70 × 2.05 m y cabecera de 1.90 m de ancho',
+          opciones: [{ nombre: 'Burós y cómoda', mat: 'madera', paleta: 'madera', ini: 1 }, { nombre: 'Cabecera', mat: 'cabecera', paleta: 'tapiz' }, { nombre: 'Base', mat: 'base', paleta: 'tapiz' }] },
+        combina: ['recamara-monaco', 'cama-paulette'] },
+      { id: 'recamara-milan', nombre: 'Recámara Milán', img: 'img/recamara-milan.jpg', cats: ['recamaras'],
+        desc: 'En chapa de parota. Cabecera de pared con luces, base, dos burós y cómoda.',
+        modelo: { glb: 'modelos/recamara-milan.glb', medidas: 'cama de 1.70 × 2.05 m y cabecera de 2.70 m de ancho',
+          opciones: [{ nombre: 'Madera', mat: 'madera', paleta: 'madera' }, { nombre: 'Cabecera', mat: 'cabecera', paleta: 'madera' }, { nombre: 'Base', mat: 'base', paleta: 'madera' }] },
+        combina: ['recamara-bulgaria'] },
+      { id: 'recamara-monaco', nombre: 'Recámara Mónaco', img: 'img/recamara-monaco.jpg', cats: ['recamaras'],
+        desc: 'En melamina. Cabecera con marco, dos burós, cómoda y espejo.',
+        modelo: { glb: 'modelos/recamara-monaco.glb', medidas: 'cama de 1.70 × 2.05 m y cabecera de 1.90 m de ancho',
+          opciones: [{ nombre: 'Melamina', mat: 'madera', paleta: 'madera', ini: 3 }, { nombre: 'Cabecera', mat: 'cabecera', paleta: 'madera', ini: 3 }, { nombre: 'Base', mat: 'base', paleta: 'madera', ini: 3 }] },
+        combina: ['recamara-venecia'] },
 
-      { id: 'booth-mesa', nombre: 'Booth con mesa y sillas', img: 'img/home-booth.jpg', cats: ['restaurante'],
-        desc: 'Booth tapizado en franjas, mesa de cubierta oscura con base fundida y sillas de fierro.',
-        combina: ['booth-vino', 'silla-madera'] },
-      { id: 'booth-vino', nombre: 'Booth tapizado en vino', img: 'img/booth-rojo.jpg', cats: ['restaurante'],
-        desc: 'Respaldo de booth acojinado en canales verticales, tapizado en vino y con remate de madera.',
-        modelo: { glb: 'modelos/booth-vino.glb', medidas: '1.40 m de ancho, 66 cm de fondo, 1.12 m de alto',
-          opciones: [{ nombre: 'Tapiz', mat: 'tapizado', paleta: 'tapiz' }, { nombre: 'Madera', mat: 'base', paleta: 'madera' }] } ,
-        combina: ['booth-mesa'] },
-      { id: 'silla-madera', nombre: 'Silla de madera', img: 'img/silla-madera.jpg', cats: ['restaurante', 'cafeteria'],
-        desc: 'Silla de madera con respaldo de tablillas y asiento tapizado.',
-        modelo: { glb: 'modelos/silla-madera.glb', medidas: '44 × 44 cm, 88 cm de alto',
-          opciones: [{ nombre: 'Asiento', mat: 'asiento', paleta: 'tapiz' }, { nombre: 'Estructura', mat: 'estructura', paleta: 'madera' }] } ,
-        combina: ['mesa-cruceta', 'mesa-patas'] },
-      { id: 'juego-fierro', nombre: 'Sillas de fierro con mesa', img: 'img/juego-mesa-negro.jpg', cats: ['restaurante', 'cafeteria'],
-        desc: 'Sillas de fierro negro con asiento tapizado y mesa de cubierta oscura con canto de madera clara.',
-        modelo: { glb: 'modelos/juego-fierro.glb', medidas: 'Mesa de 80 × 80 cm y 75 cm de alto, con dos sillas',
-          opciones: [{ nombre: 'Cubierta', mat: 'cubierta', paleta: 'cubierta' }, { nombre: 'Base', mat: 'base', paleta: 'base' }, { nombre: 'Sillas', mat: 'estructura', paleta: 'base' }, { nombre: 'Asiento', mat: 'asiento', paleta: 'tapiz' }] },
-        combina: ['mesa-cruceta', 'nivelador'] },
-      { id: 'mesa-cruceta', nombre: 'Mesa con base de cruceta', img: 'img/home-mesa-madera.jpg', cats: ['restaurante', 'mesas'],
-        desc: 'Mesa cuadrada con cubierta de veta de madera y base de cruceta, junto a sillas de madera.',
-        modelo: { glb: 'modelos/mesa-cruceta.glb', medidas: '80 × 80 cm, 75 cm de alto',
-          opciones: [{ nombre: 'Cubierta', mat: 'cubierta', paleta: 'cubierta' }, { nombre: 'Base', mat: 'base', paleta: 'base' }] } ,
-        combina: ['silla-madera', 'cubiertas'] },
+      { id: 'sala-guinea', nombre: 'Sala Guinea', img: 'img/sala-guinea.jpg', cats: ['salas'],
+        desc: 'Sala seccional tapizada, con respaldos de cojines y un brazo con detalle de madera.',
+        modelo: { glb: 'modelos/sala-guinea.glb', medidas: 'sillón de 3.20 m de largo y chaise de 1.25 m',
+          opciones: [{ nombre: 'Tapiz', mat: 'tapizado', paleta: 'tapiz' }, { nombre: 'Madera', mat: 'madera', paleta: 'madera', ini: 1 }] },
+        combina: ['mesa-elegance'] },
 
-      { id: 'cambridge', nombre: 'Juego Cambridge gris-plata', img: 'img/home-cambridge.jpg', cats: ['cafeteria', 'restaurante'],
-        desc: 'Sillas Cambridge en acabado gris-plata. Mesa de 80 × 80 con Rexcel y canto en PVC, con pedestal 200 en acabado gris-plata.',
-        modelo: { glb: 'modelos/cambridge.glb', medidas: 'Mesa de 80 × 80 cm y 75 cm de alto, con dos sillas',
-          opciones: [{ nombre: 'Cubierta', mat: 'cubierta', paleta: 'cubierta' }, { nombre: 'Base', mat: 'base', paleta: 'base' }, { nombre: 'Sillas', mat: 'estructura', paleta: 'base' }, { nombre: 'Asiento', mat: 'asiento', paleta: 'tapiz' }] },
-        combina: ['mesa-placa', 'nivelador'] },
-      { id: 'mesa-placa', nombre: 'Mesa redonda con base de placa', img: 'img/mesa-placa.jpg', cats: ['cafeteria', 'mesas'],
-        desc: 'Mesa con base de placa de acero (de su elección) y tubo de 2" para fijar a cristal o a cubierta de madera (según su elección).',
-        modelo: { glb: 'modelos/mesa-placa.glb', medidas: 'Ø 80 cm, 75 cm de alto',
-          opciones: [{ nombre: 'Cubierta', mat: 'cubierta', paleta: 'cubierta' }, { nombre: 'Base', mat: 'base', paleta: 'base' }] } ,
-        combina: ['silla-madera', 'cubiertas'] },
-      { id: 'mesa-patas', nombre: 'Mesa con patas tubulares', img: 'img/mesa-patas-cromo.jpg', cats: ['cafeteria', 'mesas'],
-        desc: 'Mesa con cubierta de madera clara y patas tubulares cromadas.',
-        modelo: { glb: 'modelos/mesa-patas.glb', medidas: '80 × 80 cm, 75 cm de alto',
-          opciones: [{ nombre: 'Cubierta', mat: 'cubierta', paleta: 'cubierta' }, { nombre: 'Patas', mat: 'base', paleta: 'base' }] },
-        combina: ['silla-madera', 'nivelador'] },
+      { id: 'comedor-berlin', nombre: 'Comedor Berlín', img: 'img/comedor-berlin.jpg', cats: ['comedores'],
+        desc: 'Comedor de 6 sillas, con mesa en chapa de parota y sillas tapizadas.',
+        modelo: { glb: 'modelos/comedor-berlin.glb', medidas: 'mesa de 1.60 × 0.90 m y 75 cm de alto, con 6 sillas',
+          opciones: [{ nombre: 'Mesa', mat: 'cubierta', paleta: 'madera' }, { nombre: 'Sillas', mat: 'estructura', paleta: 'madera', ini: 1 }, { nombre: 'Tapiz', mat: 'asiento', paleta: 'tapiz' }] },
+        combina: ['comedor-toledo', 'mesa-elegance'] },
+      { id: 'comedor-toledo', nombre: 'Comedor Toledo', img: 'img/comedor-toledo.jpg', cats: ['comedores'],
+        desc: 'Mesa en chapa de parota con sillas tapizadas en gris y estructura de madera.',
+        modelo: { glb: 'modelos/comedor-toledo.glb', medidas: 'mesa de 1.60 × 0.90 m y 75 cm de alto, con 6 sillas',
+          opciones: [{ nombre: 'Mesa', mat: 'cubierta', paleta: 'madera' }, { nombre: 'Sillas', mat: 'estructura', paleta: 'madera', ini: 1 }, { nombre: 'Tapiz', mat: 'asiento', paleta: 'tapiz', ini: 1 }] },
+        combina: ['comedor-berlin'] },
 
-      { id: 'base-2522', nombre: 'Base 2522-001', img: 'img/base-2522.jpg', cats: ['mesas'],
-        desc: 'Base en fierro fundido acabado en pintura electrostática color negro o gris-plata, para recibir cristal (no incluye cristal).',
-        modelo: { glb: 'modelos/base-2522.glb', medidas: 'mesa de 1.60 × 0.70 m y 75 cm de alto, con dos soportes a la par',
-          opciones: [{ nombre: 'Cubierta', mat: 'cubierta', paleta: 'cubierta' }, { nombre: 'Base', mat: 'base', paleta: 'base' }] },
-        combina: ['cubiertas', 'nivelador'] },
-      { id: 'cubiertas', nombre: 'Cubiertas para mesa', img: 'img/cubierta-color.jpg', cats: ['mesas'],
-        desc: 'Cubierta para mesa en rosa, con canto azul turquesa.',
-        combina: ['base-2522', 'mesa-placa', 'nivelador'] },
+      { id: 'mesa-elegance', nombre: 'Mesa Elegance', img: 'img/mesa-elegance.jpg', cats: ['mesas'],
+        desc: 'Mesa de centro en chapa de parota, con cristal en medio.',
+        modelo: { glb: 'modelos/mesa-elegance.glb', medidas: '1.10 × 0.70 m y 42 cm de alto',
+          opciones: [{ nombre: 'Madera', mat: 'madera', paleta: 'madera' }] },
+        combina: ['sala-guinea', 'comedor-berlin'] },
 
-      { id: 'nivelador', nombre: 'Niveladores para mesa', img: 'img/nivelador.jpg', cats: ['accesorios'],
-        desc: 'Niveladores para las patas de la mesa, para que no cojee en pisos disparejos.',
-        combina: ['mesa-cruceta', 'base-2522'] },
-      { id: 'perchero', nombre: 'Perchero de pie', img: 'img/perchero.jpg', cats: ['accesorios'],
-        desc: 'Perchero de pie con base redonda y ganchos en la parte alta.',
-        modelo: { glb: 'modelos/perchero.glb', medidas: 'Base de Ø 40 cm, 1.73 m de alto',
-          opciones: [{ nombre: 'Color', mat: 'base', paleta: 'base' }] } },
-      { id: 'apoyo', nombre: 'Productos de apoyo', img: 'img/apoyo-pata.jpg', cats: ['accesorios'],
-        desc: 'Piezas de apoyo para los muebles. Pregunta por la que necesitas.',
-        combina: ['nivelador'] },
+      { id: 'cama-paulette', nombre: 'Cama Paulette', img: 'img/cama-paulette.jpg', cats: ['camas'],
+        desc: 'Cama tapizada en rosa, con cabecera de picos y cama nido.',
+        modelo: { glb: 'modelos/cama-paulette.glb', medidas: 'cama de 1.00 × 1.95 m y cama nido que se jala al frente',
+          opciones: [{ nombre: 'Tapiz', mat: 'tapizado', paleta: 'tapiz', ini: 2 }] },
+        combina: ['recamara-venecia'] },
 
-      { id: 'arreglo', nombre: 'Arreglo de muebles', img: 'img/arreglo-silla.jpg', cats: ['arreglo'],
-        desc: 'Arreglamos tus muebles. En la foto, una silla con el asiento de cinchas en reparación.' }
+      { id: 'arreglo', nombre: 'Reparación y retapizado', img: 'img/reparacion-despues.svg', cats: ['arreglo'],
+        desc: 'Retapizado y reparación de muebles. En el ejemplo, una silla de comedor con el asiento roto y una pata floja.',
+        combina: ['sala-guinea'] }
     ],
 
     // reseñas inventadas, solo con nombre e inicial: la página les pone la etiqueta "Ejemplo".
     resenas: [
-      { autor: 'Laura M.', estrellas: 5, texto: 'Las sillas llegaron bien terminadas y se ven muy bien en el restaurante.' },
-      { autor: 'Jorge R.', estrellas: 5, texto: 'Me cotizaron rápido y me ayudaron a escoger las bases para mis mesas.' },
-      { autor: 'Ana P.', estrellas: 4, texto: 'Buen trato y muebles resistentes para el uso diario de la cafetería.' }
+      { autor: 'Laura M.', estrellas: 5, texto: 'Mi recámara quedó justo como la imaginé. Muy buen acabado.' },
+      { autor: 'Jorge R.', estrellas: 5, texto: 'Me cotizaron rápido el comedor y me ayudaron a escoger el color del tapiz.' },
+      { autor: 'Ana P.', estrellas: 4, texto: 'La cama de mi hija quedó hermosa y se ve muy resistente.' }
     ],
-    // las respuestas solo hablan de lo que ya hace la página (no se inventan servicios del negocio)
+    // las respuestas solo hablan de lo que ya hace la página y de lo que se ve en sus redes (no se inventan servicios)
     faq: [
       { p: '¿Cómo pido una cotización?',
         r: 'Agrega los muebles que te interesen con el botón "Cotizar", revisa tu lista en "Mi cotización" y envíala por WhatsApp.' },
       { funcion: 'modelos3d', p: '¿Puedo ver el mueble en 3D?',
-        r: 'Sí. Los muebles marcados con "3D" se giran con el dedo o el mouse, muestran sus medidas y puedes probar colores.' },
-      { funcion: 'ar', p: '¿Puedo ver cómo se vería un mueble en mi local?',
-        r: 'Es una idea para la página oficial, no está en esta muestra. Con ella, en tu celular, tocarías "Ver en mi espacio" en un mueble con 3D y apunta la cámara al piso: se coloca a tamaño real. No necesitas descargar nada.' },
-      { p: '¿Hacen reparaciones?', r: 'Sí, arreglamos sillas y mesas. Agrégalo a tu cotización y cuéntanos qué le pasa al mueble.' },
+        r: 'Sí. Los muebles marcados con "3D" se giran con el dedo o el mouse, muestran sus medidas y puedes probar colores de ejemplo.' },
+      { funcion: 'ar', p: '¿Qué es la realidad aumentada (AR)?',
+        r: 'Es una opción extra de cotización y no aparece en esta muestra. Permite ver el modelo 3D desde la cámara de tu celular, para verlo en tu casa, a tamaño real.' },
+      { p: '¿De qué materiales son los muebles?', r: 'Hay muebles en chapa de parota, en melamina y tapizados. Pregunta por el acabado que necesitas.' },
+      { p: '¿Hacen reparaciones o retapizado?', r: 'Ese servicio es un ejemplo de esta muestra: el negocio confirma si lo ofrece.' },
       { p: '¿En cuánto tiempo me los entregan?', r: 'Depende del modelo, el acabado y la cantidad. Te lo confirmamos junto con tu cotización.' },
-      { p: '¿Hacen envíos?', r: 'Cuando pidas tu cotización, dinos a dónde los necesitas y te decimos cómo se entregan.' },
-      { p: '¿Puedo pedir otro color o medida?', r: 'Sí puedes elegir el color del tapiz, de la cubierta y de la base. Para otras medidas, cuéntanos en tus comentarios.' },
+      { p: '¿Hacen envíos?', r: 'Cuando pidas tu cotización, dinos a dónde lo necesitas y te decimos cómo se entrega.' },
+      { p: '¿Puedo pedir otro color o medida?', r: 'En el 3D puedes probar colores de ejemplo. Los acabados y las medidas reales los confirmamos contigo al cotizar.' },
       // {direccion} se cambia por la dirección de la sucursal
       { p: '¿Dónde están?', r: '{direccion}.' }
     ],
@@ -310,11 +275,11 @@ window.MUESTRA_DATOS = {
       devoluciones: 'Por definir con el negocio.'
     },
 
-    // la dirección es de ejemplo (Ocotlán, Jalisco); el teléfono y el Facebook salen de su Facebook. Se confirman con el negocio antes de publicar
+    // la dirección es de ejemplo (Ocotlán, Jalisco); el teléfono sale de su Facebook. Se confirman con el negocio antes de publicar
     sucursales: [
       { nombre: 'AmueblArte', zona: 'Col. Ejemplo',
         direccion: 'Col. Ejemplo, Ocotlán, Jalisco',
-        telefonos: ['392 121 4132'], correos: ['info@amueblarte.com', 'ventas@amueblarte.com'],
+        telefonos: ['392 121 4132'], correos: [],
         mapa: '' }
     ]
   }
