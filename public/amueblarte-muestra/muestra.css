@@ -600,19 +600,3 @@ button{cursor:pointer}
 
 a.s-enlace{color:var(--brand); font-weight:600; text-decoration:underline; text-underline-offset:2px}
 .s-pie nav a{color:inherit; text-decoration:underline; font-size:inherit}
-
-/* ---------- antes y después ---------- */
-.s-antes{margin-top:14px; padding:12px; border:1px solid var(--s-line); border-radius:14px; background:var(--s-card)}
-.s-antes h5{margin:0 0 8px; font-size:14px}
-.s-antes p{margin:8px 0 0; font-size:13.5px}
-.s-antes ul{margin:6px 0 0; padding-left:18px; font-size:13px; color:var(--s-muted)}
-.s-antes-caja{position:relative; aspect-ratio:4 / 3; border-radius:10px; overflow:hidden; background:var(--s-line); user-select:none}
-.s-antes-caja img{position:absolute; inset:0; width:100%; height:100%; object-fit:cover; pointer-events:none}
-.s-antes-ant{clip-path:inset(0 calc(100% - var(--p)) 0 0)}
-.s-antes-linea{position:absolute; top:0; bottom:0; left:var(--p); width:3px; margin-left:-1.5px; background:#fff; box-shadow:0 0 0 1px rgba(0,0,0,.25); pointer-events:none}
-.s-antes-linea::after{content:'↔'; position:absolute; top:50%; left:50%; width:30px; height:30px; margin:-15px 0 0 -15px; border-radius:50%; background:#fff; color:#222; font-size:16px; line-height:30px; text-align:center; box-shadow:0 1px 4px rgba(0,0,0,.35)}
-.s-antes-et{position:absolute; top:8px; padding:3px 9px; border-radius:999px; background:rgba(0,0,0,.65); color:#fff; font-size:11px; font-weight:800; letter-spacing:.04em; text-transform:uppercase; pointer-events:none}
-.s-antes-et.ant{left:8px}
-.s-antes-et.des{right:8px}
-.s-antes-caja input[type=range]{position:absolute; inset:0; width:100%; height:100%; margin:0; opacity:0; cursor:ew-resize; touch-action:pan-y}
-.s-antes-caja:focus-within .s-antes-linea{outline:2px solid var(--brand); outline-offset:2px}

@@ -393,20 +393,6 @@
       '</div></div></article>';
   }
 
-  // antes y después: una barra se arrastra para destapar cada imagen. Es un ejemplo inventado y así se avisa.
-  function antesDespuesHtml() {
-    if (!(N.reparaciones || []).length) return '';
-    return N.reparaciones.map(function (r) {
-      return '<div class="s-antes"><h5>Antes y después <span class="s-etq">Ejemplo</span></h5>' +
-        '<div class="s-antes-caja" style="--p:50%"><img class="s-antes-des" src="' + esc(r.despues) + '" alt="' + esc(r.titulo) + ' después de la reparación">' +
-        '<img class="s-antes-ant" src="' + esc(r.antes) + '" alt="' + esc(r.titulo) + ' antes de la reparación">' +
-        '<span class="s-antes-et ant">Antes</span><span class="s-antes-et des">Después</span><i class="s-antes-linea" aria-hidden="true"></i>' +
-        '<input type="range" min="0" max="100" value="50" data-accion="antes-mov" aria-label="Mover para comparar el antes y el después"></div>' +
-        '<p><b>' + esc(r.titulo) + '.</b> ' + esc(r.problema) + '</p><ul>' + r.hecho.map(function (x) { return '<li>' + esc(x) + '</li>'; }).join('') + '</ul>' +
-        '<p class="s-aviso-muestra">Esta reparación es inventada, solo para mostrar cómo se vería. En la página final van trabajos reales del negocio.</p></div>';
-    }).join('');
-  }
-
   // lo que va debajo de la búsqueda: resultados, una categoría con su galería, o todas las categorías
   function contenidoCatalogo() {
     var q = plano(busqueda).trim();
@@ -424,7 +410,7 @@
     var c = categoriaPor(estado.cat);
     if (c) {
       return '<div class="s-cat-cab">' + (on('buscador') ? '' : '<button type="button" class="s-volver" data-accion="cat" data-id="">← Categorías</button>') +
-        '<h4>' + esc(c.nombre) + '</h4><p>' + esc(c.texto) + '</p>' + (c.aviso ? '<p class="s-aviso-muestra">' + esc(c.aviso) + '</p>' : '') + (c.id === 'arreglo' ? antesDespuesHtml() : '') + '</div><div class="s-grid">' + deCategoria(c.id).map(tarjeta).join('') + '</div>';
+        '<h4>' + esc(c.nombre) + '</h4><p>' + esc(c.texto) + '</p>' + (c.aviso ? '<p class="s-aviso-muestra">' + esc(c.aviso) + '</p>' : '') + '</div><div class="s-grid">' + deCategoria(c.id).map(tarjeta).join('') + '</div>';
     }
     return '<div class="s-catgrid">' + N.categorias.map(tile).join('') + '</div>';
   }
@@ -723,7 +709,6 @@
     { funcion: 'modelos3d', p: '¿Puedo verlos en 3D?', r: function () {
       return 'Sí: los muebles con la etiqueta "3D" se giran con el dedo, muestran sus medidas y puedes probar colores de ejemplo.';
     } },
-    { p: '¿Hacen reparaciones?', r: function () { return 'Ese servicio es un ejemplo de esta muestra: el negocio confirma si lo ofrece.'; } },
     { p: '¿Cómo los contacto?', r: function () {
       return 'Llámanos al ' + telefonos() + (N.facebook ? ' o escríbenos en nuestro Facebook' + (N.instagram ? ' o Instagram' : '') : '') + ', o manda tu cotización por WhatsApp.';
     } },
@@ -869,7 +854,6 @@
       '<div class="s-visor-txt">' + tabs + '<h2>' + esc(p.nombre) + '</h2><p>' + esc(p.desc) + '</p>' +
       (es3d ? '<p class="s-medidas"><b>Medidas del modelo de ejemplo:</b> ' + esc(m.medidas) + '.</p>' + opcionesHtml(p) +
         '<p class="s-ar-ayuda"><b>Sobre la realidad aumentada (AR):</b> es una opción extra de cotización y en la muestra no aparece. El AR permite visualizar el modelo 3D desde la cámara de tu celular, para verlo en tu casa a tamaño real. Se aplica en la página oficial si el negocio la contrata.</p>': '') +
-      (p.cats.indexOf('arreglo') >= 0 && !es3d ? antesDespuesHtml() : '') +
       (on('whatsapp') ? '<button type="button" class="s-btn s-visor-cot" data-accion="cotizar-visor">' + (es3d ? '+ Agregar con estos colores' : '+ Agregar a mi cotización') + '</button>' : '') + combinaHtml(p) +
       '</div></div>';
     visor.hidden = false;
@@ -978,7 +962,6 @@
       guardarCot();
       return;
     }
-    if (e.target.matches('[data-accion="antes-mov"]')) { e.target.parentNode.style.setProperty('--p', e.target.value + '%'); return; }
     if (!e.target.matches('[data-accion="buscar"]')) return;
     busqueda = e.target.value;
     var res = $('s-res');

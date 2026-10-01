@@ -34,7 +34,7 @@ window.MUESTRA_DATOS = {
   WHATSAPP_185: '523151260581',
 
   FUNCIONES: [
-    { id: 'productos', plan: 'esencial', nombre: 'Catálogo por categorías', descripcion: 'Sus muebles ordenados en Recámaras, Salas, Comedores, Mesas, Camas y Reparación. Sin precios publicados: se cotiza.', activa: true },
+    { id: 'productos', plan: 'esencial', nombre: 'Catálogo por categorías', descripcion: 'Sus muebles ordenados en Recámaras, Salas, Comedores, Mesas y Camas. Sin precios publicados: se cotiza.', activa: true },
     { id: 'galeria', plan: 'esencial', nombre: 'Galería de cada categoría', descripcion: 'Fotos de cada mueble; se agrandan al tocarlas.', activa: true },
     { id: 'whatsapp', plan: 'esencial', nombre: 'Botón de WhatsApp', descripcion: 'Botón fijo que abre el chat con un mensaje ya escrito. En el catálogo, cada mueble se agrega a una lista de cotización que se manda en ese mensaje.', activa: true,
       nota: 'necesita el número de WhatsApp del negocio' },
@@ -116,7 +116,8 @@ window.MUESTRA_DATOS = {
     qr: 'img/qr.png?v=1',
     // azul marino de su logo
     color: '#1E3A6E',
-    logo: 'img/logo-negocio.png',
+    // el nombre y el ?v= son nuevos a propósito: el navegador guarda las imágenes una hora y no debe mostrar el logo anterior
+    logo: 'img/logo-amueblarte.png?v=2',
     mensajeWhatsapp: 'Hola, vi su página y quiero cotizar unos muebles para mi casa.',
     lema: 'Inspiración para tu hogar',
     leyendaPrecios: 'Precios en pesos mexicanos, con IVA incluido.',
@@ -151,14 +152,6 @@ window.MUESTRA_DATOS = {
       { id: 'recamara-venecia', img: 'img/recamara-venecia.jpg', t: 'Recámara' },
       { id: 'mesa-elegance', img: 'img/mesa-elegance.jpg', t: 'Mesa de centro' }
     ],
-    // antes y después de la categoría "Reparación y retapizado". Es una reparación INVENTADA para la muestra (se marca como Ejemplo);
-    // en la página final van trabajos reales del negocio, con su permiso. antes/despues: imágenes en img/.
-    reparaciones: [
-      { titulo: 'Silla de comedor', antes: 'img/reparacion-antes.svg', despues: 'img/reparacion-despues.svg',
-        problema: 'El asiento estaba roto y sin relleno, y una pata se había aflojado.',
-        hecho: ['Se quitó el tapiz viejo y se cambió el relleno', 'Se retapizó el asiento en vino', 'Se reafirmó la pata floja', 'Se lijó y barnizó la estructura'] }
-    ],
-
     // razones para elegirlos (portada). Solo lo que se ve en sus redes y lo que hace la página.
     ventajas: [
       { t: 'Muebles para tu hogar', d: 'Recámaras, salas, comedores, mesas de centro y camas.' },
@@ -179,8 +172,7 @@ window.MUESTRA_DATOS = {
       { id: 'comedores', nombre: 'Comedores', img: 'img/comedor-berlin.jpg', texto: 'Mesas con sillas para el comedor.' },
       { id: 'mesas', nombre: 'Mesas', img: 'img/mesa-elegance.jpg', texto: 'Mesas de centro.' },
       { id: 'camas', nombre: 'Camas', img: 'img/cama-paulette.jpg', texto: 'Camas individuales y juveniles.' },
-      { id: 'arreglo', nombre: 'Reparación y retapizado', img: 'img/reparacion-despues.svg', texto: 'Dale otra vida a tus muebles.',
-        aviso: 'Servicio de ejemplo: el negocio confirma si lo ofrece. Para cotizar, agrégalo a tu lista y cuéntanos en tus comentarios qué mueble es, qué le pasa y cuántos son.' }
+
     ],
 
     // colores de ejemplo para el 3D y para la sección de acabados. Los acabados reales los da el negocio.
@@ -241,9 +233,6 @@ window.MUESTRA_DATOS = {
           opciones: [{ nombre: 'Tapiz', mat: 'tapizado', paleta: 'tapiz', ini: 2 }] },
         combina: ['recamara-venecia'] },
 
-      { id: 'arreglo', nombre: 'Reparación y retapizado', img: 'img/reparacion-despues.svg', cats: ['arreglo'],
-        desc: 'Retapizado y reparación de muebles. En el ejemplo, una silla de comedor con el asiento roto y una pata floja.',
-        combina: ['sala-guinea'] }
     ],
 
     // reseñas inventadas, solo con nombre e inicial: la página les pone la etiqueta "Ejemplo".
@@ -261,7 +250,6 @@ window.MUESTRA_DATOS = {
       { funcion: 'ar', p: '¿Qué es la realidad aumentada (AR)?',
         r: 'Es una opción extra de cotización y no aparece en esta muestra. Permite ver el modelo 3D desde la cámara de tu celular, para verlo en tu casa, a tamaño real.' },
       { p: '¿De qué materiales son los muebles?', r: 'Hay muebles en chapa de parota, en melamina y tapizados. Pregunta por el acabado que necesitas.' },
-      { p: '¿Hacen reparaciones o retapizado?', r: 'Ese servicio es un ejemplo de esta muestra: el negocio confirma si lo ofrece.' },
       { p: '¿En cuánto tiempo me los entregan?', r: 'Depende del modelo, el acabado y la cantidad. Te lo confirmamos junto con tu cotización.' },
       { p: '¿Hacen envíos?', r: 'Cuando pidas tu cotización, dinos a dónde lo necesitas y te decimos cómo se entrega.' },
       { p: '¿Puedo pedir otro color o medida?', r: 'En el 3D puedes probar colores de ejemplo. Los acabados y las medidas reales los confirmamos contigo al cotizar.' },
