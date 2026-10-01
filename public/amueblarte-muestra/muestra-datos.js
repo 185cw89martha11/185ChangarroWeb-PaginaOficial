@@ -132,7 +132,7 @@ window.MUESTRA_DATOS = {
     // ¿Quiénes somos?: texto (sigue al nombre del negocio), ciudad corta (para el dato grande) y el aviso de que el texto final lo da el dueño
     nosotros: {
       texto: 'fabrica bases fundidas y tubulares, mesas, percheros, booths, sillas y bancos para cafeterías y restaurantes.',
-      ciudad: 'CDMX',
+      ciudad: 'Ocotlán',
       aviso: 'Aquí va la historia del negocio, su taller y su equipo, con lo que el dueño nos cuente. Por ahora solo usamos lo que dice su página actual.'
     },
     // "Cómo trabajamos": pasos de ejemplo. Se confirman con el negocio antes de publicar.
@@ -162,6 +162,14 @@ window.MUESTRA_DATOS = {
       { t: 'Elige', d: 'Busca en el catálogo y toca "+ Cotizar" en cada mueble.' },
       { t: 'Revisa', d: 'Ajusta cantidades en "Mi cotización" y escribe tu nombre.' },
       { t: 'Envía', d: 'Mándanos tu lista por WhatsApp y te respondemos con precios.' }
+    ],
+
+    // antes y después de la categoría "Arreglo de muebles". Es una reparación INVENTADA para la muestra (se marca como Ejemplo);
+    // en la página final van trabajos reales del negocio, con su permiso. antes/despues: imágenes en img/.
+    reparaciones: [
+      { titulo: 'Silla de restaurante', antes: 'img/reparacion-antes.svg', despues: 'img/reparacion-despues.svg',
+        problema: 'El asiento estaba roto y sin relleno, y una pata se había aflojado.',
+        hecho: ['Se quitó el tapiz viejo y se cambió el relleno', 'Se retapizó el asiento en vino', 'Se reafirmó la pata floja', 'Se lijó y barnizó la estructura'] }
     ],
 
     // 13 categorías del catálogo viejo → 6:
@@ -201,13 +209,13 @@ window.MUESTRA_DATOS = {
         combina: ['banco-4444', 'base-alta'] },
       { id: 'bancos-pedestal', nombre: 'Bancos tapizados', img: 'img/home-bar.jpg', cats: ['bar', 'cafeteria'],
         desc: 'Bancos altos con asiento tapizado en vino y estructura gris-plata, junto a una mesa alta de pedestal.',
-        modelo: { glb: 'modelos/bancos-pedestal.glb', medidas: 'Ø 34 cm, asiento a 77 cm',
+        modelo: { glb: 'modelos/bancos-pedestal.glb', medidas: 'dos sillas de 42 × 42 cm, 86 cm de alto, asiento a 46 cm',
           opciones: [{ nombre: 'Asiento', mat: 'asiento', paleta: 'tapiz' }, { nombre: 'Estructura', mat: 'estructura', paleta: 'madera' }] },
         combina: ['base-alta', 'banco-4444'] },
       { id: 'base-alta', nombre: 'Base alta tubular', img: 'img/base-alta.jpg', cats: ['bar', 'mesas'],
         desc: 'Base alta para mesa de bar, en tubular con acabado negro y cruceta de piso.',
-        modelo: { glb: 'modelos/base-alta.glb', medidas: '60 × 60 cm de cruceta, 1.05 m de alto',
-          opciones: [{ nombre: 'Base', mat: 'base', paleta: 'base' }] },
+        modelo: { glb: 'modelos/base-alta.glb', medidas: 'mesita alta de Ø 60 cm y 1.05 m de alto',
+          opciones: [{ nombre: 'Cubierta', mat: 'cubierta', paleta: 'cubierta' }, { nombre: 'Base', mat: 'base', paleta: 'base' }] },
         combina: ['bancos-pedestal', 'cubiertas'] },
 
       { id: 'booth-mesa', nombre: 'Booth con mesa y sillas', img: 'img/home-booth.jpg', cats: ['restaurante'],
@@ -252,8 +260,8 @@ window.MUESTRA_DATOS = {
 
       { id: 'base-2522', nombre: 'Base 2522-001', img: 'img/base-2522.jpg', cats: ['mesas'],
         desc: 'Base en fierro fundido acabado en pintura electrostática color negro o gris-plata, para recibir cristal (no incluye cristal).',
-        modelo: { glb: 'modelos/base-2522.glb', medidas: 'Pie de Ø 46 cm, 72 cm de alto (sin cristal)',
-          opciones: [{ nombre: 'Base', mat: 'base', paleta: 'base' }] },
+        modelo: { glb: 'modelos/base-2522.glb', medidas: 'mesa de 1.60 × 0.70 m y 75 cm de alto, con dos soportes a la par',
+          opciones: [{ nombre: 'Cubierta', mat: 'cubierta', paleta: 'cubierta' }, { nombre: 'Base', mat: 'base', paleta: 'base' }] },
         combina: ['cubiertas', 'nivelador'] },
       { id: 'cubiertas', nombre: 'Cubiertas para mesa', img: 'img/cubierta-color.jpg', cats: ['mesas'],
         desc: 'Cubierta para mesa en rosa, con canto azul turquesa.',
@@ -302,11 +310,11 @@ window.MUESTRA_DATOS = {
       devoluciones: 'Por definir con el negocio.'
     },
 
-    // datos tomados de su página actual (amueblarte.com): confirmarlos con el negocio antes de publicar
+    // la dirección es de ejemplo (Ocotlán, Jalisco); el teléfono y el Facebook salen de su Facebook. Se confirman con el negocio antes de publicar
     sucursales: [
-      { nombre: 'AmueblArte', zona: 'San José Insurgentes',
-        direccion: 'Saturnino Herrán No. 15, Col. San José Insurgentes, Ciudad de México',
-        telefonos: ['55 8500 0622', '55 8500 0621', '392 121 4132'], correos: ['info@amueblarte.com', 'ventas@amueblarte.com'],
+      { nombre: 'AmueblArte', zona: 'Col. Ejemplo',
+        direccion: 'Col. Ejemplo, Ocotlán, Jalisco',
+        telefonos: ['392 121 4132'], correos: ['info@amueblarte.com', 'ventas@amueblarte.com'],
         mapa: '' }
     ]
   }

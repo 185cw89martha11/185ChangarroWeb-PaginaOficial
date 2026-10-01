@@ -393,6 +393,20 @@
       '</div></div></article>';
   }
 
+  // antes y después: una barra se arrastra para destapar cada imagen. Es un ejemplo inventado y así se avisa.
+  function antesDespuesHtml() {
+    if (!(N.reparaciones || []).length) return '';
+    return N.reparaciones.map(function (r) {
+      return '<div class="s-antes"><h5>Antes y después <span class="s-etq">Ejemplo</span></h5>' +
+        '<div class="s-antes-caja" style="--p:50%"><img class="s-antes-des" src="' + esc(r.despues) + '" alt="' + esc(r.titulo) + ' después de la reparación">' +
+        '<img class="s-antes-ant" src="' + esc(r.antes) + '" alt="' + esc(r.titulo) + ' antes de la reparación">' +
+        '<span class="s-antes-et ant">Antes</span><span class="s-antes-et des">Después</span><i class="s-antes-linea" aria-hidden="true"></i>' +
+        '<input type="range" min="0" max="100" value="50" data-accion="antes-mov" aria-label="Mover para comparar el antes y el después"></div>' +
+        '<p><b>' + esc(r.titulo) + '.</b> ' + esc(r.problema) + '</p><ul>' + r.hecho.map(function (x) { return '<li>' + esc(x) + '</li>'; }).join('') + '</ul>' +
+        '<p class="s-aviso-muestra">Esta reparación es inventada, solo para mostrar cómo se vería. En la página final van trabajos reales del negocio.</p></div>';
+    }).join('');
+  }
+
   // lo que va debajo de la búsqueda: resultados, una categoría con su galería, o todas las categorías
   function contenidoCatalogo() {
     var q = plano(busqueda).trim();
@@ -410,7 +424,7 @@
     var c = categoriaPor(estado.cat);
     if (c) {
       return '<div class="s-cat-cab">' + (on('buscador') ? '' : '<button type="button" class="s-volver" data-accion="cat" data-id="">← Categorías</button>') +
-        '<h4>' + esc(c.nombre) + '</h4><p>' + esc(c.texto) + '</p>' + (c.aviso ? '<p class="s-aviso-muestra">' + esc(c.aviso) + '</p>' : '') + '</div><div class="s-grid">' + deCategoria(c.id).map(tarjeta).join('') + '</div>';
+        '<h4>' + esc(c.nombre) + '</h4><p>' + esc(c.texto) + '</p>' + (c.aviso ? '<p class="s-aviso-muestra">' + esc(c.aviso) + '</p>' : '') + (c.id === 'arreglo' ? antesDespuesHtml() : '') + '</div><div class="s-grid">' + deCategoria(c.id).map(tarjeta).join('') + '</div>';
     }
     return '<div class="s-catgrid">' + N.categorias.map(tile).join('') + '</div>';
   }
@@ -710,6 +724,10 @@
         ? 'Sí: los muebles con la etiqueta "3D · AR" se giran en 3D y, desde tu celular, se colocan en tu espacio con la cámara.'
         : 'Sí: los muebles con la etiqueta "3D" se giran con el dedo, muestran sus medidas y puedes probar colores.';
     } },
+    { p: '¿Hacen reparaciones?', r: function () { return 'Sí, arreglamos sillas y mesas. Agrégalo a tu cotización y cuéntanos qué le pasa al mueble.'; } },
+    { p: '¿Cómo los contacto?', r: function () {
+      return 'Llámanos al ' + telefonos() + (N.facebook ? ' o escríbenos en nuestro Facebook' : '') + ', o manda tu cotización por WhatsApp.';
+    } },
     { p: '¿Dónde están?', r: function () { return 'Estamos en ' + suc().direccion + '.'; } },
     { p: 'Otra pregunta', r: function () { return 'Eso mejor pregúntalo por WhatsApp y te contestamos en persona.'; } }
   ];
@@ -855,15 +873,18 @@
       '<div class="s-visor-txt">' + tabs + '<h2>' + esc(p.nombre) + '</h2><p>' + esc(p.desc) + '</p>' +
       (es3d ? '<p class="s-medidas"><b>Medidas del modelo de ejemplo:</b> ' + esc(m.medidas) + '.</p>' + opcionesHtml(p) +
         (conAR ? '<p class="s-ar-ayuda"><b>Idea para la página oficial:</b> con realidad aumentada, en tu celular tocarías <b>Ver en mi espacio</b> y apuntarías la cámara al piso. Solo se aplica si el negocio contrata su página.</p>' : '') : '') +
+      (p.cats.indexOf('arreglo') >= 0 && !es3d ? antesDespuesHtml() : '') +
       (on('whatsapp') ? '<button type="button" class="s-btn s-visor-cot" data-accion="cotizar-visor">' + (es3d ? '+ Agregar con estos colores' : '+ Agregar a mi cotización') + '</button>' : '') + combinaHtml(p) +
       '</div></div>';
     visor.hidden = false;
     if (es3d) { prepararMV(p); vigilar3d(); }
   }
 
+  var focoPrevio = null;
   function abrirProducto(id, modo) {
     var p = productoPor(id);
     if (!p) return;
+    if (visor.hidden) focoPrevio = document.activeElement;
     vis.id = id;
     vis.modo = modo === '3d' && p.modelo && on('modelos3d') ? '3d' : 'foto';
     if (!vis.sel[id] && p.modelo) {
@@ -873,10 +894,26 @@
     pintarVisor();
     visor.querySelector('.s-visor-x').focus();
   }
-  function cerrarVisor() { soltarObservador(); visor.hidden = true; visor.innerHTML = ''; }
+  function cerrarVisor() {
+    soltarObservador(); visor.hidden = true; visor.innerHTML = '';
+    if (focoPrevio && document.contains(focoPrevio)) focoPrevio.focus();
+    focoPrevio = null;
+  }
   // tocar fuera de la caja también cierra
   visor.addEventListener('click', function (e) { if (e.target === visor) cerrarVisor(); });
-  document.addEventListener('keydown', function (e) { if (e.key === 'Escape' && !visor.hidden) cerrarVisor(); });
+  document.addEventListener('keydown', function (e) {
+    if (e.key === 'Escape' && !visor.hidden) cerrarVisor();
+    else if (e.key === 'Escape' && docAbierto && !document.body.classList.contains('panel-abierto') && !$('modal').open) { docAbierto = ''; pintarDoc(); }
+    else if (e.key === 'Escape' && chat.abierto && !document.body.classList.contains('panel-abierto') && !$('modal').open) { chat.abierto = false; pintarChat(); }
+    // dentro del visor, Tab da la vuelta entre sus botones en vez de irse a la página de atrás
+    else if (e.key === 'Tab' && !visor.hidden) {
+      var f = [].slice.call(visor.querySelectorAll('button:not([disabled]), model-viewer, a[href]')).filter(function (x) { return x.offsetParent !== null; });
+      if (!f.length) return;
+      var i = f.indexOf(document.activeElement);
+      if (e.shiftKey && i <= 0) { e.preventDefault(); f[f.length - 1].focus(); }
+      else if (!e.shiftKey && i === f.length - 1) { e.preventDefault(); f[0].focus(); }
+    }
+  });
 
   var pantalla = document.querySelector('.pantalla');
   pantalla.addEventListener('click', function (e) {
@@ -945,6 +982,7 @@
       guardarCot();
       return;
     }
+    if (e.target.matches('[data-accion="antes-mov"]')) { e.target.parentNode.style.setProperty('--p', e.target.value + '%'); return; }
     if (!e.target.matches('[data-accion="buscar"]')) return;
     busqueda = e.target.value;
     var res = $('s-res');

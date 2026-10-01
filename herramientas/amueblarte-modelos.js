@@ -200,31 +200,38 @@ function booth() {
   ];
 }
 
-// base alta tubular: cruceta de piso, columna y placa arriba
-function baseAlta() {
-  const base = new Malla(), nivelador = new Malla();
+// mesita alta (de bar): cubierta redonda, columna tubular y cruceta de piso con niveladores
+function mesitaAlta() {
+  const cubierta = new Malla(), base = new Malla(), nivelador = new Malla();
+  cilindro(cubierta, 0.30, 0.03, 0, 1.02, 0, 40);
   caja(base, 0.60, 0.03, 0.06, 0, 0.012, 0);
   caja(base, 0.06, 0.03, 0.60, 0, 0.012, 0);
-  cilindro(base, 0.035, 1.0, 0, 0.042, 0);
-  caja(base, 0.24, 0.012, 0.24, 0, 1.042, 0);
+  cilindro(base, 0.035, 0.96, 0, 0.042, 0);
+  cilindro(base, 0.09, 0.012, 0, 1.008, 0, 24);
   [[-1, 0], [1, 0], [0, -1], [0, 1]].forEach(([sx, sz]) => cilindro(nivelador, 0.022, 0.012, sx * 0.27, 0, sz * 0.27));
   return [
+    { nombre: 'cubierta', color: '#6B4423', metal: 0, rugoso: 0.5, malla: cubierta },
     { nombre: 'base', color: '#1C1C1C', metal: 0.6, rugoso: 0.45, malla: base },
     { nombre: 'nivelador', color: '#111111', metal: 0, rugoso: 0.9, malla: nivelador }
   ];
 }
 
-// base de fierro fundido: pie redondo, columna y placa para recibir el cristal
-function base2522() {
-  const base = new Malla();
-  cilindro(base, 0.23, 0.03, 0, 0, 0, 40);
-  cilindro(base, 0.06, 0.04, 0, 0.03, 0, 32);
-  cilindro(base, 0.04, 0.60, 0, 0.07, 0);
-  cilindro(base, 0.07, 0.03, 0, 0.67, 0, 32);
-  caja(base, 0.20, 0.02, 0.20, 0, 0.70, 0);
-  return [{ nombre: 'base', color: '#1C1C1C', metal: 0.7, rugoso: 0.4, malla: base }];
+// mesa larga con dos soportes de fierro fundido a la par (uno bajo cada extremo)
+function mesaDosSoportes() {
+  const cubierta = new Malla(), base = new Malla();
+  caja(cubierta, 1.60, 0.03, 0.70, 0, 0.72, 0);
+  [-0.5, 0.5].forEach(x => {
+    cilindro(base, 0.23, 0.03, x, 0, 0, 40);
+    cilindro(base, 0.06, 0.04, x, 0.03, 0, 32);
+    cilindro(base, 0.04, 0.58, x, 0.07, 0);
+    cilindro(base, 0.07, 0.03, x, 0.65, 0, 32);
+    caja(base, 0.30, 0.02, 0.30, x, 0.68, 0);
+  });
+  return [
+    { nombre: 'cubierta', color: '#6B4423', metal: 0, rugoso: 0.5, malla: cubierta },
+    { nombre: 'base', color: '#1C1C1C', metal: 0.7, rugoso: 0.4, malla: base }
+  ];
 }
-
 // mesa con cuatro patas tubulares
 function mesaPatas() {
   const cubierta = new Malla(), base = new Malla();
@@ -240,20 +247,16 @@ function mesaPatas() {
   ];
 }
 
-// banco alto con pedestal y asiento redondo tapizado
-function bancoPedestal() {
+// dos sillas tapizadas, una junto a la otra
+function dosSillas() {
   const estructura = new Malla(), asiento = new Malla();
-  cilindro(estructura, 0.22, 0.03, 0, 0, 0, 36);
-  cilindro(estructura, 0.03, 0.66, 0, 0.03, 0, 20);
-  cilindro(estructura, 0.12, 0.02, 0, 0.69, 0, 28);
-  cilindro(asiento, 0.17, 0.06, 0, 0.71, 0, 36);
-  cilindro(estructura, 0.18, 0.015, 0, 0.30, 0, 36);
+  const def = { a: 0.42, f: 0.42, hAsiento: 0.46, hTotal: 0.86, grueso: 0.024, travesanos: [0.18], tablillas: [0.60, 0.72] };
+  [-0.30, 0.30].forEach(x => sillaEn(estructura, asiento, def, x, 0, 1));
   return [
     { nombre: 'estructura', color: '#B5B8BC', metal: 0.8, rugoso: 0.3, malla: estructura },
     { nombre: 'asiento', color: '#7A1020', metal: 0, rugoso: 0.85, malla: asiento }
   ];
 }
-
 // perchero de pie: base redonda, poste y ganchos arriba
 function perchero() {
   const base = new Malla();
@@ -293,12 +296,12 @@ const MUEBLES = {
   'banco-4444': () => silla({ a: 0.42, f: 0.42, hAsiento: 0.76, hTotal: 1.10, travesanos: [0.30], travesanosAtras: true, tablillas: [0.86, 0.95, 1.03] }),
   'booth-vino': booth,
   'sillon-bar': () => silla({ a: 0.52, f: 0.50, hAsiento: 0.76, hTotal: 1.12, travesanos: [0.30], travesanosAtras: true, tablillas: [0.88, 0.97, 1.05], brazos: true }),
-  'bancos-pedestal': bancoPedestal,
-  'base-alta': baseAlta,
+  'bancos-pedestal': dosSillas,
+  'base-alta': mesitaAlta,
   'juego-fierro': () => juego({ cubierta: '#1E1E1E', base: '#1C1C1C', estructura: '#1C1C1C', asiento: '#202020' }),
   'cambridge': () => juego({ cubierta: '#F2F0EA', base: '#B5B8BC', estructura: '#B5B8BC', asiento: '#B5B8BC' }),
   'mesa-patas': mesaPatas,
-  'base-2522': base2522,
+  'base-2522': mesaDosSoportes,
   'perchero': perchero
 };
 
