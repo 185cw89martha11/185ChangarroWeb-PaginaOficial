@@ -1,4 +1,4 @@
-/* 185ChangarroWeb — planes y catálogo de funciones. Los usan tarifas.html e index.html.
+/* 185ChangarroWeb — planes y catálogo de funciones. Los usan tarifas.html, index.html y la demo (data.js).
    Si cambias algo aquí, revisa también la sección 3 y la lista PLANES de terminos.html, y PLANS de data.js.
    PLANS: id, name, forx (para quién es), inst (instalación), mes (mensualidad), funcs, sla, time, featured, inc (lo que incluye, admite HTML).
    CATALOG: [categoría, [[función, cuenta como 2 (1/0), pide datos (1/0)], ...]] */

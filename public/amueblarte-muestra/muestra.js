@@ -21,6 +21,8 @@
   var ANCHO_PC = 1100, ALTO_PC = 680;
   // ventana angosta o muy vertical (un celular): el teléfono va primero y el panel se abre aparte
   var VERTICAL = window.matchMedia('(max-width: 820px), (max-aspect-ratio: 3/4)');
+  // quien pide menos movimiento en su sistema no ve el giro automático del 3D
+  var MENOS_MOVIMIENTO = window.matchMedia('(prefers-reduced-motion: reduce)');
 
   var $ = function (id) { return document.getElementById(id); };
   var esc = function (s) {
@@ -375,7 +377,7 @@
   function tile(c) {
     var n = deCategoria(c.id).length, foto = on('galeria');
     return '<button type="button" class="s-catt' + (foto ? '' : ' sin-foto') + '" data-accion="cat" data-id="' + c.id + '">' +
-      (foto ? '<img src="' + esc(c.img) + '" alt="" loading="lazy">' : '') +
+      (foto ? '<img src="' + esc(c.img) + '" alt="" loading="lazy" decoding="async">' : '') +
       '<span><b>' + esc(c.nombre) + '</b><small>' + n + (n === 1 ? ' mueble' : ' muebles') + '</small></span></button>';
   }
 
@@ -386,7 +388,7 @@
     var foto = on('galeria'), en3d = on('modelos3d') && p.modelo, dentro = !!enLista(p.id);
     return '<article class="s-prod' + (foto ? '' : ' sin-foto') + '">' +
       (foto ? '<button type="button" class="s-prod-foto' + (p.contener ? ' contener' : '') + '" data-accion="producto" data-id="' + p.id + '" aria-label="Ver ' + esc(p.nombre) + '">' +
-        '<img src="' + esc(p.img) + '" alt="' + esc(p.nombre) + '" loading="lazy">' + (en3d ? '<span class="s-3d">' + etiqueta3d() + '</span>' : on('modelos3d') ? '<span class="s-3d pedido">3D bajo pedido</span>' : '') + '</button>' : '') +
+        '<img src="' + esc(p.img) + '" alt="' + esc(p.nombre) + '" loading="lazy" decoding="async">' + (en3d ? '<span class="s-3d">' + etiqueta3d() + '</span>' : on('modelos3d') ? '<span class="s-3d pedido">3D bajo pedido</span>' : '') + '</button>' : '') +
       '<div class="s-prod-txt"><b>' + esc(p.nombre) + '</b><span>' + esc(p.desc) + '</span><div class="s-prod-acc">' +
       '<button type="button" class="s-btn suave" data-accion="producto" data-id="' + p.id + '"' + (en3d ? ' data-modo="3d"' : '') + '>' + (en3d ? 'Ver en 3D' : 'Ver') + '</button>' +
       (on('whatsapp') ? '<button type="button" class="s-btn' + (dentro ? ' dentro' : '') + '" data-accion="cotizar" data-id="' + p.id + '" aria-pressed="' + dentro + '">' + (dentro ? '✓ En mi lista' : '+ Cotizar') + '</button>' : '') +
@@ -419,7 +421,7 @@
     var cuerpo = '';
     if (on('buscador')) {
       cuerpo += '<label class="s-busca"><svg width="18" height="18" viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="6.5" fill="none" stroke="currentColor" stroke-width="2"/><path d="m16 16 4.5 4.5" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>' +
-        '<input type="search" data-accion="buscar" placeholder="Buscar un mueble: recámara, sala, comedor…" value="' + esc(busqueda) + '" aria-label="Buscar un mueble" autocomplete="off"></label>' +
+        '<input type="search" data-accion="buscar" placeholder="Buscar: recámara, sala…" value="' + esc(busqueda) + '" aria-label="Buscar un mueble" autocomplete="off"></label>' +
         '<div class="s-chips" role="group" aria-label="Categorías"><button type="button" class="s-chip" data-accion="cat" data-id="" aria-pressed="' + (!estado.cat) + '">Todas</button>' +
         N.categorias.map(function (c) {
           return '<button type="button" class="s-chip" data-accion="cat" data-id="' + c.id + '" aria-pressed="' + (estado.cat === c.id) + '">' + esc(c.nombre) + '</button>';
@@ -468,7 +470,7 @@
         '<p class="s-dir">Gira el mueble en 3D, mira sus medidas y cámbiale el color.</p>' +
         '<div class="s-mini">' + N.productos.filter(function (p) { return p.modelo; }).map(function (p) {
           return '<button type="button" class="s-mini-btn" data-accion="producto" data-id="' + p.id + '" data-modo="3d">' +
-            (on('galeria') ? '<img src="' + esc(p.img) + '" alt="" loading="lazy">' : '') + '<span>' + esc(p.nombre) + '</span><em>' + etiqueta3d() + '</em></button>';
+            (on('galeria') ? '<img src="' + esc(p.img) + '" alt="" loading="lazy" decoding="async">' : '') + '<span>' + esc(p.nombre) + '</span><em>' + etiqueta3d() + '</em></button>';
         }).join('') + '</div>' +
         '<p class="s-nota">Modelos de demostración. Los del negocio se hacen con sus muebles y medidas reales.' + '</p>', 'ancha'));
     }
@@ -499,7 +501,7 @@
     }).join('') + '</ol><p class="s-aviso-muestra"><span class="s-etq">Ejemplo</span> Los pasos se confirman con el negocio antes de publicar.</p></section>');
     if (on('galeria') && N.trabajos.length) {
       partes.push('<section class="s-sec ancha"><h3>Algunos de nuestros diseños</h3><div class="s-mini">' + N.trabajos.map(function (t) {
-        return '<button type="button" class="s-mini-btn" data-accion="producto" data-id="' + t.id + '"><img src="' + esc(t.img) + '" alt="" loading="lazy"><span>' + esc(t.t) + '</span></button>';
+        return '<button type="button" class="s-mini-btn" data-accion="producto" data-id="' + t.id + '"><img src="' + esc(t.img) + '" alt="" loading="lazy" decoding="async"><span>' + esc(t.t) + '</span></button>';
       }).join('') + '</div></section>');
     }
     partes.push('<section class="s-sec ancha"><h3>Acabados a tu gusto</h3><p class="s-dir">Elige el acabado: chapa de parota, melamina o tapiz.</p>' +
@@ -509,7 +511,7 @@
         }).join('') + '</div></div>';
       }).join('') + '<p class="s-aviso-muestra"><span class="s-etq">Ejemplo</span> Son colores de ejemplo. Los acabados reales los da el negocio.</p></section>');
     if (on('productos')) {
-      partes.push(seccion('productos', 'Lo que fabricamos', '<ul class="s-lista s-fab">' + N.categorias.map(function (c) {
+      partes.push(seccion('productos', 'Lo que ofrecemos', '<ul class="s-lista s-fab">' + N.categorias.map(function (c) {
         return '<li><button type="button" class="s-enlace" data-accion="cat" data-id="' + c.id + '">' + esc(c.nombre) + '</button><span>' + esc(c.texto) + '</span></li>';
       }).join('') + '</ul>'));
     }
@@ -540,8 +542,8 @@
     }
     if (on('ubicacion')) {
       partes.push(seccion('ubicacion', 'Dónde estamos', '<p class="s-dir">' + esc(s.direccion) + '</p>' +
-        (s.mapa ? '<img class="s-mapa-img" src="' + esc(s.mapa) + '" alt="Mapa de ' + esc(nombre()) + '" loading="lazy">'
-          : '<div class="s-mapa" aria-hidden="true"><span>Mapa de ejemplo</span></div>') +
+        (s.mapa ? '<img class="s-mapa-img" src="' + esc(s.mapa) + '" alt="Mapa de ' + esc(nombre()) + '" loading="lazy" decoding="async">'
+          : '<div class="s-mapa" aria-hidden="true"><span><svg width="14" height="14" viewBox="0 0 24 24"><path d="M12 21s-6.5-5.6-6.5-11a6.5 6.5 0 0 1 13 0c0 5.4-6.5 11-6.5 11Z" fill="none" stroke="currentColor" stroke-width="2"/><circle cx="12" cy="10" r="2.3" fill="currentColor"/></svg>Mapa de ejemplo</span></div>') +
         botonAviso('Ver en Google Maps', 'Aquí se abriría la ficha de ' + nombre() + ' en Google Maps.')));
     }
     if (on('google')) {
@@ -551,7 +553,7 @@
     if (on('faq')) partes.push(seccion('faq', 'Preguntas frecuentes', faqHtml()));
     if (on('qr')) {
       partes.push(seccion('qr', 'Comparte nuestra página', N.qr
-        ? '<div class="s-qr"><img class="s-qr-real" src="' + esc(N.qr) + '" alt="Código QR de esta muestra" loading="lazy"><p>Escanéalo para abrir esta muestra en tu celular.</p></div>'
+        ? '<div class="s-qr"><img class="s-qr-real" src="' + esc(N.qr) + '" alt="Código QR de esta muestra" loading="lazy" decoding="async"><p>Escanéalo para abrir esta muestra en tu celular.</p></div>'
         : '<div class="s-qr"><div class="s-qr-img" aria-hidden="true">' + qrFalso() + '</div><p>Este QR va impreso en el mostrador, volantes y tarjetas. <span class="s-etq">QR de ejemplo</span></p></div>'));
     }
     return partes;
@@ -581,7 +583,7 @@
       // aviso para el negocio: esto es una muestra, no la página final
       '<p class="s-muestra"><b>Página de muestra</b>Esta es una muestra de cómo podría verse la página de ' + esc(n) +
       '. La versión final no quedará exactamente igual: cada cambio que el negocio decida se acordará por mensaje o correo. ' +
-      'Las fotos vienen de sus redes sociales' + (on('modelos3d') ? ' y los modelos 3D son de demostración' : '') + '. ' + (on('ar') ? 'La realidad aumentada es solo una idea: se aplica en la página oficial si el negocio la contrata. ' : '') +
+      'Las fotos vienen de sus redes sociales' + (on('modelos3d') ? ' y los modelos 3D son de demostración' : '') + '. ' + (on('ar') ? 'El AR es una opción extra de cotización y no aparece en la muestra. ' : '') +
       'Si el negocio decide no contratar el servicio, 185ChangarroWeb eliminará esta muestra y no la usará para ningún otro fin ' +
       'que el de presentársela.</p></footer>';
 
@@ -818,8 +820,8 @@
   }
 
   // el 3D solo está activo mientras se ve: al cambiar a Foto, cerrar, salir de la pestaña o dejar de verse, el visor se quita
-  var observador = null;
-  function soltarObservador() { if (observador) { observador.disconnect(); observador = null; } }
+  var observador = null, timerFuera = 0;
+  function soltarObservador() { clearTimeout(timerFuera); if (observador) { observador.disconnect(); observador = null; } }
   function apagar3d(motivo) {
     if (visor.hidden || vis.modo !== '3d') return;
     vis.modo = 'foto';
@@ -829,8 +831,10 @@
   function vigilar3d() {
     var caja = visor.querySelector('.s-mv-caja');
     if (!caja || !window.IntersectionObserver) return;
+    // se apaga solo si lleva más de 2.5 s fuera de la vista (no al instante, para poder bajar a ver los colores)
     observador = new IntersectionObserver(function (en) {
-      if (!en[0].isIntersecting) apagar3d('El 3D se desactivó porque dejó de verse.');
+      clearTimeout(timerFuera);
+      if (!en[0].isIntersecting) timerFuera = setTimeout(function () { apagar3d('El 3D se desactivó porque dejó de verse.'); }, 2500);
     });
     observador.observe(caja);
   }
@@ -842,7 +846,7 @@
     var m = p.modelo && on('modelos3d') ? p.modelo : null;
     var es3d = vis.modo === '3d' && m;
     var media = es3d
-      ? '<div class="s-visor-media s-mv-caja"><model-viewer class="s-mv" src="' + esc(m.glb) + '" alt="Modelo 3D: ' + esc(p.nombre) + '" camera-controls touch-action="pan-y" auto-rotate rotation-per-second="18deg" interaction-prompt="none" ' +
+      ? '<div class="s-visor-media s-mv-caja"><model-viewer class="s-mv" src="' + esc(m.glb) + '" alt="Modelo 3D: ' + esc(p.nombre) + '" camera-controls touch-action="pan-y" ' + (MENOS_MOVIMIENTO.matches ? '' : 'auto-rotate rotation-per-second="18deg" ') + 'interaction-prompt="none" ' +
                 'shadow-intensity="1" shadow-softness="0.9" exposure="1.05" environment-image="neutral" camera-orbit="35deg 72deg auto">' +
         '</model-viewer><p class="s-mv-estado">Cargando 3D…</p></div>'
       : '<div class="s-visor-media"><img class="' + (p.contener ? 'contener' : '') + '" src="' + esc(p.img) + '" alt="' + esc(p.nombre) + '"></div>';

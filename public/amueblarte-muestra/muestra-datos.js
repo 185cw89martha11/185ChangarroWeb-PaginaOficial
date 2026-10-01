@@ -63,7 +63,7 @@ window.MUESTRA_DATOS = {
     // opcional: "Llenar como" no los toca. Los precios y paquetes están en EXTRAS (más abajo).
     { id: 'modelos3d', plan: 'extras', nombre: 'Modelos 3D de sus muebles', descripcion: 'El cliente gira el mueble en 3D, ve sus medidas y le prueba colores antes de cotizar.', activa: true, opcional: true,
       obligatoriaCon: ['ar'], nota: 'extra cotizable, pago único: se cotiza por paquete de modelos' },
-    { id: 'ar', plan: 'extras', nombre: 'Realidad aumentada (AR)', descripcion: 'Ver el modelo 3D desde la cámara del celular, para verlo en tu casa a tamaño real. Necesita los modelos 3D. Es una opción extra de cotización y no aparece en la muestra: se aplica en la página oficial si el negocio la contrata.', activa: true, opcional: true,
+    { id: 'ar', plan: 'extras', nombre: 'Realidad aumentada (AR)', descripcion: 'Ver el modelo 3D desde la cámara del celular, para verlo en tu casa a tamaño real. Necesita los modelos 3D. Es una opción extra de cotización y no aparece en la muestra: se aplica en la página oficial si el negocio la contrata.', activa: false, opcional: true,
       nota: 'extra cotizable, pago único; requiere los modelos 3D' }
   ],
 

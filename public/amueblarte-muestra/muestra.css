@@ -10,11 +10,11 @@
 }
 @media (prefers-color-scheme: dark){
   :root:not([data-theme="light"]){
-    --bg:#110F17; --panel:#19161F; --panel-2:#211D29; --ink:#ECE8F4; --muted:#A29CB3; --line:#302B3A;
-    --accent:#B79AF2; --accent-ink:#140F1F; --accent-soft:#241C35; --bezel:#060509; --focus:#B79AF2;
-    --shadow:0 1px 2px rgba(0,0,0,.4), 0 12px 34px rgba(0,0,0,.45);
-    color-scheme:dark;
-  }
+      --bg:#110F17; --panel:#19161F; --panel-2:#211D29; --ink:#ECE8F4; --muted:#A29CB3; --line:#302B3A;
+      --accent:#B79AF2; --accent-ink:#140F1F; --accent-soft:#241C35; --bezel:#060509; --focus:#B79AF2;
+      --shadow:0 1px 2px rgba(0,0,0,.4), 0 12px 34px rgba(0,0,0,.45);
+      color-scheme:dark;
+    }
 }
 :root[data-theme="dark"]{
   --bg:#110F17; --panel:#19161F; --panel-2:#211D29; --ink:#ECE8F4; --muted:#A29CB3; --line:#302B3A;
@@ -23,13 +23,14 @@
   color-scheme:dark;
 }
 *{box-sizing:border-box}
-html,body{height:100%}
+html, body{height:100%}
 body{margin:0; background:var(--bg); color:var(--ink); font-family:var(--f-ui); font-size:15px; line-height:1.45}
-button,input,textarea{font:inherit; color:inherit}
+button, input, textarea{font:inherit; color:inherit}
 button{cursor:pointer}
 :focus-visible{outline:2px solid var(--focus); outline-offset:2px}
-@media (prefers-reduced-motion: reduce){ *{transition:none!important} }
-
+@media (prefers-reduced-motion: reduce){
+  *{transition:none!important}
+}
 /* ---------- herramienta ---------- */
 .app{height:100%; display:grid; grid-template-rows:auto 1fr}
 .top{display:flex; align-items:center; gap:10px; padding:10px 16px; padding-top:calc(10px + env(safe-area-inset-top, 0px)); background:var(--panel); border-bottom:1px solid var(--line)}
@@ -41,15 +42,13 @@ button{cursor:pointer}
 .seg{display:flex; background:var(--panel-2); border:1px solid var(--line); border-radius:999px; padding:3px; flex:none}
 .seg button{display:inline-flex; align-items:center; gap:6px; border:0; background:transparent; padding:6px 12px; border-radius:999px; font-weight:600; font-size:13px; color:var(--muted)}
 .seg button[aria-pressed="true"]{background:var(--panel); color:var(--ink); box-shadow:0 1px 3px rgba(0,0,0,.14)}
-
 .main{min-height:0; display:grid; grid-template-columns:320px minmax(0,1fr)}
 .panel{background:var(--panel); border-right:1px solid var(--line); overflow-y:auto; padding:18px 18px 32px; display:flex; flex-direction:column; gap:24px}
 .panel h2{font-size:11px; text-transform:uppercase; letter-spacing:.12em; color:var(--muted); margin:0 0 10px; font-weight:700}
 .hint{font-size:13px; color:var(--muted); margin:0 0 10px; line-height:1.5}
 .field{display:flex; flex-direction:column; gap:5px; margin-bottom:12px}
 .field label{font-size:13px; font-weight:600}
-.field input,.field textarea{border:1px solid var(--line); background:var(--panel-2); border-radius:10px; padding:9px 11px; width:100%; resize:vertical}
-
+.field input, .field textarea{border:1px solid var(--line); background:var(--panel-2); border-radius:10px; padding:9px 11px; width:100%; resize:vertical}
 .toggles{display:flex; flex-direction:column}
 .tog{display:grid; grid-template-columns:1fr auto; column-gap:14px; row-gap:2px; padding:10px 0; border-top:1px solid var(--line); align-items:center; cursor:pointer}
 .tog:first-child{border-top:0; padding-top:0}
@@ -62,7 +61,6 @@ button{cursor:pointer}
 .switch input:checked + span{background:var(--accent)}
 .switch input:checked + span::after{transform:translateX(18px)}
 .switch input:focus-visible + span{outline:2px solid var(--focus); outline-offset:2px}
-
 .grupo{margin-top:10px; border:1px solid var(--line); border-radius:12px; background:var(--panel)}
 .grupo-cab{display:flex; align-items:center; justify-content:space-between; gap:8px; padding:10px 12px; cursor:pointer; list-style:none}
 .grupo-cab::-webkit-details-marker{display:none}
@@ -87,7 +85,6 @@ button{cursor:pointer}
 .tog.fija{cursor:default}
 .plan-sugerido{background:var(--accent-soft); border-radius:12px; padding:10px 12px; font-size:13px; line-height:1.45; margin-bottom:10px}
 .plan-sugerido b{font-size:14px}
-
 /* extras cotizables: paquete de modelos 3D y AR */
 .tag-precio{background:var(--accent-soft); border-color:transparent; color:var(--accent)}
 .ext{padding:2px 12px 12px; display:flex; flex-direction:column; gap:10px}
@@ -112,12 +109,10 @@ button{cursor:pointer}
 .ext-nota{margin:0; font-size:12.5px; color:var(--muted)}
 .presets{display:flex; flex-wrap:wrap; align-items:center; gap:6px; font-size:12.5px; color:var(--muted)}
 .chip-btn{border:1px solid var(--line); background:var(--panel-2); border-radius:999px; padding:4px 11px; font-size:12.5px; font-weight:600}
-
 .btn{display:inline-flex; align-items:center; justify-content:center; gap:6px; border:1px solid var(--line); background:var(--panel); padding:9px 14px; border-radius:10px; font-weight:600; font-size:13px}
 .btn.solid{background:var(--grad); color:var(--grad-ink); border-color:transparent; text-shadow:0 1px 2px rgba(40,20,70,.35)}
 .btn.wide{width:100%}
 .btn.icono{padding:7px}
-
 /* ---------- escenario y marcos ---------- */
 .stage{min-width:0; min-height:0; overflow:auto; display:flex; flex-direction:column; padding:24px 16px}
 /* aviso de que la dirección del sitio es ilustrativa (el dominio de ejemplo podría existir) */
@@ -127,18 +122,16 @@ button{cursor:pointer}
 .escala{margin:auto; width:380px; max-width:100%; flex:none}
 .marco{background:var(--bezel); box-shadow:var(--shadow); display:flex; flex-direction:column; overflow:hidden}
 .pantalla{flex:1; min-height:0; background:#FBFAF7; overflow:hidden}
-
 /* celular: 360 de ancho útil, se ajusta a la altura disponible */
 .marco.celular{width:100%;height:clamp(560px, calc(100dvh - 120px), 800px); border-radius:46px; padding:10px}
 .marco.celular .pantalla{border-radius:36px}
 .marco.celular .pantalla::before{content:""; position:absolute; top:10px; left:50%; width:96px; height:26px; transform:translateX(-50%); background:var(--bezel); border-radius:999px; z-index:3}
 .marco.celular .barra-nav{display:none}
 /* celular: sin barra de desplazamiento, como en un teléfono de verdad (se arrastra; ver arrastrable en muestra.js) */
-.marco.celular .sitio,.marco.celular .s-doc,.marco.celular .s-chat-msgs{scrollbar-width:none}
-.marco.celular .sitio::-webkit-scrollbar,.marco.celular .s-doc::-webkit-scrollbar,.marco.celular .s-chat-msgs::-webkit-scrollbar{display:none}
-.marco.celular .sitio,.marco.celular .s-doc{cursor:grab; -webkit-user-select:none; user-select:none}
+.marco.celular .sitio, .marco.celular .s-doc, .marco.celular .s-chat-msgs{scrollbar-width:none}
+.marco.celular .sitio::-webkit-scrollbar, .marco.celular .s-doc::-webkit-scrollbar, .marco.celular .s-chat-msgs::-webkit-scrollbar{display:none}
+.marco.celular .sitio, .marco.celular .s-doc{cursor:grab; -webkit-user-select:none; user-select:none}
 .marco.celular .arrastrando{cursor:grabbing}
-
 /* computadora: ventana de navegador de 1100×680 que muestra.js escala para que quepa */
 .marco.escritorio{width:1100px; height:680px; border-radius:12px; transform-origin:top left; background:#E4E2EA}
 .barra-nav{display:flex; align-items:center; gap:12px; padding:9px 14px; background:#E4E2EA; border-bottom:1px solid #D2CFDA}
@@ -147,7 +140,6 @@ button{cursor:pointer}
 .puntos i:nth-child(2){background:#F5BD4F}
 .puntos i:nth-child(3){background:#58C454}
 .url{flex:1; max-width:520px; margin:0 auto; background:#fff; color:#5C605D; border-radius:7px; padding:4px 12px; font:12.5px var(--f-mono); text-align:center; white-space:nowrap; overflow:hidden; text-overflow:ellipsis}
-
 /* ---------- sitio de prueba (siempre claro) ---------- */
 .pantalla{
   --brand:#448ACA; --s-bg:#FBFAF7; --s-card:#FFFFFF; --s-ink:#1C1E1D; --s-muted:#5C605D; --s-line:#E6E3DC;
@@ -161,191 +153,69 @@ button{cursor:pointer}
 .s-btn{display:inline-flex; align-items:center; justify-content:center; gap:6px; border:0; border-radius:10px; padding:10px 14px; background:var(--brand); color:#fff; font-weight:700; font-size:14px}
 .s-btn.suave{background:var(--brand-soft); color:var(--brand-deep)}
 .s-etq{display:inline-block; font-size:11px; font-weight:700; letter-spacing:.04em; text-transform:uppercase; padding:2px 8px; border-radius:999px; background:var(--s-line); color:var(--s-muted)}
-
 /* barra de arriba: logo, lista de cotización y el menú de 4 páginas; se queda fija al bajar */
 .s-barra{position:sticky; top:0; z-index:2; background:var(--s-card); border-bottom:2px solid var(--brand)}
 .s-barra-fila{display:flex; align-items:center; justify-content:space-between; gap:12px; padding:10px 16px 6px}
 /* celular: la primera fila va a la altura de la cámara (logo a la izquierda, cotización a la derecha) para que ocupe poco */
 .marco.celular .s-barra-fila{padding:8px 14px 4px}
-.marco.celular .s-logo-img{height:34px}
+.marco.celular .s-logo-img{height:42px}
 .s-logo-btn{border:0; background:none; padding:0; display:block; min-width:0}
 .s-logo{margin:0; min-width:0; padding:5px 12px; border:2px solid var(--brand); border-radius:999px; color:var(--brand); font:400 17px/1.2 'Young Serif', Georgia, serif; white-space:nowrap; overflow:hidden; text-overflow:ellipsis}
 .s-logo-img{display:block; height:48px; width:auto; min-width:0}
-
-/* portada: elegir sucursal */
-.s-portada{display:flex; flex-direction:column; gap:12px; padding:6px 0 10px}
-.s-portada h2{margin:0; font:400 26px/1.2 'Young Serif', Georgia, serif; color:var(--brand-deep)}
-.s-portada p{margin:0 0 4px; font-size:14px; color:var(--s-muted)}
-.s-suc-btn{display:flex; align-items:center; gap:14px; width:100%; padding:16px; border:2px solid var(--brand); border-radius:16px; background:var(--s-card); color:var(--s-ink); text-align:left; box-shadow:0 2px 8px rgba(0,0,0,.05)}
-.s-suc-num{flex:none; display:grid; place-items:center; width:40px; height:40px; border-radius:50%; background:var(--brand); color:#fff; font:400 20px 'Young Serif', Georgia, serif}
-.s-suc-txt{flex:1; min-width:0; display:flex; flex-direction:column; gap:2px}
-.s-suc-txt b{font-size:15.5px; line-height:1.25}
-.s-suc-txt small{font-size:13px; color:var(--s-muted)}
-.s-suc-txt em{font-style:normal; font-size:12px; font-weight:600; color:#177A43}
-.s-suc-txt em.no{color:#B0413E}
-.s-suc-flecha{flex:none; font-size:28px; line-height:1; color:var(--brand)}
-
 /* subpágina: nombre de la sucursal y regreso a la portada */
-.s-suc-cab{display:flex; flex-direction:column; align-items:flex-start; gap:2px}
-.s-suc-cab h2{margin:0; font:400 24px/1.2 'Young Serif', Georgia, serif; color:var(--brand-deep)}
-.s-suc-cab span{font-size:13.5px; color:var(--s-muted)}
 .s-volver{margin-bottom:6px; border:0; background:var(--brand-soft); color:var(--brand-deep); border-radius:999px; padding:6px 12px; font-size:13px; font-weight:700}
-.s-idioma{flex:none; display:flex; border:2px solid var(--brand); border-radius:999px; overflow:hidden}
-.s-idioma button{border:0; background:transparent; color:var(--brand); padding:5px 12px; font-size:13px; font-weight:700}
-.s-idioma button + button{border-left:2px solid var(--brand)}
-.s-idioma button[aria-pressed="true"]{background:var(--brand); color:#fff}
-
-.s-abierto{justify-self:start; display:inline-flex; align-items:center; gap:7px; padding:5px 6px 5px 12px; border-radius:999px; background:var(--brand-soft); color:var(--brand-deep); font-size:13px; font-weight:600}
-.s-abierto i{width:8px; height:8px; border-radius:50%; background:#1FA855}
-.s-abierto.cerrado i{background:#D9534F}
-
 /* × para quitar una función desde la muestra */
 .s-quitar{flex:none; width:26px; height:26px; padding:0; border:1px solid var(--s-line); border-radius:50%; background:var(--s-bg); color:var(--s-muted); font-size:17px; line-height:1; display:grid; place-items:center}
 .s-sec > .s-quitar{position:absolute; top:12px; right:12px}
-.s-abierto .s-quitar{width:20px; height:20px; font-size:14px; background:transparent; border-color:transparent; color:inherit}
 .s-flot{position:relative}
 .s-flot .s-quitar{position:absolute; top:-8px; left:-8px; width:22px; height:22px; font-size:14px; background:#fff; box-shadow:0 2px 6px rgba(0,0,0,.2)}
-
 /* menú: cada categoría se abre para ver sus platillos */
-.s-menu h3{font-size:28px; margin-bottom:12px}
-.s-cats{display:grid; gap:10px}
-.s-cat{border:2px solid var(--brand); border-radius:12px; background:var(--s-card)}
-.s-cat summary{display:flex; align-items:center; justify-content:space-between; gap:10px; padding:14px 16px; cursor:pointer; list-style:none; font-weight:700; color:var(--brand-deep)}
-.s-cat summary::-webkit-details-marker{display:none}
-.s-cat summary small{display:inline-grid; place-items:center; min-width:24px; height:24px; padding:0 6px; border-radius:999px; background:var(--brand-soft); font-size:12px}
-.s-cat summary::after{content:""; flex:none; width:8px; height:8px; border-right:2px solid currentColor; border-bottom:2px solid currentColor; transform:rotate(45deg); margin:-4px 4px 0 0; transition:transform .15s}
-.s-cat[open] summary::after{transform:rotate(-135deg); margin-top:4px}
-.s-cat summary span{flex:1}
-.s-cat .s-lista{padding:0 16px 12px}
-.s-marca{display:inline-block; font-style:normal; font-size:10.5px; font-weight:700; padding:1px 6px; border-radius:999px; background:#E6F1F8; color:#0B5A87; vertical-align:1px}
-.s-marca.picante{background:#FBE9E7; color:#A5311F}
 .s-btn-wa{flex:none; background:#1FA855}
-
 .s-cuerpo{flex:1; display:grid; gap:14px; padding:18px 16px 96px; align-content:start}
 .s-sec{position:relative; background:var(--s-card); border:1px solid var(--s-line); border-radius:16px; padding:16px 18px; min-width:0}
 .s-sec > h3{padding-right:32px}
-/* animalito: tan alto como la sección, pegado a la derecha y cortado a la mitad por el borde del recuadro.
-   Va detrás del contenido y un poco transparente para que el texto se siga leyendo. */
-.s-sec.con-animal{overflow:hidden}
-.s-animal{position:absolute; top:0; right:0; z-index:0; height:100%; width:auto; max-width:none; transform:translateX(50%); opacity:.35; pointer-events:none; user-select:none}
-.s-sec.con-animal > :not(.s-animal):not(.s-quitar){position:relative; z-index:1}
-.s-sec.con-animal > .s-quitar{z-index:2}
 /* el pez mira a la derecha: se voltea para que en la mitad que se ve quede su cara y no la cola */
-.s-sec[data-funcion="productos"] > .s-animal{transform:translateX(50%) scaleX(-1)}
 .s-lista li{display:flex; justify-content:space-between; gap:12px; padding:7px 0; border-top:1px solid var(--s-line); font-size:14px}
 .s-lista li:first-child{border-top:0; padding-top:0}
 .s-lista span{color:var(--s-muted)}
-.s-lista li.hoy span,.s-lista li.hoy b{color:var(--brand-deep); font-weight:700}
 .s-nota{margin:10px 0 0; font-size:13px; color:var(--s-muted)}
-
-.s-dias,.s-horas{display:flex; gap:6px; overflow-x:auto; padding-bottom:4px; margin-bottom:10px}
-.s-horas{flex-wrap:wrap; overflow:visible}
-.s-dias button,.s-horas button{flex:none; border:1px solid var(--s-line); background:var(--s-bg); border-radius:10px; padding:7px 10px; font-size:13px; line-height:1.2; text-align:center}
-.s-dias button b{display:block; font-size:16px}
-.s-dias button[aria-pressed="true"],.s-horas button[aria-pressed="true"]{background:var(--brand); border-color:var(--brand); color:#fff}
-
-/* galería de platillos: cada foto se abre en grande en el visor */
-.s-galeria{display:grid; grid-template-columns:repeat(2, 1fr); gap:12px 10px}
-.s-foto{display:flex; flex-direction:column; gap:6px; border:0; background:none; padding:0; text-align:left; color:var(--s-ink); cursor:zoom-in}
-.s-foto img{display:block; width:100%; aspect-ratio:4 / 5; object-fit:cover; border-radius:12px; background:var(--s-line)}
-.s-foto span{font-size:13px; font-weight:700; line-height:1.3}
-
-/* especial de la semana */
-.s-especial{display:grid; grid-template-columns:112px minmax(0,1fr); gap:14px; align-items:start}
-.s-especial > div{display:flex; flex-direction:column; gap:3px}
-.s-especial-t{align-self:flex-start; font-size:11px; font-weight:700; letter-spacing:.04em; text-transform:uppercase; padding:2px 8px; border-radius:999px; background:var(--brand); color:#fff}
-.s-especial b{font-size:15.5px}
-.s-especial span:not(.s-especial-t){font-size:13.5px; color:var(--s-muted)}
-.s-especial small{margin-top:4px; font-size:12px; color:var(--s-muted)}
-
 /* promociones, eventos y especialidades */
 .s-tabs{display:flex; gap:4px; padding:4px; margin-bottom:14px; border-radius:12px; background:var(--brand-soft)}
 .s-tabs button{flex:1; min-width:0; border:0; border-radius:9px; padding:7px 4px; background:transparent; color:var(--brand-deep); font-size:12.5px; font-weight:700}
 .s-tabs button[aria-selected="true"]{background:var(--s-card); box-shadow:0 1px 3px rgba(0,0,0,.12)}
-.s-promos{display:grid; gap:14px}
-.s-especial.sin-foto{grid-template-columns:64px minmax(0,1fr)}
-.s-promo-ico{display:grid; place-items:center; width:64px; height:64px; border-radius:14px; background:var(--brand-soft); color:var(--brand-deep); font-size:28px; font-weight:700}
-.s-especial .s-etq{align-self:flex-start; margin-top:4px}
-
-/* redes con sus seguidores */
-.s-red{display:flex; align-items:center; gap:12px; width:100%; padding:10px 12px; border:1px solid var(--s-line); border-radius:12px; background:var(--s-bg); color:var(--s-ink); text-align:left}
-.s-red-ico{flex:none; display:grid; place-items:center; width:36px; height:36px; border-radius:10px; color:#fff; font-weight:800; font-size:16px}
-.s-red-ico.instagram{background:linear-gradient(135deg, #F58529, #DD2A7B 55%, #8134AF)}
-.s-red-ico.facebook{background:#1877F2}
-.s-red-txt{flex:1; min-width:0; display:flex; flex-direction:column}
-.s-red-txt b{font-size:14px}
-.s-red-txt small{font-size:12px; color:var(--s-muted); overflow:hidden; text-overflow:ellipsis; white-space:nowrap}
-.s-red-num{flex:none; display:flex; flex-direction:column; align-items:flex-end; line-height:1.2}
-.s-red-num b{font-size:15px}
-.s-red-num small{font-size:11px; color:var(--s-muted)}
-
 /* avisos de la muestra (precios de ejemplo, reseñas de ejemplo) */
 .s-aviso-muestra{margin:10px 0 0; padding:9px 11px; border-left:3px solid var(--brand); border-radius:6px; background:var(--brand-soft); font-size:12.5px; line-height:1.45; color:var(--s-ink)}
-
 /* reservación: pasos, mesas libres y ocupadas */
 .s-paso{margin:4px 0 6px; font-size:13px; font-weight:700; color:var(--s-muted)}
-.s-apartado{margin:4px 0 12px; padding:12px; border:1px solid var(--s-line); border-radius:14px; background:var(--s-bg)}
-.s-apartado .s-leyenda{margin-bottom:0}
-.s-nota-mesa{margin:0 0 8px}
-.s-mesas{display:grid; grid-template-columns:repeat(5, 1fr); gap:6px; margin-bottom:8px}
-.s-mesas.espera .s-mesa{opacity:.55; cursor:default}
-.s-mesa{border:1px solid var(--s-line); background:var(--s-bg); border-radius:10px; padding:6px 2px; font-size:17px; font-weight:700; line-height:1.1; color:var(--s-ink)}
-.s-mesa small{display:block; font-size:10px; font-weight:600; color:var(--s-muted)}
-.s-mesa.ocupada{background:#ECEBE7; color:#A9A7A1; text-decoration:line-through; cursor:not-allowed}
-.s-mesa.ocupada small{color:inherit}
-.s-mesa[aria-pressed="true"]{background:var(--brand); border-color:var(--brand); color:#fff}
-.s-mesa[aria-pressed="true"] small{color:#fff}
-.s-leyenda{display:flex; flex-wrap:wrap; gap:4px 14px; margin:0 0 12px; font-size:12px; color:var(--s-muted)}
-.s-leyenda span{display:inline-flex; align-items:center; gap:5px}
-.s-leyenda i{width:11px; height:11px; border-radius:3px; border:1px solid var(--s-line); background:var(--s-bg)}
-.s-leyenda i.ocupada{background:#DAD8D2}
-.s-leyenda i.tuya{background:var(--brand); border-color:var(--brand)}
-
 .s-resena{padding:10px 0; border-top:1px solid var(--s-line)}
 .s-resena:first-of-type{border-top:0; padding-top:0}
 .s-resena p{margin:4px 0 0; font-size:14px}
 .s-resena small{display:flex; align-items:center; gap:8px; color:var(--s-muted); font-size:12.5px}
 .s-estrellas{color:#B07A00; letter-spacing:1px}
-
-.s-evento{display:flex; gap:12px; padding:10px 0; border-top:1px solid var(--s-line)}
-.s-evento:first-of-type{border-top:0; padding-top:0}
-.s-evento .f{flex:none; width:76px; font-size:12px; font-weight:700; color:var(--brand-deep); background:var(--brand-soft); border-radius:10px; padding:6px; text-align:center; line-height:1.25}
-.s-evento b{display:block; font-size:14.5px}
-.s-evento span{font-size:13px; color:var(--s-muted)}
-
 .s-faq details{border-top:1px solid var(--s-line); padding:9px 0}
 .s-faq details:first-of-type{border-top:0; padding-top:0}
 .s-faq summary{cursor:pointer; font-weight:600; font-size:14px}
 .s-faq p{margin:6px 0 0; font-size:14px; color:var(--s-muted)}
-
 .s-dir{margin:0 0 10px; font-size:14px; color:var(--s-muted)}
 .s-mapa{height:130px; border-radius:12px; display:grid; place-items:center; font-size:12.5px; color:var(--s-muted); margin-bottom:10px;
   background:repeating-linear-gradient(0deg, transparent 0 22px, var(--s-line) 22px 24px), repeating-linear-gradient(90deg, var(--brand-soft) 0 30px, var(--s-line) 30px 32px)}
+.s-mapa svg{vertical-align:-3px; margin-right:5px}
 .s-mapa span{background:var(--s-card); padding:4px 10px; border-radius:999px}
 .s-mapa-img{display:block; width:100%; height:auto; border-radius:12px; border:1px solid var(--s-line); margin-bottom:10px}
-.s-suc{display:flex; justify-content:space-between; align-items:center; gap:10px; padding:9px 0; border-top:1px solid var(--s-line)}
-.s-suc:first-of-type{border-top:0; padding-top:0}
-.s-suc b{display:block; font-size:14.5px}
-.s-suc span{font-size:13px; color:var(--s-muted)}
-
-.s-redes{display:flex; flex-direction:column; gap:8px}
 .s-qr{display:flex; align-items:center; gap:14px}
 .s-qr-img{flex:none; width:96px; height:96px; padding:6px; background:#fff; border:1px solid var(--s-line); border-radius:8px; display:grid; grid-template-columns:repeat(21, 1fr)}
 .s-qr-img i.n{background:#1C1E1D}
 .s-qr p{margin:0; font-size:13px; color:var(--s-muted)}
 .s-qr-real{flex:none; width:120px; height:120px; padding:6px; background:#fff; border:1px solid var(--s-line); border-radius:8px}
-
-.s-pie{padding:18px 16px 22px; text-align:center; font-size:12.5px; color:var(--s-muted); border-top:1px solid var(--s-line); display:flex; flex-direction:column; gap:6px}
+.s-pie{padding:18px 16px 92px; text-align:center; font-size:12.5px; color:var(--s-muted); border-top:1px solid var(--s-line); display:flex; flex-direction:column; gap:6px}
 .s-pie nav{display:flex; justify-content:center; flex-wrap:wrap; gap:6px 14px}
 .s-pie button{border:0; background:none; padding:0; font-size:12.5px; color:var(--brand-deep); text-decoration:underline}
 .s-contacto{display:flex; flex-direction:column; gap:2px; overflow-wrap:anywhere}
 .s-contacto b{color:var(--s-ink); font-size:13.5px}
 .s-enlace{border:0; background:none; padding:0; font:inherit; color:var(--brand-deep); text-decoration:underline}
-.s-evento small{display:block; margin-top:3px; font-size:12px; color:var(--s-muted)}
 /* nota del pie: avisa al negocio que es una muestra */
 .s-muestra{margin:8px 0 0; padding:12px 14px; border:1px dashed color-mix(in srgb, var(--brand) 45%, #fff); border-radius:12px; background:var(--brand-soft); color:var(--s-ink); text-align:left; font-size:12.5px; line-height:1.5}
 .s-muestra b{display:block; margin-bottom:2px; color:var(--brand-deep); font-size:13px}
-
 /* visor de fotos: en celular el texto va abajo; en computadora, a la derecha */
 .s-visor{position:absolute; inset:0; z-index:6; display:grid; place-items:center; padding:48px 14px 20px; background:rgba(10,20,30,.78); container-type:inline-size}
 .s-visor-caja{position:relative; width:100%; max-height:100%; display:flex; flex-direction:column; background:var(--s-card); border-radius:16px; overflow-x:hidden; overflow-y:auto; box-shadow:0 20px 50px rgba(0,0,0,.4)}
@@ -355,7 +225,7 @@ button{cursor:pointer}
 .s-visor-txt{padding:14px 16px 18px}
 .s-visor-txt h2{margin:0 0 6px; font:400 20px/1.25 'Young Serif', Georgia, serif; color:var(--brand)}
 .s-visor-txt p{margin:0; font-size:14px; color:var(--s-muted)}
-.s-visor-x{position:absolute; top:10px; right:10px; z-index:1; width:34px; height:34px; border:0; border-radius:50%; background:rgba(255,255,255,.92); color:var(--s-ink); font-size:22px; line-height:1; box-shadow:0 2px 8px rgba(0,0,0,.25)}
+.s-visor-x{position:absolute; top:10px; right:10px; z-index:3; width:34px; height:34px; border:0; border-radius:50%; background:rgba(255,255,255,.92); color:var(--s-ink); font-size:22px; line-height:1; box-shadow:0 2px 8px rgba(0,0,0,.25)}
 @container (min-width: 600px){
   .s-visor-caja{flex-direction:row; max-width:860px; height:min(100%, 560px); overflow:hidden}
   .s-visor-media{width:58%}
@@ -365,7 +235,6 @@ button{cursor:pointer}
   .s-visor-txt h2{font-size:26px}
   .s-visor-txt p{font-size:15.5px}
 }
-
 /* documentos legales del negocio: cubren la pantalla como si fueran otra página */
 .s-doc{position:absolute; inset:0; z-index:5; overflow-y:auto; background:var(--s-bg); font-size:14px; line-height:1.55}
 .s-doc-barra{position:sticky; top:0; padding:46px 16px 10px; background:var(--s-bg); border-bottom:1px solid var(--s-line)}
@@ -378,7 +247,6 @@ button{cursor:pointer}
 .s-doc ul{margin:0 0 6px; padding-left:20px}
 .s-doc-fecha{font-size:12.5px; color:var(--s-muted)}
 .s-vacio{margin:0 16px 16px; padding:18px; text-align:center; border:1.5px dashed var(--s-line); border-radius:16px; color:var(--s-muted); font-size:14px}
-
 /* botones flotantes: quedan fijos aunque el sitio se desplace */
 .s-flotantes{position:absolute; right:14px; bottom:14px; left:14px; z-index:4; display:flex; flex-direction:column; align-items:flex-end; gap:10px; pointer-events:none}
 .s-flotantes > *{pointer-events:auto}
@@ -393,7 +261,6 @@ button{cursor:pointer}
 .s-msg.yo{background:var(--brand); color:#fff; align-self:flex-end}
 .s-chat-preg{display:flex; flex-wrap:wrap; gap:6px; padding:0 12px 12px}
 .s-chat-preg button{border:1px solid var(--s-line); background:var(--s-bg); border-radius:999px; padding:5px 10px; font-size:12.5px}
-
 /* ---------- AmueblArte: menú, inicio, catálogo, cotización y 3D ---------- */
 .s-nav{display:grid; grid-template-columns:repeat(4, minmax(0, 1fr)); border-top:1px solid var(--s-line)}
 .s-nav button{border:0; background:none; min-height:44px; padding:6px 3px; display:grid; place-items:center; text-align:center; font-size:12.5px; font-weight:700; line-height:1.15; color:var(--s-ink)}
@@ -402,12 +269,10 @@ button{cursor:pointer}
 .s-cot-btn b{min-width:20px; height:20px; padding:0 5px; border-radius:999px; background:var(--brand); color:#fff; font-size:12px; display:inline-grid; place-items:center}
 .marco.celular .s-cot-btn b{position:absolute; top:-5px; right:-5px}
 .s-cot-txt{display:none}
-
 .s-btn.claro{background:#fff; color:var(--brand-deep)}
 .s-btn.fantasma{background:transparent; color:#fff; box-shadow:inset 0 0 0 2px rgba(255,255,255,.85)}
 .s-btn.dentro{background:#177A43}
 .s-acciones{display:flex; flex-wrap:wrap; gap:8px}
-
 /* inicio: portada con el lema */
 .s-hero{display:grid; gap:14px; padding:22px 18px; border-radius:18px; background:linear-gradient(160deg, var(--brand-deep), var(--brand)); color:#fff}
 .s-hero-txt{display:flex; flex-direction:column; gap:10px; align-items:flex-start}
@@ -416,7 +281,6 @@ button{cursor:pointer}
 .s-hero p{margin:0; font-size:14.5px; line-height:1.5; opacity:.92}
 .s-hero-botones{display:flex; flex-wrap:wrap; gap:8px; margin-top:4px}
 .s-hero-foto{display:block; width:100%; max-height:230px; object-fit:cover; border-radius:14px; box-shadow:0 8px 22px rgba(0,0,0,.3)}
-
 /* categorías */
 .s-catgrid{display:grid; grid-template-columns:repeat(2, minmax(0, 1fr)); gap:10px}
 .s-catt{position:relative; display:block; aspect-ratio:1 / 1; padding:0; border:0; border-radius:14px; overflow:hidden; background:var(--brand); text-align:left; color:#fff}
@@ -426,11 +290,14 @@ button{cursor:pointer}
 .s-catt b{font:400 17px/1.2 'Young Serif', Georgia, serif}
 .s-catt small{font-size:12px; opacity:.9}
 .s-catt.sin-foto{aspect-ratio:auto; min-height:76px}
+/* en 2 columnas, si sobra una tarjeta se estira a lo ancho para no dejar un hueco */
+.s-catgrid > .s-catt:last-child:nth-child(odd):not(.sin-foto){grid-column:1 / -1; aspect-ratio:2 / 1}
+.s-mini > :last-child:nth-child(odd){grid-column:1 / -1}
+.s-mini > :last-child:nth-child(odd) img{aspect-ratio:2 / 1}
 .s-catt.sin-foto span{position:static; padding:14px 12px}
 .s-cat-cab{margin-bottom:12px}
 .s-cat-cab h4{margin:0 0 2px; font:400 22px/1.2 'Young Serif', Georgia, serif; color:var(--brand-deep)}
 .s-cat-cab p{margin:0; font-size:13.5px; color:var(--s-muted)}
-
 /* catálogo: búsqueda, filtros y galería de cada categoría */
 .s-catalogo h3{font-size:24px}
 .s-busca{display:flex; align-items:center; gap:8px; margin-bottom:10px; padding:9px 12px; border:2px solid var(--brand); border-radius:12px; background:#fff; color:var(--brand)}
@@ -451,7 +318,6 @@ button{cursor:pointer}
 .s-prod-acc{margin-top:auto; padding-top:6px; display:flex; flex-direction:column; gap:6px}
 .s-prod-acc .s-btn{padding:8px; font-size:12.5px}
 .s-prod.sin-foto .s-prod-txt{padding-top:12px}
-
 /* inicio: muebles con 3D */
 .s-mini{display:grid; grid-template-columns:repeat(2, minmax(0, 1fr)); gap:10px}
 .s-mini-btn{position:relative; display:flex; flex-direction:column; gap:6px; padding:0 0 10px; border:1px solid var(--s-line); border-radius:12px; overflow:hidden; background:var(--s-card); text-align:left; color:var(--s-ink)}
@@ -459,7 +325,6 @@ button{cursor:pointer}
 .s-mini-btn span{padding:0 10px; font-size:12.5px; font-weight:700; line-height:1.25}
 .s-mini-btn em{position:absolute; left:8px; top:8px; padding:3px 8px; border-radius:999px; background:var(--brand); color:#fff; font-style:normal; font-size:10.5px; font-weight:800}
 .s-mini-btn:not(:has(img)) em{position:static; align-self:flex-start; margin:10px 0 0 10px}
-
 /* quiénes somos y contacto */
 .s-lema{margin:0 0 8px; font:400 22px/1.2 'Young Serif', Georgia, serif; color:var(--brand-deep)}
 .s-nosotros p{font-size:14.5px; line-height:1.55}
@@ -470,7 +335,6 @@ button{cursor:pointer}
 .s-fab li, .s-contactos li{align-items:baseline; flex-wrap:wrap}
 .s-fab li span{flex:1 1 55%; text-align:right}
 .s-contactos li b{text-align:right}
-
 /* lista de cotización */
 .s-cot-lista li{display:grid; grid-template-columns:48px minmax(0, 1fr) auto; gap:10px; align-items:center; padding:10px 0; border-top:1px solid var(--s-line)}
 .s-cot-lista li:first-child{border-top:0}
@@ -481,14 +345,13 @@ button{cursor:pointer}
 .s-cant{display:inline-flex; align-items:center; gap:8px}
 .s-cant button{width:28px; height:28px; border:1px solid var(--s-line); border-radius:50%; background:var(--s-card); font-size:16px; line-height:1; color:var(--brand-deep)}
 .s-cot-msg{margin:0 0 12px; padding:10px 12px; border-radius:10px; background:var(--brand-soft); font:13px/1.5 var(--f-ui); white-space:pre-wrap; overflow-wrap:anywhere}
-
 /* visor 3D */
 .s-visor-txt .s-tabs{margin-bottom:10px}
-.s-mv-caja{position:relative; height:290px; background:radial-gradient(circle at 50% 38%, #fff, #E6E1D8)}
+/* el modelo se queda fijo arriba mientras se baja a elegir colores */
+.s-mv-caja{position:sticky; top:0; z-index:2; height:290px; background:radial-gradient(circle at 50% 38%, #fff, #E6E1D8)}
 .s-mv{display:block; width:100%; height:100%; --poster-color:transparent; background:transparent}
 .s-mv-estado{position:absolute; inset:auto 12px 54px; margin:0; padding:8px 10px; border-radius:10px; background:rgba(255,255,255,.9); font-size:12.5px; color:var(--s-muted); text-align:center; pointer-events:none}
 .s-mv-estado[hidden]{display:none}
-.s-ar-btn{position:absolute; left:50%; bottom:12px; transform:translateX(-50%); border:0; border-radius:999px; padding:10px 16px; background:var(--brand); color:#fff; font-weight:700; font-size:13.5px; box-shadow:0 6px 16px rgba(0,0,0,.3); white-space:nowrap}
 .s-medidas{margin:8px 0 0!important; font-size:13px!important}
 .s-opciones{margin-top:10px}
 .s-opciones .s-paso{margin:0 0 6px}
@@ -500,7 +363,6 @@ button{cursor:pointer}
 .s-color[aria-pressed="true"]{box-shadow:0 0 0 3px var(--brand)}
 .s-ar-ayuda{margin-top:8px!important; font-size:12.5px!important}
 .s-visor-cot{width:100%; margin-top:14px}
-
 /* el sitio responde al ancho del marco, no al de la ventana */
 @container (min-width: 700px){
   /* computadora: logo, menú y cotización en una sola fila */
@@ -521,9 +383,10 @@ button{cursor:pointer}
   .s-catgrid{grid-template-columns:repeat(3, minmax(0, 1fr))}
   .s-grid{grid-template-columns:repeat(4, minmax(0, 1fr))}
   .s-mini{grid-template-columns:repeat(5, minmax(0, 1fr))}
+  .s-catgrid > .s-catt:last-child:nth-child(odd){grid-column:auto; aspect-ratio:1 / 1}
+  .s-mini > :last-child:nth-child(odd){grid-column:auto}
   .s-prod-acc{flex-direction:row}
 }
-
 /* ---------- aviso y modal ---------- */
 .aviso{position:fixed; left:50%; bottom:calc(20px + env(safe-area-inset-bottom, 0px)); transform:translateX(-50%); z-index:50; max-width:calc(100% - 32px); background:var(--ink); color:var(--bg); padding:10px 16px; border-radius:12px; font-size:13.5px; box-shadow:var(--shadow)}
 .modal{width:min(560px, calc(100% - 32px)); border:1px solid var(--line); border-radius:16px; padding:18px; background:var(--panel); color:var(--ink); box-shadow:var(--shadow)}
@@ -533,7 +396,6 @@ button{cursor:pointer}
 .modal textarea{width:100%; border:1px solid var(--line); background:var(--panel-2); border-radius:10px; padding:10px 12px; font:12.5px/1.5 var(--f-mono); resize:vertical}
 .modal-acciones{display:flex; justify-content:flex-end; gap:8px; margin-top:12px}
 .btn.wa{margin-top:10px; padding:12px 16px; background:#1FA855; border-color:#1FA855; color:#fff; font-size:14.5px; text-decoration:none}
-
 /* ---------- celular (se enseña desde el teléfono) ---------- */
 /* muestra.js le pone .vertical al body cuando la ventana es angosta o muy vertical (un celular):
    primero se ve el teléfono y el panel sale desde la izquierda con el botón "Ábreme…" */
@@ -550,7 +412,6 @@ button{cursor:pointer}
 .vertical .seg-lugar{display:flex; justify-content:center; margin-bottom:12px}
 .velo{position:fixed; inset:0; z-index:35; background:rgba(10,8,16,.5)}
 .vertical.panel-abierto{overflow:hidden}
-
 /* portada: ventajas, cotizar en 3 pasos y datos de la cotización */
 .s-ventajas{padding:14px}
 .s-vent-grid{display:grid; grid-template-columns:repeat(2, minmax(0, 1fr)); gap:10px}
@@ -564,12 +425,11 @@ button{cursor:pointer}
 .s-pasos span{font-size:13px; color:var(--s-muted)}
 .s-cot-campos{display:grid; gap:10px; margin:12px 0}
 .s-cot-campos label{display:flex; flex-direction:column; gap:4px; font-size:13px; font-weight:600}
-.s-cot-campos input,.s-cot-campos textarea{border:1px solid var(--s-line); border-radius:10px; padding:9px 11px; background:#fff; font:inherit; font-weight:400; color:var(--s-ink); resize:vertical; -webkit-user-select:text; user-select:text}
+.s-cot-campos input, .s-cot-campos textarea{border:1px solid var(--s-line); border-radius:10px; padding:9px 11px; background:#fff; font:inherit; font-weight:400; color:var(--s-ink); resize:vertical; -webkit-user-select:text; user-select:text}
 @container (min-width: 700px){
   .s-vent-grid{grid-template-columns:repeat(4, minmax(0, 1fr))}
   .s-pasos{grid-template-columns:repeat(3, 1fr)}
 }
-
 /* ---------- 3D bajo pedido, acabados, "Combina con" y resumen de la petición ---------- */
 .s-3d.pedido{background:var(--s-card); color:var(--s-muted); border:1px solid var(--s-line)}
 .s-acab{display:flex; align-items:center; gap:12px; margin-top:10px}
@@ -586,7 +446,6 @@ button{cursor:pointer}
 .resumen span{font-size:11.5px; color:var(--muted)}
 .resumen b{font-size:13.5px}
 .modal-acciones{flex-wrap:wrap}
-
 /* imprimir o guardar en PDF: solo la hoja con el resumen y el mensaje */
 .hoja-impresion{display:none}
 @media print{
@@ -597,6 +456,9 @@ button{cursor:pointer}
   .hoja-impresion pre{white-space:pre-wrap; font:12.5px/1.5 var(--f-mono)}
   html, body{height:auto}
 }
-
 a.s-enlace{color:var(--brand); font-weight:600; text-decoration:underline; text-underline-offset:2px}
 .s-pie nav a{color:inherit; text-decoration:underline; font-size:inherit}
+
+/* pista para girar el modelo 3D: se apaga sola a los pocos segundos */
+.s-mv-caja::after{content:'↔ Arrastra para girar'; position:absolute; left:50%; bottom:10px; transform:translateX(-50%); padding:4px 12px; border-radius:999px; background:rgba(0,0,0,.55); color:#fff; font-size:12px; font-weight:600; white-space:nowrap; pointer-events:none; animation:s-oculta .4s 4.5s forwards}
+@keyframes s-oculta{to{opacity:0; visibility:hidden}}
