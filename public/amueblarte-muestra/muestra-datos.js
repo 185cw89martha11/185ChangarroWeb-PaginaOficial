@@ -105,6 +105,9 @@ window.MUESTRA_DATOS = {
   NEGOCIO: {
     titular: 'Nombre del dueño o razón social',
     correoDatos: 'info@amueblarte.com',
+    // QR real: lleva directo a esta muestra en nuestro sitio (https://one85changarroweb.onrender.com/amueblarte-muestra/).
+    // Se generó sin servicios intermedios, así que no caduca. ?v= obliga a bajar la imagen nueva si se cambia.
+    qr: 'img/qr.png?v=1',
     // su Facebook (con el teléfono 392 121 4132, que también viene de ahí)
     facebook: 'https://www.facebook.com/p/AmueblArte-100091426114526/',
     // dominio que ya tiene el negocio (en la barra de la muestra y en el correo profesional)
