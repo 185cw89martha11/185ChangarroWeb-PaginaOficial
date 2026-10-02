@@ -40,7 +40,10 @@ const TYPES = {
   '.webp': 'image/webp',
   '.ico': 'image/x-icon',
   '.woff2': 'font/woff2',
-  '.glb': 'model/gltf-binary'
+  '.glb': 'model/gltf-binary',
+  '.txt': 'text/plain; charset=utf-8',
+  '.wav': 'audio/wav',
+  '.mp3': 'audio/mpeg'
 };
 
 function send(res, status, body, type) {
@@ -58,6 +61,17 @@ const server = http.createServer((req, res) => {
     pathname = decodeURIComponent(url.pathname);
     search = url.search;
   } catch (e) { return send(res, 400, 'Dirección no válida'); }
+
+  // La invitación de ejemplo vive en /15anos-demo/ (sin ñ, para que la carpeta sea segura en cualquier sistema).
+  // Quien escriba /15años-demo/ llega al mismo lugar.
+  const ALIAS = '/15años-demo';
+  const norm = pathname.normalize('NFC');
+  if (norm === ALIAS || norm.startsWith(ALIAS + '/')) {
+    res.writeHead(301, { Location: '/15anos-demo' + norm.slice(ALIAS.length) + search });
+    return res.end();
+  }
+  // Las invitaciones de ejemplo no deben aparecer en buscadores.
+  if (pathname.startsWith('/15anos-demo')) res.setHeader('X-Robots-Tag', 'noindex, nofollow');
 
   if (pathname.startsWith('/api/')) return solicitudes.manejar(req, res, pathname);
 
