@@ -100,7 +100,9 @@ body.menu-abierto{overflow:hidden}
 .intro-on body{overflow:hidden}
 .intro-on main,.intro-on .pie,.intro-on .menu-btn,.intro-on .franja-demo{visibility:hidden}
 .intro{position:fixed;inset:0;z-index:100;overflow:hidden;color:#fff;background:var(--texto);background:radial-gradient(circle at 50% 30%,color-mix(in srgb,var(--acento) 65%,#000),#12081f 85%)}
-.intro.sale{transform:translateY(-105%);transition:transform .9s cubic-bezier(.7,0,.8,.4)}
+/* salida: primero la carta/hoja sube; 1 s después el fondo la sigue */
+.intro.sale{transform:translateY(-105%);transition:transform .9s cubic-bezier(.7,0,.8,.4) 1s;pointer-events:none}
+.intro.sale .intro-saltar{visibility:hidden}
 .intro-fondo{position:absolute;inset:0;pointer-events:none;animation:titila 3.2s ease-in-out infinite alternate;
  background-image:radial-gradient(2px 2px at 12% 18%,#fff 50%,transparent),radial-gradient(3px 3px at 80% 12%,#fde68a 50%,transparent),radial-gradient(2px 2px at 30% 70%,#fff 50%,transparent),radial-gradient(3px 3px at 88% 64%,#fff 50%,transparent),radial-gradient(2px 2px at 55% 90%,#fde68a 50%,transparent),radial-gradient(2px 2px at 66% 40%,#fff 50%,transparent),radial-gradient(3px 3px at 8% 52%,#fde68a 50%,transparent)}
 .intro-saltar{position:absolute;top:.8rem;right:.8rem;z-index:3;margin:0}
@@ -114,10 +116,12 @@ body.menu-abierto{overflow:hidden}
 .cara{position:absolute;inset:0;border-radius:18px;backface-visibility:hidden;-webkit-backface-visibility:hidden;box-shadow:0 22px 50px rgba(0,0,0,.55);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:.4rem;padding:1.4rem;text-align:center}
 .dorso{transform:rotateY(180deg);background:var(--acento);background-image:repeating-linear-gradient(45deg,rgba(255,255,255,.14) 0 2px,transparent 2px 16px),repeating-linear-gradient(-45deg,rgba(255,255,255,.14) 0 2px,transparent 2px 16px);border:3px solid rgba(255,255,255,.2)}
 .dorso::after{content:'';position:absolute;inset:12px;border:2px solid rgba(255,255,255,.7);border-radius:12px}
-.sello{position:relative;z-index:1;width:6.4rem;height:6.4rem;border-radius:50%;background:#fff;color:var(--acento);display:flex;align-items:center;justify-content:center;font:400 2.6rem var(--f-titulo);box-shadow:0 0 0 6px rgba(255,255,255,.35)}
+.sello{position:relative;z-index:1;width:6.4rem;height:6.4rem;border-radius:50%;background:#fff;color:var(--acento);display:flex;align-items:center;justify-content:center;font:700 1.45rem/1.1 var(--f-texto);letter-spacing:.02em;box-shadow:0 0 0 6px rgba(255,255,255,.35)}
 .frente{background:var(--fondo);color:var(--texto);border:3px solid var(--acento)}
 .f-chico{margin:0;text-transform:uppercase;letter-spacing:.2em;font-size:.85rem;font-weight:700;color:var(--acento)}
 .f-nombre{margin:.3rem 0;font:400 clamp(2.6rem,13vw,3.4rem)/1.05 var(--f-titulo)}
+.f-demo{margin:.9rem 0 0;padding:.3rem .8rem;border:2px solid currentColor;border-radius:999px;font-size:.8rem;font-weight:700;text-transform:uppercase;letter-spacing:.12em;color:var(--acento)}
+.dorso .f-demo{position:relative;z-index:1;color:#fff}
 .f-toca{margin:1.1rem 0 0;font-weight:700;animation:pulso 1.6s ease-in-out infinite}
 .intro.abierta .carta{opacity:0;transform:scale(.7);pointer-events:none}
 .hoja{position:absolute;inset:0;margin:auto;width:min(90vw,430px);height:fit-content;max-height:94vh;overflow:hidden;padding:2rem 1.4rem 1.6rem;border-radius:6px;text-align:center;background:var(--fondo);color:var(--texto);box-shadow:0 26px 60px rgba(0,0,0,.6);opacity:0;transform:scale(.55) rotate(-5deg);pointer-events:none;transition:opacity .6s .25s,transform .8s .25s cubic-bezier(.2,1.1,.3,1)}
@@ -132,6 +136,7 @@ body.menu-abierto{overflow:hidden}
 .h-barra{height:6px;margin:1rem auto 0;max-width:220px;border-radius:99px;background:rgba(0,0,0,.12);overflow:hidden}
 .h-barra span{display:block;height:100%;width:0;background:var(--acento)}
 .intro.abierta .h-barra span{animation:llena 5s linear forwards}
+.intro.sale .carta,.intro.sale .hoja{opacity:1;transform:translateY(-130vh);transition:transform .9s cubic-bezier(.7,0,.8,.4)}
 @keyframes cae{from{transform:translateY(-120vh) rotate(-10deg)}70%{transform:translateY(18px) rotate(2deg)}to{transform:none}}
 @keyframes flota{0%,100%{transform:translateY(0) rotate(-1.4deg)}50%{transform:translateY(-14px) rotate(1.4deg)}}
 @keyframes pulso{50%{opacity:.45}}

@@ -15,7 +15,7 @@
       raiz.classList.remove('intro-on');
       intro.classList.add('sale');
       window.scrollTo(0, 0);
-      setTimeout(function () { intro.remove(); }, 1000);
+      setTimeout(function () { intro.remove(); }, 2300);
     };
     var abreCarta = function () {
       if (abierta || !intro.classList.contains('listo')) return;
@@ -28,6 +28,10 @@
     carta.addEventListener('keydown', function (ev) {
       if (ev.key === 'Enter' || ev.key === ' ') { ev.preventDefault(); abreCarta(); }
     });
+    // Mientras corre el temporizador, la página va cargando por detrás (imágenes y música).
+    Array.prototype.forEach.call(document.querySelectorAll('img[loading="lazy"]'), function (im) { im.loading = 'eager'; });
+    var btnPre = document.getElementById('musica');
+    if (btnPre) { var pre = new Audio(); pre.preload = 'auto'; pre.src = btnPre.dataset.src; }
     requestAnimationFrame(function () { intro.classList.add('cayo'); });
     setTimeout(function () { intro.classList.add('giro'); }, 1500);
     setTimeout(function () { intro.classList.add('listo'); carta.focus({ preventScroll: true }); }, 2800);

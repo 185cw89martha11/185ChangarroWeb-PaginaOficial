@@ -1,2 +1,2 @@
 User-agent: *
-Disallow: /15anos-demo/
+Disallow: /ejemplodeevento-muestra/

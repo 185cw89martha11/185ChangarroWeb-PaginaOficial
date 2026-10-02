@@ -62,16 +62,17 @@ const server = http.createServer((req, res) => {
     search = url.search;
   } catch (e) { return send(res, 400, 'Dirección no válida'); }
 
-  // La invitación de ejemplo vive en /15anos-demo/ (sin ñ, para que la carpeta sea segura en cualquier sistema).
-  // Quien escriba /15años-demo/ llega al mismo lugar.
-  const ALIAS = '/15años-demo';
+  // La invitación de ejemplo vive en /ejemplodeevento-muestra/ (sin ñ, para que la carpeta sea segura en cualquier sistema).
+  // Los nombres anteriores (/15anos-demo, /15años-demo) redirigen ahí para que los enlaces ya enviados sigan sirviendo.
   const norm = pathname.normalize('NFC');
-  if (norm === ALIAS || norm.startsWith(ALIAS + '/')) {
-    res.writeHead(301, { Location: '/15anos-demo' + norm.slice(ALIAS.length) + search });
-    return res.end();
+  for (const viejo of ['/15años-demo', '/15anos-demo']) {
+    if (norm === viejo || norm.startsWith(viejo + '/')) {
+      res.writeHead(301, { Location: '/ejemplodeevento-muestra' + norm.slice(viejo.length) + search });
+      return res.end();
+    }
   }
   // Las invitaciones de ejemplo no deben aparecer en buscadores.
-  if (pathname.startsWith('/15anos-demo')) res.setHeader('X-Robots-Tag', 'noindex, nofollow');
+  if (pathname.startsWith('/ejemplodeevento-muestra')) res.setHeader('X-Robots-Tag', 'noindex, nofollow');
 
   if (pathname.startsWith('/api/')) return solicitudes.manejar(req, res, pathname);
 
