@@ -107,10 +107,15 @@ function entregar(req, res, file) {
   fs.stat(file, (err, st) => {
     if (err || !st.isFile()) return send(res, 404, 'No se encontró la página');
     const ext = path.extname(file).toLowerCase();
+    // El HTML, el código y los estilos nunca se guardan en caché. Si se guardaran, al publicar
+    // una versión nueva el navegador mezclaría el HTML nuevo con el planes.js viejo y la página
+    // se rompería hasta que venciera la caché. Son archivos chicos; volver a bajarlos no se nota.
+    // Las imágenes, fuentes y modelos sí se guardan una hora: pesan y casi nunca cambian.
+    const vivo = ext === '.html' || ext === '.js' || ext === '.css';
     res.writeHead(200, {
       'Content-Type': TYPES[ext] || 'application/octet-stream',
       'Content-Length': st.size,
-      'Cache-Control': ext === '.html' ? 'no-cache' : 'public, max-age=3600'
+      'Cache-Control': vivo ? 'no-cache' : 'public, max-age=3600'
     });
     if (req.method === 'HEAD') return res.end();
     fs.createReadStream(file).pipe(res);

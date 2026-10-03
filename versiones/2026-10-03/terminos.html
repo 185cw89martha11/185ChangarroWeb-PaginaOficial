@@ -352,11 +352,11 @@
           <select id="acc-plan" required>
             <option value="">Elija un plan</option>
             <option>Básica</option>
-            <option>Esencial</option>
-            <option>Negocio</option>
-            <option>Negocio + Asistente Pro</option>
-            <option>Invitación para evento (Básica)</option>
-            <option>Invitación para evento (Completa)</option>
+            <option>Personalizable (Esencial)</option>
+            <option>Personalizable (Negocio)</option>
+            <option>Personalizable (Negocio + Asistente Pro)</option>
+            <option>Evento (Invitación Básica)</option>
+            <option>Evento (Invitación Completa)</option>
             <option>Otra página (con cotización)</option>
           </select>
         </div>
@@ -413,11 +413,11 @@
 
   var PLANES = {
     'Básica': {precio:'$700 de instalación y $99 al mes', inc:BASICA},
-    'Invitación para evento (Básica)': {precio:'$350, pago único sin mensualidad', inc:EV_BASICA},
-    'Invitación para evento (Completa)': {precio:'$500, pago único sin mensualidad', inc:EV_COMPLETA.concat(EV_BASICA)},
-    'Esencial': {precio:'$1,800 de instalación y $199 al mes', inc:ESENCIAL},
-    'Negocio': {precio:'$2,800 de instalación y $299 al mes', inc:NEGOCIO.slice(1).concat(ESENCIAL)},
-    'Negocio + Asistente Pro': {precio:'$3,900 de instalación y $449 al mes', inc:PRO.slice(1).concat(NEGOCIO.slice(1), ESENCIAL)},
+    'Evento (Invitación Básica)': {precio:'$350, pago único sin mensualidad', inc:EV_BASICA},
+    'Evento (Invitación Completa)': {precio:'$500, pago único sin mensualidad', inc:EV_COMPLETA.concat(EV_BASICA)},
+    'Personalizable (Esencial)': {precio:'$1,800 de instalación y $199 al mes', inc:ESENCIAL},
+    'Personalizable (Negocio)': {precio:'$2,800 de instalación y $299 al mes', inc:NEGOCIO.slice(1).concat(ESENCIAL)},
+    'Personalizable (Negocio + Asistente Pro)': {precio:'$3,900 de instalación y $449 al mes', inc:PRO.slice(1).concat(NEGOCIO.slice(1), ESENCIAL)},
     'Otra página (con cotización)': {precio:'el de la cotización por escrito', inc:['Lo que dice la cotización por escrito que me envió 185ChangarroWeb']}
   };
 
