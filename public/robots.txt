@@ -1,2 +1,8 @@
 User-agent: *
+Allow: /
+Disallow: /vista-previa/
+Disallow: /prospectar/
 Disallow: /ejemplodeevento-muestra/
+Disallow: /admin
+Disallow: /muestra
+Sitemap: https://one85changarroweb.onrender.com/sitemap.xml

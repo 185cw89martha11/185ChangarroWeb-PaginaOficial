@@ -1,0 +1,180 @@
+{
+  "marca": "185ChangarroWeb",
+  "eslogan": "PÃƒÂ¡ginas web para negocios locales, con mantenimiento desde el primer dÃƒÂ­a.",
+  "urlSitio": "https://one85changarroweb.onrender.com",
+  "portal": "https://one85changarroweb.onrender.com",
+  "whatsapp": "523151260581",
+  "correo": "185changarroweb@gmail.com",
+  "tuNombre": "",
+  "noIndexar": [
+    "/ejemplodeevento-muestra/",
+    "/admin",
+    "/muestra"
+  ],
+  "horarioAtencion": "de 15:00 a 21:00",
+  "redes": {
+    "facebook": "",
+    "instagram": "",
+    "tiktok": ""
+  },
+  "planes": [
+    {
+      "id": "esencial",
+      "nombre": "Esencial",
+      "para": "Para que lo encuentren, le escriban y aparten.",
+      "instalacion": 1800,
+      "mensualidad": 199,
+      "tiempo": "3 a 5 dÃƒÂ­as hÃƒÂ¡biles",
+      "respuesta": "48 h",
+      "funciones": "Ã¢â‚¬â€",
+      "destacado": false,
+      "incluye": [
+        "PÃƒÂ¡gina con servicios y precios",
+        "BotÃƒÂ³n de WhatsApp con mensaje listo",
+        "Mapa, horarios y aviso de \"abierto ahora\"",
+        "Enlace para redes y QR para imprimir",
+        "Dominio propio a nombre del negocio",
+        "Agenda de citas o reservas",
+        "GalerÃƒÂ­a de fotos",
+        "Eventos y promociones",
+        "Aviso de privacidad (cuando la pÃƒÂ¡gina pide datos)",
+        "TÃƒÂ©rminos y Condiciones (opcionales; obligatorios si la pÃƒÂ¡gina recibe pedidos o pagos)"
+      ]
+    },
+    {
+      "id": "negocio",
+      "nombre": "Negocio",
+      "para": "Para que la pÃƒÂ¡gina trabaje y conteste por usted.",
+      "instalacion": 2800,
+      "mensualidad": 299,
+      "tiempo": "5 a 7 dÃƒÂ­as hÃƒÂ¡biles",
+      "respuesta": "36 h",
+      "funciones": "10",
+      "destacado": true,
+      "incluye": [
+        "Todo lo de Esencial",
+        "Preguntas frecuentes",
+        "Alta y arreglo de su ficha en Google Maps, con QR para pedir reseÃƒÂ±as",
+        "Asistente en la pÃƒÂ¡gina que contesta con sus datos",
+        "ReseÃƒÂ±as de clientes en la pÃƒÂ¡gina",
+        "Hasta 10 funciones del catÃƒÂ¡logo",
+        "RenovaciÃƒÂ³n radical de diseÃƒÂ±o o funciones, no en meses seguidos",
+        "ConfiguraciÃƒÂ³n de correo profesional (con costo extra)"
+      ]
+    },
+    {
+      "id": "pro",
+      "nombre": "Negocio + Asistente Pro",
+      "para": "Para tener a alguien que le ayuda a vender cada mes.",
+      "instalacion": 3900,
+      "mensualidad": 449,
+      "tiempo": "7 a 10 dÃƒÂ­as hÃƒÂ¡biles",
+      "respuesta": "4 h",
+      "funciones": "15",
+      "destacado": false,
+      "incluye": [
+        "Todo lo de Negocio",
+        "Hasta 15 funciones del catÃƒÂ¡logo",
+        "WhatsApp Business configurado: bienvenida, ausencia, respuestas rÃƒÂ¡pidas y catÃƒÂ¡logo",
+        "Pedidos con anticipo y liga de pago externa",
+        "Reporte mensual detallado: visitas, clics, citas y pedidos",
+        "2 diseÃƒÂ±os de promociÃƒÂ³n al mes para WhatsApp y redes",
+        "Respuestas redactadas a sus reseÃƒÂ±as de Google",
+        "Recordatorios de citas por correo",
+        "Varias sucursales en una misma pÃƒÂ¡gina",
+        "ConfiguraciÃƒÂ³n de correo profesional incluida",
+        "Hasta 3 cambios pequeÃƒÂ±os al dÃƒÂ­a"
+      ]
+    }
+  ],
+  "mantenimiento": [
+    "Hosting y candado de seguridad (https) siempre activos",
+    "Precios y horarios se pueden actualizar diariamente",
+    "Hasta 3 cambios al mes en lo que ya existe: fotos, textos o promociones",
+    "Respaldo mensual de la pÃƒÂ¡gina",
+    "Reporte mensual de visitas y clics a WhatsApp",
+    "Arreglar fallas de la pÃƒÂ¡gina no tiene costo"
+  ],
+  "pagos": [
+    "InstalaciÃƒÂ³n: 50% al contratar y 50% al entregar la pÃƒÂ¡gina.",
+    "La primera mensualidad se paga un mes despuÃƒÂ©s de publicada la pÃƒÂ¡gina.",
+    "Dominio: el primer aÃƒÂ±o de un .xyz, .online, .site o .shop va incluido; un .com o .com.mx cuesta $100 mÃƒÂ¡s. La renovaciÃƒÂ³n se paga aparte cada aÃƒÂ±o: $500, o $1,000 para .com y .com.mx.",
+    "Sin plazo forzoso: se puede cancelar con 30 dÃƒÂ­as de aviso.",
+    "La contrataciÃƒÂ³n se confirma aceptando por escrito, por WhatsApp o correo electrÃƒÂ³nico, el plan y los TÃƒÂ©rminos y Condiciones."
+  ],
+  "mensajeProspecto": "Hola, buen dÃƒÂ­a Ã°Å¸â€˜â€¹ Le escribo de 185ChangarroWeb[, soy {tuNombre}]. EncontrÃƒÂ© {negocio} {fuente} y le preparÃƒÂ© una vista previa de cÃƒÂ³mo se verÃƒÂ­a su pÃƒÂ¡gina web, sin ningÃƒÂºn compromiso:\n\n{link}\n\nIncluye {catalogo}, botÃƒÂ³n de WhatsApp, horario y mapa para que sus clientes lo encuentren fÃƒÂ¡cil. La pÃƒÂ¡gina queda con dominio a nombre de su negocio y con mantenimiento cada mes: desde {instalacion} de instalaciÃƒÂ³n y {mensualidad} al mes, IVA incluido.\n\nSi no le interesa, no se preocupe, no le vuelvo a escribir. Ã‚Â¡Gracias por su tiempo!",
+  "planesFuente": "Copiado de planes.js el 2026-10-03. No edites aquÃƒÂ­: cambia planes.js y corre \"npm run planes\".",
+  "basica": {
+    "id": "basica",
+    "nombre": "BÃƒÂ¡sica",
+    "para": "Para que lo encuentren en internet y le escriban, sin gastar mucho.",
+    "instalacion": 700,
+    "mensualidad": 99,
+    "tiempo": "2 a 3 dÃƒÂ­as hÃƒÂ¡biles",
+    "respuesta": "72 h",
+    "incluye": [
+      "Una sola pÃƒÂ¡gina con su nombre, logo, fotos y precios",
+      "BotÃƒÂ³n de WhatsApp con el mensaje ya escrito",
+      "Mapa, horarios y aviso de \"abierto ahora\"",
+      "Enlace para sus redes y QR para imprimir",
+      "Datos del negocio en el pie y aviso de privacidad",
+      "DirecciÃƒÂ³n web incluida (dominio propio se cotiza aparte)",
+      "Hosting, candado de seguridad (https) y respaldo mensual",
+      "Un cambio al mes: precios, horarios o una foto"
+    ],
+    "noIncluye": [
+      "Agenda de citas o reservas",
+      "CatÃƒÂ¡logo con buscador y filtros",
+      "Asistente que contesta en la pÃƒÂ¡gina",
+      "ReseÃƒÂ±as de clientes en la pÃƒÂ¡gina",
+      "Alta y arreglo de su ficha en Google Maps",
+      "Funciones del catÃƒÂ¡logo",
+      "Reporte mensual de visitas"
+    ]
+  },
+  "eventos": {
+    "tiempo": "24 a 48 horas",
+    "vigencia": "3 meses despuÃƒÂ©s del evento",
+    "extra": 100,
+    "cambio": 50,
+    "paquetes": [
+      {
+        "id": "basica",
+        "nombre": "InvitaciÃƒÂ³n BÃƒÂ¡sica",
+        "para": "Para avisar bonito y que confirmen por WhatsApp.",
+        "precio": 350,
+        "destacado": false,
+        "incluye": [
+          "Portada con foto y los nombres",
+          "Fecha, hora y lugar con mapa",
+          "ConfirmaciÃƒÂ³n de asistencia por WhatsApp",
+          "Enlace y QR para mandarla por WhatsApp o redes",
+          "Se ve bien en cualquier celular"
+        ]
+      },
+      {
+        "id": "completa",
+        "nombre": "InvitaciÃƒÂ³n Completa",
+        "para": "Para una fiesta grande, con todos los detalles.",
+        "precio": 500,
+        "destacado": true,
+        "incluye": [
+          "Todo lo de la BÃƒÂ¡sica",
+          "Cuenta regresiva hasta el dÃƒÂ­a del evento",
+          "GalerÃƒÂ­a de fotos",
+          "Fotos del lugar, para que sepan a dÃƒÂ³nde llegar",
+          "Itinerario de la fiesta",
+          "CÃƒÂ³digo de vestimenta",
+          "Mesa de regalos",
+          "MÃƒÂºsica de fondo"
+        ]
+      }
+    ]
+  },
+  "referidos": {
+    "basica": 150,
+    "planes": 200,
+    "eventos": 0,
+    "vigencia": "31 de marzo de 2027"
+  }
+}

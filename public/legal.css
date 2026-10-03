@@ -26,7 +26,7 @@ a{color:var(--accent); text-underline-offset:2px}
 
 .wrap{max-width:780px; margin:0 auto; padding-block:28px 56px; padding-inline:16px; display:flex; flex-direction:column; gap:20px}
 .brand{display:flex; align-items:center; gap:12px}
-.logo{height:40px; width:auto; border-radius:8px; background:#fff; flex:none; display:block}
+.logo{height:40px; width:auto; border-radius:8px;  flex:none; display:block}
 .home{display:block; flex:none; border-radius:8px}
 .eyebrow{margin:0; font-size:11px; font-weight:700; letter-spacing:.14em; text-transform:uppercase; color:var(--muted)}
 h1{margin:2px 0 0; font-size:30px; line-height:1.1; letter-spacing:-.015em; font-weight:800; text-wrap:balance}

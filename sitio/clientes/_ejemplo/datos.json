@@ -1,0 +1,131 @@
+{
+  "_notas": "EJEMPLO DE REFERENCIA (negocio ficticio). Las carpetas que empiezan con _ no se publican.",
+  "tipo": "restaurante",
+  "nombre": "Tacos El Güero",
+  "titular": "Nombre legal del dueño o razón social",
+  "eslogan": "Tacos al pastor al carbón[ en {zona}] desde 1998. Pide por WhatsApp y te lo llevamos.",
+  "whatsapp": "5500000000",
+  "telefono": "33 0000 0000",
+  "correo": "contacto@ejemplo.com",
+  "direccion": "Av. Ejemplo 123, Col. Centro",
+  "zona": "Iztapalapa, CDMX",
+  "mapa": "",
+  "horario": {
+    "lun": "",
+    "mar": "13:00-23:00",
+    "mie": "13:00-23:00",
+    "jue": "13:00-23:00",
+    "vie": "13:00-02:00",
+    "sab": "13:00-02:00",
+    "dom": "13:00-22:00"
+  },
+  "catalogo": [
+    {
+      "categoria": "Tacos",
+      "productos": [
+        {
+          "nombre": "Pastor",
+          "precio": 17,
+          "descripcion": "Con piña, cebolla y cilantro"
+        },
+        {
+          "nombre": "Suadero",
+          "precio": 17
+        },
+        {
+          "nombre": "Campechano",
+          "precio": 20
+        }
+      ]
+    },
+    {
+      "categoria": "Para compartir",
+      "productos": [
+        {
+          "nombre": "Orden de 5 tacos",
+          "precio": 80
+        },
+        {
+          "nombre": "Taquiza para eventos",
+          "precio": "Cotizar",
+          "descripcion": "Desde 30 personas"
+        }
+      ]
+    },
+    {
+      "categoria": "Bebidas",
+      "productos": [
+        {
+          "nombre": "Agua de horchata 1 L",
+          "precio": 35
+        },
+        {
+          "nombre": "Refresco",
+          "precio": 25
+        }
+      ]
+    }
+  ],
+  "pedidos": true,
+  "nosotros": "Tacos El Güero empezó como un puesto de la esquina y hoy sigue con la misma receta de la familia.\n\nPide para llevar, a domicilio o ven a comer con nosotros.",
+  "destacados": [
+    {
+      "icono": "🔥",
+      "titulo": "Hecho al momento",
+      "texto": "Cada orden se prepara cuando la pides. Nada recalentado."
+    },
+    {
+      "icono": "🛵",
+      "titulo": "Pedidos sin complicaciones",
+      "texto": "Arma tu pedido aquí y envíalo por WhatsApp en un toque."
+    },
+    {
+      "icono": "💛",
+      "titulo": "Precio justo",
+      "texto": "Porciones generosas a precio de barrio."
+    }
+  ],
+  "preguntas": [
+    {
+      "p": "¿Tienen servicio a domicilio?",
+      "r": "Sí, en colonias cercanas. Envíanos tu dirección por WhatsApp y te confirmamos costo y tiempo de entrega."
+    },
+    {
+      "p": "¿Cómo hago un pedido?",
+      "r": "Toca «Agregar» en lo que quieras y luego «Ver pedido». Se abre WhatsApp con tu pedido listo para mandar."
+    },
+    {
+      "p": "¿Qué formas de pago aceptan?",
+      "r": "Aceptamos {pagos}."
+    },
+    {
+      "p": "¿Hacen pedidos para fiestas o eventos?",
+      "r": "Sí. Escríbenos con la fecha y el número de personas y te mandamos una cotización."
+    }
+  ],
+  "pagos": [
+    "Efectivo",
+    "Transferencia"
+  ],
+  "entrega": "Envío gratis en la colonia; otras zonas, costo según distancia.",
+  "redes": {
+    "facebook": "",
+    "instagram": "",
+    "tiktok": ""
+  },
+  "color": "",
+  "portada": "",
+  "logo": "",
+  "galeria": [],
+  "cedula": "",
+  "preciosVigentes": "2026-10-05",
+  "terminos": {
+    "anticipo": "Para pedidos de más de $500 pedimos 50% de anticipo por transferencia.",
+    "cancelaciones": "",
+    "devoluciones": "",
+    "promociones": "",
+    "extra": ""
+  },
+  "dominio": "https://www.tacoselguero-ejemplo.site",
+  "ocultarCredito": false
+}

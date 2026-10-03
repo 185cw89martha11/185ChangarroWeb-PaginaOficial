@@ -36,7 +36,7 @@ button{cursor:pointer}
 .top{display:flex; align-items:center; gap:10px; padding:10px 16px; padding-top:calc(10px + env(safe-area-inset-top, 0px)); background:var(--panel); border-bottom:1px solid var(--line)}
 .brandmark{display:flex; align-items:center; gap:10px; min-width:0; margin-right:auto}
 .home{display:block; flex:none; border-radius:7px}
-.bm-logo{height:34px; width:auto; border-radius:7px; background:#fff; flex:none; display:block}
+.bm-logo{height:34px; width:auto; border-radius:7px;  flex:none; display:block}
 .brandmark strong{display:block; font-size:15px}
 .brandmark small{display:block; font-size:12px; color:var(--muted); white-space:nowrap; overflow:hidden; text-overflow:ellipsis}
 .seg{display:flex; background:var(--panel-2); border:1px solid var(--line); border-radius:999px; padding:3px; flex:none}

@@ -1,5 +1,28 @@
 # 185ChangarroWeb
 
+## La portada se genera, no se escribe a mano
+
+`public/index.html` **es un archivo generado**. No lo edites: se sobrescribe.
+
+La cara pública de 185ChangarroWeb vive en `sitio/` (proyecto aparte, con su propio generador y 15 pruebas). Para cambiarla se edita `sitio/src/agency/pages.js` (contenido), `sitio/src/agency/agency.css` (estilos) o `sitio/config.json` (datos), y luego:
+
+```
+node herramientas/generar-portada.js
+```
+
+Eso arma `sitio/dist/` y lo **copia** encima de `public/`. Se copia, no se mueve: el generador vacía su propia carpeta `dist/` antes de trabajar, y si apuntara directo a `public/` se llevaría por delante los Términos, el panel y las muestras. La salida se sube al repositorio para que Render no tenga que generar nada: su build sigue siendo solo `npm install`.
+
+Los precios **no se escriben en `sitio/config.json`**: salen de `public/planes.js` con `cd sitio && npm run planes`, que copia planes, Básica, Eventos y el premio por recomendar. `planes.js` manda.
+
+Qué aporta cada parte a la misma URL:
+
+| Viene de | Rutas |
+|---|---|
+| `sitio/` (generado) | `/` (portada), `/crear/`, `/ejemplos/<giro>/`, `/vista-previa/`, `/prospectar/`, `/herramientas/link-de-whatsapp/`, `/privacidad-del-sitio/`, `404.html`, `robots.txt`, `sitemap.xml`, `logo.svg`, `favicon.svg` |
+| El portal (a mano) | `/tarifas`, `/basicas`, `/eventos`, `/terminos`, `/privacidad`, `/admin`, `/demo`, `/muestra`, `/api/`, y las muestras de cada negocio |
+
+Dos nombres se cambiaron para que no chocaran con el portal: la vista previa del sitio comercial es `/vista-previa/` (porque `/demo` ya es la demo de ventas) y su aviso de cookies es `/privacidad-del-sitio/` (porque `/privacidad` es el Aviso de Privacidad legal).
+
 ## Los tres servicios
 
 185ChangarroWeb vende tres cosas distintas, y la portada es una puerta a cada una:
@@ -32,7 +55,9 @@ Esto es el muestrario, no la página final de un cliente. Generar sitios reales 
 
 | Archivo | Qué tiene |
 |---|---|
-| `public/index.html` | Portada pública de 185ChangarroWeb: nombre, quiénes somos, **las tres puertas** (Básicas → Personalizables → Eventos, armadas con `planes.js`), el premio por recomendar y la sección Contratar. Los datos de contacto están al inicio de su `<script>`. No lleva precios escritos a mano. |
+| `public/index.html` | **Generado.** Portada comercial: hero con mockup de celular, los problemas del negocio, qué incluye, los 6 ejemplos, cómo funciona, precios (Básica + los tres planes), Eventos, premio por recomendar, comparativa y preguntas. Sale de `sitio/`; no se edita a mano. |
+| `sitio/` | El generador de la portada y de los ejemplos. `src/agency/pages.js` arma la portada; `src/render.js` y `src/presets.js` arman los sitios de ejemplo de cada giro; `scripts/build.js` escribe todo en `sitio/dist/`; `scripts/sincronizar-planes.js` trae los precios de `public/planes.js`; `scripts/test.js` son sus pruebas. Trae también el creador de vistas previas (`/crear/`) y material de ventas en `ventas/` y `redes/`. |
+| `public/logo.svg`, `public/favicon.svg` | El logo de 185ChangarroWeb: el "185" en azul, morado y rosa sobre fondo oscuro. Lo usan todas las páginas. Sustituyó al `logo.png` de fondo blanco. |
 | `public/basicas.html` | Página del servicio más barato para negocios: la Básica, una sola hoja con contenido fijo. Qué incluye y **qué no incluye** (ambas listas salen de `BASICA` en `planes.js`), ejemplos, pagos y premio por recomendar. |
 | `public/eventos.html` | Página de las invitaciones digitales (`EVENTOS` de `planes.js`): dos paquetes de pago único, enlace a la invitación de ejemplo, cuánto tiempo está en línea y qué se necesita. Es el único servicio donde se habla de "tú": no es para negocios y no lleva premio por recomendar. |
 | `public/demo.html` | Demo de ventas. Marcado: barra superior, panel de ajustes, marco de teléfono con el sitio del cliente, asistente, pestaña Propuesta. |
@@ -65,7 +90,7 @@ Esto es el muestrario, no la página final de un cliente. Generar sitios reales 
 - La herramienta usa tokens en `:root` con modo oscuro. El sitio del cliente no cambia con el tema.
 - `localStorage` solo para comodidad (último negocio configurado), siempre dentro de `try/catch`. La demo tiene que funcionar sin él.
 - Los precios y textos no se editan desde la página (sin botones de "Editar precios" ni campos editables): solo se cambian en el código. La excepción es la muestra de Mariscos 8 Tostadas, que se deja como está.
-- En todas las páginas, el logo de 185ChangarroWeb es un enlace a la portada (`index.html`, o `../index.html` en las muestras que viven en su propia carpeta).
+- En todas las páginas, el logo de 185ChangarroWeb es un enlace a la portada (`index.html`, o `../index.html` en las muestras que viven en su propia carpeta). El logo es `logo.svg`, que ya trae su propio fondo oscuro: no se le pone recuadro blanco.
 - El asistente contesta solo con datos de `data.js` y, si no sabe algo, manda a WhatsApp. No debe inventar respuestas. No lo conectes a una IA sin que 185ChangarroWeb lo pida, porque eso tiene costo.
 - Las reseñas de ejemplo siempre llevan la etiqueta "Ejemplo". En sitios reales de clientes van solo reseñas reales.
 - El QR es decorativo a propósito y no se puede escanear: el dominio de ejemplo podría existir y llevar al negocio de otra persona. Cámbialo por un QR real solo cuando exista el dominio del cliente.

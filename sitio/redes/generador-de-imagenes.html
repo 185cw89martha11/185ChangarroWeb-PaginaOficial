@@ -1,0 +1,261 @@
+<!doctype html>
+<html lang="es-MX">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Generador de imágenes</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Figtree:wght@500;600;700;800;900&display=swap">
+<style>
+  :root{--ink:#1C1826;--muted:#5E5873;--line:#DEDAE8;--accent:#6B3FC4;--bg:#F7F5FB}
+  *{box-sizing:border-box}
+  [hidden]{display:none!important}
+  body{margin:0;background:var(--bg);color:var(--ink);font:400 15px/1.5 Figtree,system-ui,sans-serif}
+  header{padding:20px 24px;border-bottom:1px solid var(--line);background:#fff}
+  h1{margin:0;font:800 1.5rem Figtree,system-ui,sans-serif}
+  header p{margin:4px 0 0;color:var(--muted)}
+  main{display:grid;grid-template-columns:minmax(0,360px) minmax(0,1fr);gap:24px;padding:24px;max-width:1300px;margin:0 auto}
+  @media (max-width:860px){main{grid-template-columns:minmax(0,1fr)}}
+  form{background:#fff;border:1px solid var(--line);border-radius:18px;padding:18px;align-self:start}
+  label{display:grid;gap:5px;font-weight:700;font-size:.88rem;margin-bottom:12px}
+  input,select,textarea{width:100%;padding:10px 12px;border-radius:10px;border:1.5px solid var(--line);font:400 .95rem Figtree,system-ui,sans-serif;color:var(--ink);background:#fff}
+  textarea{resize:vertical}
+  .row{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+  .stage{display:grid;place-items:center;gap:14px;align-content:start}
+  canvas{width:100%;max-width:560px;height:auto;border-radius:14px;box-shadow:0 30px 60px -30px rgba(20,16,30,.5);background:#fff}
+  button{padding:12px 20px;border-radius:12px;border:0;background:linear-gradient(90deg,#4A63F2,#8A55D8 50%,#D8459F);color:#fff;font:800 1rem Figtree,system-ui,sans-serif;cursor:pointer}
+  .hint{color:var(--muted);font-size:.85rem;text-align:center;max-width:560px}
+</style>
+</head>
+<body>
+<header><h1>Generador de imágenes para redes · 185ChangarroWeb</h1><p>Elija una plantilla, ajuste los textos y descargue el PNG. Funciona sin internet una vez que carga la letra.</p></header>
+<main>
+  <form id="f" autocomplete="off">
+    <label>Plantilla
+      <select name="tpl">
+        <option value="pregunta">¿Su negocio no tiene página?</option>
+        <option value="comisiones">Pedidos sin comisiones</option>
+        <option value="checklist">Lo que incluye (lista)</option>
+        <option value="vistaprevia">Véala antes de contratar</option>
+        <option value="precios">Planes y precios</option>
+        <option value="menu">¿Le preguntan el precio todo el día?</option>
+        <option value="recomiende">Recomiéndenos</option>
+        <option value="logo">Logo (foto de perfil)</option>
+      </select>
+    </label>
+    <div class="row">
+      <label>Formato
+        <select name="fmt">
+          <option value="1080x1080">Post 1:1</option>
+          <option value="1080x1350">Post 4:5</option>
+          <option value="1080x1920">Historia / Reel</option>
+          <option value="1200x630">Enlace (Open Graph)</option>
+        </select>
+      </label>
+      <label>Colores
+        <select name="theme">
+          <option value="noche">Noche</option>
+          <option value="degradado">Degradado de la marca</option>
+          <option value="lavanda">Lavanda</option>
+          <option value="blanco">Blanco</option>
+        </select>
+      </label>
+    </div>
+    <label>Etiqueta <input name="badge" maxlength="60"></label>
+    <label>Título <textarea name="title" rows="2" maxlength="120"></textarea></label>
+    <label>Subtítulo <textarea name="sub" rows="2" maxlength="200"></textarea></label>
+    <label data-for="checklist">Lista (una por línea) <textarea name="list" rows="6"></textarea></label>
+    <label data-for="precios">Planes (Nombre | Instalación | Mensualidad, uno por línea) <textarea name="plans" rows="3"></textarea></label>
+    <div class="row">
+      <label>Nombre junto al logo <input name="brand" maxlength="30"></label>
+      <label>Sitio o WhatsApp <input name="url" maxlength="60"></label>
+    </div>
+  </form>
+  <div class="stage">
+    <canvas id="c" width="1080" height="1080" aria-label="Vista previa de la imagen"></canvas>
+    <button type="button" id="dl">Descargar PNG</button>
+    <p class="hint">Consejo: para la imagen que aparece al compartir su sitio, elija "Enlace (Open Graph)", descárguela y guárdela como <b>src/static/og.png</b>.</p>
+  </div>
+</main>
+<script>
+(function () {
+  'use strict';
+  var TEMPLATES = {
+    pregunta: { badge: '📱 Para negocios locales', title: '¿Su negocio todavía no tiene página web?', sub: 'Con dominio a su nombre y mantenimiento cada mes. Desde $1,800 de instalación y $199 al mes.' },
+    comisiones: { badge: '🛵 Pedidos por WhatsApp', title: 'Pedidos sin comisiones', sub: 'Su propia página con menú y carrito. Sus clientes le piden directo por WhatsApp y la venta es toda suya.' },
+    checklist: { badge: '✅ Su página incluye', title: 'Todo lo que su changarro necesita', sub: 'Desde $1,800 + $199 al mes, IVA incluido', list: 'Menú o catálogo con precios\nBotón de WhatsApp\nPedidos sin comisiones\nHorario «Abierto ahora»\nMapa y «Cómo llegar»\nDominio a nombre de su negocio' },
+    vistaprevia: { badge: '👀 Sin compromiso', title: 'Véala gratis antes de contratar', sub: 'Le preparamos una vista previa con el nombre de su negocio. Si no le convence, no contrata.' },
+    precios: { badge: '💳 IVA incluido', title: 'Tres planes, todos con mantenimiento', sub: 'Sin plazo forzoso · Dominio a nombre del negocio', plans: 'Esencial | $1,800 | $199\nNegocio | $2,800 | $299\nPro | $3,900 | $449' },
+    menu: { badge: '💬 ¿Le suena?', title: '¿Le preguntan el precio 50 veces al día?', sub: 'Comparta un solo enlace con su menú, horario y ubicación. Su página contesta por usted.' },
+    recomiende: { badge: '🙌 Gracias por compartir', title: '¿Conoce a alguien con negocio?', sub: 'Recomiéndenos: lo ayudamos a que su changarro también abra en internet.' },
+    logo: { badge: '', title: '', sub: '' }
+  };
+  var THEMES = {
+    noche: { bg: ['#110F17', '#24183A'], glows: ['rgba(245,103,200,.45)', 'rgba(86,112,254,.45)'], text: '#ffffff', sub: 'rgba(255,255,255,.82)', badgeBg: 'rgba(255,255,255,.12)', badgeText: '#ffffff', card: 'rgba(255,255,255,.08)', dot: 'rgba(255,255,255,.10)' },
+    degradado: { bg: ['#4A63F2', '#D8459F'], glows: ['rgba(158,107,228,.55)', 'rgba(255,255,255,.18)'], text: '#ffffff', sub: 'rgba(255,255,255,.9)', badgeBg: 'rgba(20,16,30,.22)', badgeText: '#ffffff', card: 'rgba(255,255,255,.14)', dot: 'rgba(255,255,255,.12)' },
+    lavanda: { bg: ['#F1EFF7', '#EEE8FA'], glows: ['rgba(245,103,200,.22)', 'rgba(86,112,254,.22)'], text: '#1C1826', sub: '#5E5873', badgeBg: '#ffffff', badgeText: '#1C1826', card: '#ffffff', dot: 'rgba(28,24,38,.06)' },
+    blanco: { bg: ['#ffffff', '#F7F5FB'], glows: ['rgba(158,107,228,.16)', 'rgba(86,112,254,.14)'], text: '#1C1826', sub: '#5E5873', badgeBg: '#EEE8FA', badgeText: '#1C1826', card: '#F7F5FB', dot: 'rgba(28,24,38,.06)' }
+  };
+  var FONT = "Figtree, system-ui, sans-serif";
+  var DIGITS = [
+    ['#6F86FF', new Path2D('M7.8 12.8 11 9.8v20.4M8 30.2h6')],
+    ['#AB7CEB', new Path2D('M20 9.8a3.4 3.4 0 0 1 3.4 3.4v2.8a3.4 3.4 0 0 1-3.4 3.4 3.4 3.4 0 0 1-3.4-3.4v-2.8A3.4 3.4 0 0 1 20 9.8zM20 19.4a3.9 3.9 0 0 1 3.9 3.9v3a3.9 3.9 0 0 1-3.9 3.9 3.9 3.9 0 0 1-3.9-3.9v-3a3.9 3.9 0 0 1 3.9-3.9z')],
+    ['#F567C8', new Path2D('M32.6 9.8h-5.4v8.6h2.2c2.3 0 3.6 1.8 3.6 5v1.2c0 3.4-1.5 5.6-4.2 5.6h-2.2')]
+  ];
+  var f = document.getElementById('f'), E = f.elements, c = document.getElementById('c'), ctx = c.getContext('2d');
+  var KEY = 'cw185-img-gen';
+
+  function rr(x, y, w, h, r) { ctx.beginPath(); ctx.moveTo(x + r, y); ctx.arcTo(x + w, y, x + w, y + h, r); ctx.arcTo(x + w, y + h, x, y + h, r); ctx.arcTo(x, y + h, x, y, r); ctx.arcTo(x, y, x + w, y, r); ctx.closePath(); }
+  // El logo compacto: cuadro oscuro con el "185" en los colores de la marca.
+  function logo(x, y, size) {
+    ctx.save(); ctx.translate(x, y); ctx.scale(size / 40, size / 40);
+    rr(0, 0, 40, 40, 10); ctx.fillStyle = '#1C1826'; ctx.fill();
+    ctx.lineWidth = 3.4; ctx.lineCap = 'round'; ctx.lineJoin = 'round';
+    DIGITS.forEach(function (d) { ctx.strokeStyle = d[0]; ctx.stroke(d[1]); });
+    ctx.restore();
+  }
+  function wrap(text, maxW) {
+    var words = String(text).split(/\s+/), lines = [], cur = '';
+    words.forEach(function (w) { var t = cur ? cur + ' ' + w : w; if (ctx.measureText(t).width > maxW && cur) { lines.push(cur); cur = w; } else cur = t; });
+    if (cur) lines.push(cur);
+    return lines;
+  }
+  function fit(text, maxW, maxH, size, min, weight, lh) {
+    var lines;
+    for (; size >= min; size -= 2) {
+      ctx.font = weight + ' ' + size + 'px ' + FONT;
+      lines = wrap(text, maxW);
+      if (lines.length * size * lh <= maxH && lines.every(function (l) { return ctx.measureText(l).width <= maxW; })) break;
+    }
+    return { lines: lines, size: size };
+  }
+  function drawLines(r, x, y, lh, color) {
+    ctx.fillStyle = color; ctx.textBaseline = 'top';
+    r.lines.forEach(function (l, i) { ctx.fillText(l, x, y + i * r.size * lh); });
+    return y + r.lines.length * r.size * lh;
+  }
+
+  function draw() {
+    var s = { tpl: E.tpl.value, theme: THEMES[E.theme.value], badge: E.badge.value.trim(), title: E.title.value.trim(), sub: E.sub.value.trim(), brand: E.brand.value.trim(), url: E.url.value.trim() };
+    var dim = E.fmt.value.split('x').map(Number), W = dim[0], H = dim[1], T = s.theme;
+    c.width = W; c.height = H;
+    var u = Math.min(W, H) / 1080, pad = Math.round(84 * u), wide = W / H > 1.5;
+
+    var g = ctx.createLinearGradient(0, 0, W, H); g.addColorStop(0, T.bg[0]); g.addColorStop(1, T.bg[1]);
+    ctx.fillStyle = g; ctx.fillRect(0, 0, W, H);
+    [[W * 0.95, H * 0.05, T.glows[0]], [W * 0.02, H * 0.98, T.glows[1]]].forEach(function (p) {
+      var rg = ctx.createRadialGradient(p[0], p[1], 0, p[0], p[1], Math.max(W, H) * 0.6);
+      rg.addColorStop(0, p[2]); rg.addColorStop(1, 'rgba(0,0,0,0)'); ctx.fillStyle = rg; ctx.fillRect(0, 0, W, H);
+    });
+    ctx.fillStyle = T.dot;
+    for (var yy = 18 * u; yy < H; yy += 28 * u) for (var xx = 18 * u; xx < W; xx += 28 * u) { ctx.beginPath(); ctx.arc(xx, yy, 1.6 * u, 0, Math.PI * 2); ctx.fill(); }
+
+    if (s.tpl === 'logo') { var size = Math.min(W, H) * 0.56; logo((W - size) / 2, (H - size) / 2, size); return; }
+
+    var ls = 64 * u; logo(pad, pad, ls);
+    if (s.brand) {
+      ctx.font = '800 ' + Math.round(40 * u) + 'px ' + FONT; ctx.fillStyle = T.text; ctx.textBaseline = 'middle';
+      ctx.fillText(s.brand, pad + ls + 18 * u, pad + ls / 2 + 2 * u);
+    }
+
+    var y = pad + ls + (wide ? 44 : 70) * u, maxW = W - pad * 2;
+    if (s.badge) {
+      ctx.font = '700 ' + Math.round(30 * u) + 'px ' + FONT;
+      var bw = ctx.measureText(s.badge).width + 48 * u, bh = 58 * u;
+      rr(pad, y, bw, bh, bh / 2); ctx.fillStyle = T.badgeBg; ctx.fill();
+      ctx.fillStyle = T.badgeText; ctx.textBaseline = 'middle'; ctx.fillText(s.badge, pad + 24 * u, y + bh / 2 + 1);
+      y += bh + 40 * u;
+    }
+
+    var footerH = 96 * u, bottom = H - pad - footerH;
+    var hasList = s.tpl === 'checklist' || s.tpl === 'precios';
+    var tr = fit(s.title, maxW, (bottom - y) * (hasList ? 0.34 : 0.6), Math.round((wide ? 92 : 124) * u), Math.round(44 * u), 900, 1.04);
+    y = drawLines(tr, pad, y, 1.04, T.text) + 26 * u;
+    if (s.sub) {
+      var sr = fit(s.sub, maxW * 0.94, (bottom - y) * (hasList ? 0.25 : 0.9), Math.round(44 * u), Math.round(24 * u), 500, 1.35);
+      y = drawLines(sr, pad, y, 1.35, T.sub) + 36 * u;
+    }
+
+    if (s.tpl === 'checklist') {
+      var items = E.list.value.split('\n').map(function (x) { return x.trim(); }).filter(Boolean).slice(0, 8);
+      // Prueba 1 y 2 columnas y se queda con la que deja la letra más grande sin encimarse.
+      var layout = function (cols) {
+        var rows = Math.ceil(items.length / cols), rowH = Math.min(84 * u, (bottom - y) / Math.max(rows, 1)), colW = maxW / cols;
+        var textW = colW - rowH * 0.56 - 18 * u - (cols > 1 ? 24 * u : 0), fs = Math.min(40 * u, rowH * 0.5);
+        var longest = function () { ctx.font = '600 ' + Math.round(fs) + 'px ' + FONT; return Math.max.apply(null, items.map(function (t) { return ctx.measureText(t).width; }).concat(0)); };
+        while (fs > 18 * u && longest() > textW) fs -= 1;
+        return { cols: cols, rowH: rowH, colW: colW, fs: fs };
+      };
+      var L1 = layout(1), L2 = layout(2), L = L2.fs > L1.fs + 2 * u ? L2 : L1;
+      ctx.font = '600 ' + Math.round(L.fs) + 'px ' + FONT; ctx.textBaseline = 'middle';
+      items.forEach(function (it, i) {
+        var cx = pad + (i % L.cols) * L.colW, cy = y + Math.floor(i / L.cols) * L.rowH + L.rowH / 2, r = L.rowH * 0.28;
+        ctx.beginPath(); ctx.arc(cx + r, cy, r, 0, Math.PI * 2); ctx.fillStyle = '#25d366'; ctx.fill();
+        ctx.strokeStyle = '#052e16'; ctx.lineWidth = 4 * u; ctx.lineCap = 'round'; ctx.lineJoin = 'round';
+        ctx.beginPath(); ctx.moveTo(cx + r * 0.55, cy); ctx.lineTo(cx + r * 0.9, cy + r * 0.35); ctx.lineTo(cx + r * 1.5, cy - r * 0.35); ctx.stroke();
+        ctx.fillStyle = T.text; ctx.fillText(it, cx + r * 2 + 18 * u, cy + 1);
+      });
+    }
+
+    if (s.tpl === 'precios') {
+      var plans = E.plans.value.split('\n').map(function (l) { return l.split('|').map(function (x) { return x.trim(); }); }).filter(function (p) { return p[0]; }).slice(0, 3);
+      var n = plans.length || 1, gap = 22 * u, vertical = H > W * 1.1;
+      var cw = vertical ? maxW : (maxW - gap * (n - 1)) / n, ch = vertical ? Math.min(180 * u, (bottom - y - gap * (n - 1)) / n) : Math.min(270 * u, bottom - y);
+      plans.forEach(function (p, i) {
+        var x = vertical ? pad : pad + i * (cw + gap), top = vertical ? y + i * (ch + gap) : y, on = i === 1;
+        rr(x, top, cw, ch, 26 * u); ctx.fillStyle = on ? '#6B3FC4' : T.card; ctx.fill();
+        var ink = on ? '#ffffff' : T.text, soft = on ? 'rgba(255,255,255,.8)' : T.sub;
+        ctx.textBaseline = 'top'; ctx.fillStyle = ink; ctx.font = '800 ' + Math.round(34 * u) + 'px ' + FONT;
+        ctx.fillText(p[0], x + 26 * u, top + 24 * u);
+        if (vertical) {
+          ctx.textAlign = 'right'; ctx.textBaseline = 'middle';
+          ctx.font = '900 ' + Math.round(58 * u) + 'px ' + FONT; ctx.fillStyle = ink; ctx.fillText(p[1] || '', x + cw - 26 * u, top + ch / 2 - 10 * u);
+          ctx.font = '600 ' + Math.round(28 * u) + 'px ' + FONT; ctx.fillStyle = soft; ctx.fillText(p[2] ? '+ ' + p[2] + ' al mes' : '', x + cw - 26 * u, top + ch / 2 + 38 * u);
+          ctx.textAlign = 'left';
+        } else {
+          ctx.font = '900 ' + Math.round(54 * u) + 'px ' + FONT; ctx.fillText(p[1] || '', x + 26 * u, top + 80 * u);
+          ctx.font = '600 ' + Math.round(26 * u) + 'px ' + FONT; ctx.fillStyle = soft;
+          ctx.fillText('instalación', x + 26 * u, top + 142 * u);
+          if (p[2]) { ctx.fillStyle = ink; ctx.font = '800 ' + Math.round(34 * u) + 'px ' + FONT; ctx.fillText('+ ' + p[2] + '/mes', x + 26 * u, top + 190 * u); }
+        }
+      });
+    }
+
+    var fy = H - pad - 64 * u;
+    rr(pad, fy, maxW, 64 * u, 32 * u); ctx.fillStyle = T.badgeBg; ctx.fill();
+    ctx.font = '700 ' + Math.round(30 * u) + 'px ' + FONT; ctx.fillStyle = T.text; ctx.textBaseline = 'middle'; ctx.textAlign = 'center';
+    ctx.fillText(s.url ? '👉 ' + s.url : '👉 Escríbanos por WhatsApp', W / 2, fy + 33 * u);
+    ctx.textAlign = 'left';
+  }
+
+  function applyTemplate() {
+    var t = TEMPLATES[E.tpl.value];
+    ['badge', 'title', 'sub', 'list', 'plans'].forEach(function (k) { if (t[k] != null) E[k].value = t[k]; });
+    document.querySelectorAll('[data-for]').forEach(function (el) { el.hidden = el.getAttribute('data-for') !== E.tpl.value; });
+  }
+
+  var DEF = { brand: 'ChangarroWeb', url: 'one85changarroweb-negocios.onrender.com' };
+  try { var saved = JSON.parse(localStorage.getItem(KEY) || '{}'); E.brand.value = saved.brand != null ? saved.brand : DEF.brand; E.url.value = saved.url || DEF.url; } catch (e) { E.brand.value = DEF.brand; E.url.value = DEF.url; }
+  f.addEventListener('input', function (e) {
+    if (e.target.name === 'tpl') applyTemplate();
+    if (e.target.name === 'brand' || e.target.name === 'url') { try { localStorage.setItem(KEY, JSON.stringify({ brand: E.brand.value, url: E.url.value })); } catch (err) { /* sin almacenamiento */ } }
+    draw();
+  });
+  f.addEventListener('change', function (e) { if (e.target.name === 'tpl') applyTemplate(); draw(); });
+  document.getElementById('dl').addEventListener('click', function () {
+    c.toBlob(function (b) {
+      var a = document.createElement('a');
+      a.href = URL.createObjectURL(b); a.download = '185changarroweb-' + E.tpl.value + '-' + E.fmt.value + '.png';
+      document.body.appendChild(a); a.click(); a.remove();
+      setTimeout(function () { URL.revokeObjectURL(a.href); }, 1000);
+    }, 'image/png');
+  });
+
+  applyTemplate();
+  draw();
+  Promise.all([document.fonts.load("900 80px Figtree"), document.fonts.load('800 40px Figtree'), document.fonts.load('600 30px Figtree'), document.fonts.load('500 30px Figtree')]).then(draw, draw);
+})();
+</script>
+</body>
+</html>
