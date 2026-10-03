@@ -1,0 +1,227 @@
+<!doctype html>
+<html lang="es-MX">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<link rel="icon" type="image/png" href="icono.png">
+<title>Páginas Web Básicas — 185ChangarroWeb</title>
+<meta name="description" content="Página web de una sola hoja para negocios locales: $700 de instalación y $99 al mes, lista en 2 a 3 días hábiles.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Figtree:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap">
+<style>
+body{margin:0}[hidden]{display:none!important}
+:root{
+  --bg:#F1EFF7; --panel:#FFFFFF; --panel-2:#F7F5FB; --ink:#1C1826; --muted:#5E5873; --line:#DEDAE8;
+  --accent:#6B3FC4; --accent-ink:#FFFFFF; --accent-soft:#EEE8FA; --warn-bg:#EEE8FA; --warn-ink:#4A2A8A;
+  --grad:linear-gradient(90deg, #5670FE 0%, #9E6BE4 50%, #F567C8 100%); --grad-ink:#FFFFFF;
+  --f-ui:'Figtree', system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+  --f-mono:'JetBrains Mono', ui-monospace, Menlo, Consolas, monospace;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --bg:#110F17; --panel:#19161F; --panel-2:#211D29; --ink:#ECE8F4; --muted:#A29CB3; --line:#302B3A;
+    --accent:#B79AF2; --accent-ink:#140F1F; --accent-soft:#241C35; --warn-bg:#241C35; --warn-ink:#D9C8FA;
+    color-scheme:dark;
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#110F17; --panel:#19161F; --panel-2:#211D29; --ink:#ECE8F4; --muted:#A29CB3; --line:#302B3A;
+  --accent:#B79AF2; --accent-ink:#140F1F; --accent-soft:#241C35; --warn-bg:#241C35; --warn-ink:#D9C8FA;
+  color-scheme:dark;
+}
+*{box-sizing:border-box}
+body{background:var(--bg); color:var(--ink); font-family:var(--f-ui); font-size:15px; line-height:1.45}
+a{color:var(--accent); text-underline-offset:2px}
+:focus-visible{outline:2px solid var(--accent); outline-offset:2px}
+.wrap{max-width:1080px; margin:0 auto; padding-block:28px 56px; padding-inline:16px; display:flex; flex-direction:column; gap:22px}
+
+.head{display:flex; flex-wrap:wrap; align-items:flex-end; justify-content:space-between; gap:14px}
+.brand{display:flex; align-items:center; gap:12px}
+.logo{height:40px; width:auto; border-radius:8px; background:#fff; flex:none; display:block}
+.home{display:block; flex:none; border-radius:8px}
+.eyebrow{margin:0; font-size:11px; font-weight:700; letter-spacing:.14em; text-transform:uppercase; color:var(--muted)}
+h1{margin:2px 0 0; font-size:30px; line-height:1.1; letter-spacing:-.015em; font-weight:800; text-wrap:balance}
+.lead{margin:0; color:var(--muted); max-width:62ch}
+.nav{display:flex; flex-wrap:wrap; gap:8px}
+.nav a{display:inline-flex; align-items:center; border:1px solid var(--line); background:var(--panel); color:var(--ink); border-radius:10px; padding:8px 13px; font-weight:700; font-size:13.5px; text-decoration:none}
+.nav a[aria-current="page"]{border-color:var(--accent); color:var(--accent)}
+
+.hero{background:var(--panel); border:1px solid var(--line); border-radius:20px; padding:24px; display:grid; grid-template-columns:1fr auto; gap:20px; align-items:center}
+.hero h2{margin:0 0 8px; font-size:24px; line-height:1.15}
+.precio{background:var(--panel-2); border-radius:16px; padding:16px 20px; text-align:center; min-width:210px}
+.precio span{display:block; font-size:10.5px; font-weight:700; letter-spacing:.09em; text-transform:uppercase; color:var(--muted)}
+.precio b{display:block; font-family:var(--f-mono); font-size:38px; font-weight:500; line-height:1.1; font-variant-numeric:tabular-nums}
+.precio small{display:block; font-size:13px; color:var(--muted); margin-top:4px}
+.precio hr{border:0; border-top:1px solid var(--line); margin:12px 0}
+
+.grid2{display:grid; grid-template-columns:repeat(2, minmax(0,1fr)); gap:14px}
+.card{background:var(--panel); border:1px solid var(--line); border-radius:16px; padding:18px}
+.card h3{margin:0 0 12px; font-size:16px}
+ul.checks,ul.crosses{list-style:none; margin:0; padding:0; display:flex; flex-direction:column; gap:7px}
+.checks li,.crosses li{display:grid; grid-template-columns:18px 1fr; gap:8px; font-size:14px; line-height:1.4}
+.checks li::before{content:""; width:13px; height:7px; margin-top:5px; border-left:2px solid var(--accent); border-bottom:2px solid var(--accent); transform:rotate(-45deg)}
+.crosses li{color:var(--muted)}
+.crosses li::before{content:"×"; font-size:17px; line-height:1.1; color:var(--muted); text-align:center}
+.opt{color:var(--muted); font-size:12.5px}
+.rules{margin:0; padding:0; list-style:none; display:flex; flex-direction:column; gap:8px; font-size:14px}
+.rules li{padding-left:14px; position:relative}
+.rules li::before{content:""; position:absolute; left:0; top:.6em; width:5px; height:5px; border-radius:50%; background:var(--accent)}
+.note{background:var(--warn-bg); color:var(--warn-ink); border-radius:10px; padding:9px 11px; font-size:13px; margin:12px 0 0}
+
+.ejemplos{display:grid; grid-template-columns:repeat(2, minmax(0,1fr)); gap:12px; margin-top:4px}
+.ej{display:block; background:var(--panel-2); border:1px solid var(--line); border-radius:14px; padding:16px; text-decoration:none; color:var(--ink)}
+.ej:hover,.ej:focus-visible{border-color:var(--accent)}
+.ej b{display:block; font-size:16px; margin-bottom:4px}
+.ej span{display:block; font-size:13.5px; color:var(--muted)}
+.ej em{display:block; font-style:normal; font-weight:700; font-size:13.5px; color:var(--accent); margin-top:8px}
+
+.cta{background:var(--accent-soft); border:2px solid var(--accent); border-radius:18px; padding:20px; display:flex; flex-wrap:wrap; align-items:center; justify-content:space-between; gap:12px 18px}
+.cta h3{margin:0 0 4px; font-size:18px; color:var(--accent)}
+.cta p{margin:0; font-size:14.5px; max-width:60ch}
+.acciones{display:flex; flex-wrap:wrap; gap:8px}
+.acciones a{display:inline-flex; align-items:center; border-radius:10px; padding:10px 16px; font-weight:700; font-size:14px; text-decoration:none; border:1px solid var(--accent); color:var(--accent); background:var(--panel)}
+.acciones a.pri{background:var(--grad); color:var(--grad-ink); border-color:transparent; text-shadow:0 1px 2px rgba(40,20,70,.35)}
+.foot{font-size:12.5px; color:var(--muted); margin:0}
+
+@media (max-width: 880px){
+  .grid2,.ejemplos{grid-template-columns:minmax(0,1fr)}
+  .hero{grid-template-columns:minmax(0,1fr)}
+  h1{font-size:25px}
+}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header class="head">
+    <div class="brand"><a class="home" href="index.html" aria-label="Ir al inicio de 185ChangarroWeb"><img class="logo" src="logo.png" alt="" width="61" height="40"></a><div><p class="eyebrow">185ChangarroWeb</p><h1>Páginas Web Básicas</h1></div></div>
+    <nav class="nav" aria-label="Servicios">
+      <a href="basicas.html" aria-current="page">Básicas</a>
+      <a href="tarifas.html">Personalizables</a>
+      <a href="eventos.html">Eventos</a>
+    </nav>
+  </header>
+
+  <p class="lead">La página más sencilla y más barata que hacemos: una sola hoja con lo que su negocio necesita para que lo encuentren y le escriban. El contenido se arma una vez y se queda así.</p>
+  <p class="lead" style="font-size:13px">Versión del 3 de octubre de 2026.</p>
+
+  <section class="hero">
+    <div>
+      <h2 id="que-es">¿Para quién es?</h2>
+      <p class="lead" id="forx"></p>
+      <p class="lead" style="margin-top:10px">Si lo que quiere es que la página <b>trabaje</b> por usted (agenda, catálogo, asistente que contesta, reseñas, promociones que cambian), eso son las <a href="tarifas.html">Páginas Personalizables</a>.</p>
+    </div>
+    <div class="precio">
+      <span>Instalación</span>
+      <b id="p-inst"></b>
+      <small>pago único</small>
+      <hr>
+      <span>Mensualidad</span>
+      <b id="p-mes"></b>
+      <small>al mes</small>
+    </div>
+  </section>
+
+  <div class="grid2">
+    <section class="card">
+      <h3>Qué incluye</h3>
+      <ul class="checks" id="incluye"></ul>
+      <p class="note">Lista en <b id="tiempo"></b>. Si algo se descompone, contestamos en <b id="sla"></b> hábiles y arreglarlo no cuesta.</p>
+    </section>
+
+    <section class="card">
+      <h3>Qué NO incluye</h3>
+      <p class="lead" style="font-size:14px; margin-bottom:12px">Esto es a propósito: es lo que hace que la Básica cueste lo que cuesta. Todo esto está en los planes personalizables.</p>
+      <ul class="crosses" id="no-incluye"></ul>
+    </section>
+  </div>
+
+  <section class="card">
+    <h3>Así se ve una página de 185ChangarroWeb</h3>
+    <p class="lead" style="font-size:14px">Ábralas en el celular. Son muestras de negocios reales que hicimos como ejemplo.</p>
+    <div class="ejemplos">
+      <a class="ej" href="mariscos8tostadas-muestra/">
+        <b>Mariscos 8 Tostadas</b>
+        <span>Puerto Vallarta · Menú, fotos y pedidos por WhatsApp</span>
+        <em>Ver la muestra →</em>
+      </a>
+      <a class="ej" href="clinicadentalsanpablo-muestra/">
+        <b>Clínica Dental San Pablo</b>
+        <span>Tepatitlán · Servicios, precios y citas</span>
+        <em>Ver la muestra →</em>
+      </a>
+    </div>
+    <p class="note"><b>Importante y honesto:</b> estas muestras se hicieron para enseñar nuestro trabajo y traen cosas que pertenecen a los planes personalizables. Lo que incluye una Página Básica es exactamente la lista de "Qué incluye" de arriba, ni más ni menos.</p>
+  </section>
+
+  <div class="grid2">
+    <section class="card">
+      <h3>Pagos y reglas</h3>
+      <ul class="rules">
+        <li>Instalación: 50% al contratar y 50% al entregar la página.</li>
+        <li>La primera mensualidad se paga un mes después de publicada la página.</li>
+        <li><b>Dirección web:</b> la Básica incluye una dirección web sin costo. Si quiere un dominio propio a nombre del negocio (.com, .xyz y demás), se cotiza aparte: el alta y la renovación de cada año.</li>
+        <li><b>Un cambio al mes</b> sobre lo que ya existe: precios, horarios o una foto. Los cambios de más se cotizan aparte.</li>
+        <li>Sin plazo forzoso: se puede cancelar con 30 días de aviso.</li>
+        <li>Si el pago se atrasa más de 15 días, la página se pausa. No se borra.</li>
+        <li>¿Se queda corta? Puede pasarse a un plan personalizable cuando quiera; lo que ya pagó de instalación se le toma a cuenta.</li>
+      </ul>
+    </section>
+
+    <section class="card">
+      <h3>Qué necesito de su negocio</h3>
+      <ul class="checks">
+        <li>Logo (si no tiene, se hace uno sencillo)</li>
+        <li>Fotos del local, productos o trabajos</li>
+        <li>Lista de servicios o productos con precios</li>
+        <li>Horarios, dirección y número de WhatsApp</li>
+        <li>Sus redes sociales, si las tiene</li>
+      </ul>
+      <p class="note" id="premio"></p>
+    </section>
+  </div>
+
+  <section class="cta">
+    <div>
+      <h3>¿Le interesa?</h3>
+      <p>Escríbanos y le hacemos una muestra de su negocio con su nombre, sus fotos y sus precios, antes de que pague nada.</p>
+    </div>
+    <div class="acciones">
+      <a class="pri" id="c-wa" href="#" target="_blank" rel="noopener">Preguntar por WhatsApp</a>
+      <a id="c-mail" href="#">Escribir por correo</a>
+      <a href="terminos.html#aceptar">Aceptar y contratar</a>
+    </div>
+  </section>
+
+  <p class="foot">Precios en pesos mexicanos, IVA incluido. Las licencias de terceros y las comisiones de las plataformas de pago las paga el negocio directamente.</p>
+  <p class="foot"><a href="index.html">Inicio</a> · <a href="tarifas.html">Páginas Personalizables</a> · <a href="eventos.html">Páginas para Eventos</a> · <a href="terminos.html">Términos y Condiciones</a> · <a href="privacidad.html">Aviso de Privacidad</a></p>
+</div>
+
+<script src="planes.js"></script>
+<script>
+(function(){
+  var B = window.PLANES_185.BASICA, R = window.PLANES_185.REFERIDOS;
+  function fmt(n){ return Number(n||0).toLocaleString('es-MX'); }
+  function li(x){ return '<li><span>' + x + '</span></li>'; }
+
+  document.getElementById('forx').textContent = B.forx;
+  document.getElementById('p-inst').textContent = '$' + fmt(B.inst);
+  document.getElementById('p-mes').textContent = '$' + fmt(B.mes);
+  document.getElementById('tiempo').textContent = B.time;
+  document.getElementById('sla').textContent = B.sla;
+  document.getElementById('incluye').innerHTML = B.inc.map(li).join('');
+  document.getElementById('no-incluye').innerHTML = B.no.map(li).join('');
+  document.getElementById('premio').innerHTML = '<b>Premio por recomendar:</b> si alguien contrata una Página Básica porque usted nos recomendó, le damos <b>$' + fmt(R.basica) + '</b>. Las reglas están en la sección 19 de los <a href="terminos.html#recomendar">Términos</a>.';
+
+  // Datos de contacto de 185ChangarroWeb (los mismos de la portada).
+  var WHATSAPP = '523151260581';
+  var CORREO = '185changarroweb@gmail.com';
+  var MENSAJE = 'Hola, 185ChangarroWeb. Me interesa una Página Web Básica para mi negocio.';
+  var ASUNTO = 'Página Web Básica';
+  var wa = document.getElementById('c-wa'), mail = document.getElementById('c-mail');
+  if(WHATSAPP) wa.href = 'https://wa.me/' + WHATSAPP + '?text=' + encodeURIComponent(MENSAJE); else wa.hidden = true;
+  if(CORREO) mail.href = 'mailto:' + CORREO + '?subject=' + encodeURIComponent(ASUNTO) + '&body=' + encodeURIComponent(MENSAJE); else mail.hidden = true;
+})();
+</script>
+</body>
+</html>

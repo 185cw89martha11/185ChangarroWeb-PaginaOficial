@@ -1,5 +1,17 @@
 # 185ChangarroWeb
 
+## Los tres servicios
+
+185ChangarroWeb vende tres cosas distintas, y la portada es una puerta a cada una:
+
+1. **Páginas Web Básicas** (`basicas.html`) — una sola hoja, contenido fijo. $700 de instalación y $99 al mes. Es el gancho: barata, pero recortada a propósito.
+2. **Páginas Web Personalizables** (`tarifas.html`) — los tres planes de siempre, desde $1,800 + $199 al mes. Aquí sí se arma a gusto del cliente, dentro de lo que incluye el plan.
+3. **Páginas Web para Eventos** (`eventos.html`) — invitaciones digitales, $350 o $500 de pago único, sin mensualidad.
+
+El **premio por recomendar** es $150 en Básicas y $200 en Personalizables. En Eventos no hay premio: el ticket no lo aguanta. Las reglas completas están en la sección 19 de los Términos.
+
+Regla que no se rompe: las muestras de negocios (Mariscos, Clínica Dental, AmueblArte) se hicieron para enseñar el trabajo y traen cosas de los planes personalizables. Una Básica incluye exactamente la lista `BASICA.inc` de `planes.js`, ni más ni menos, y `basicas.html` lo dice con todas sus letras para no prometer de más.
+
 ## Qué es
 
 Herramienta de ventas para el servicio de páginas web de 185ChangarroWeb. Es una demo interactiva que se abre en su celular o laptop frente al dueño de un negocio local para enseñarle cómo se vería su página.
@@ -20,11 +32,13 @@ Esto es el muestrario, no la página final de un cliente. Generar sitios reales 
 
 | Archivo | Qué tiene |
 |---|---|
-| `public/index.html` | Portada pública de 185ChangarroWeb: nombre, quiénes somos, planes (de `planes.js`), sección Contratar con enlaces a Tarifas, Términos y Aviso, y botones de WhatsApp y correo. Los datos de contacto están al inicio de su `<script>`. |
+| `public/index.html` | Portada pública de 185ChangarroWeb: nombre, quiénes somos, **las tres puertas** (Básicas → Personalizables → Eventos, armadas con `planes.js`), el premio por recomendar y la sección Contratar. Los datos de contacto están al inicio de su `<script>`. No lleva precios escritos a mano. |
+| `public/basicas.html` | Página del servicio más barato para negocios: la Básica, una sola hoja con contenido fijo. Qué incluye y **qué no incluye** (ambas listas salen de `BASICA` en `planes.js`), ejemplos, pagos y premio por recomendar. |
+| `public/eventos.html` | Página de las invitaciones digitales (`EVENTOS` de `planes.js`): dos paquetes de pago único, enlace a la invitación de ejemplo, cuánto tiempo está en línea y qué se necesita. Es el único servicio donde se habla de "tú": no es para negocios y no lleva premio por recomendar. |
 | `public/demo.html` | Demo de ventas. Marcado: barra superior, panel de ajustes, marco de teléfono con el sitio del cliente, asistente, pestaña Propuesta. |
 | `public/muestra.html`, `muestra.css`, `muestra.js`, `muestra-datos.js` | Muestra por cliente (es la base que se copia por negocio, ver "Cómo hacer la muestra de un negocio"): interruptores con todo lo que incluyen los planes (sin las funciones del catálogo), agrupados por plan y con el plan que cubre lo prendido; vista previa en celular o computadora (botón arriba a la derecha); botón que exporta un mensaje para Claude Code con lo que decidió el cliente. `muestra-datos.js` es la plantilla: `FUNCIONES` (qué se prende) y `NEGOCIO` (el contenido de ejemplo). Nombres y precios de planes salen de `planes.js`. Si cambia lo que incluye un plan en `planes.js`, actualiza también `FUNCIONES`. |
-| `public/tarifas.html` | Página de planes, precios, tiempos de respuesta y catálogo de funciones. |
-| `public/planes.js` | Planes y catálogo de funciones (`window.PLANES_185`). Los usan `tarifas.html` e `index.html`. |
+| `public/tarifas.html` | Página de las Páginas Personalizables: los tres planes, precios, tiempos de respuesta y catálogo de funciones. Manda a Básicas y a Eventos. |
+| `public/planes.js` | **El único lugar donde viven los precios** (`window.PLANES_185`): `BASICA`, `PLANS`, `EVENTOS`, `REFERIDOS` y `CATALOG`. Los usan `index.html`, `basicas.html`, `eventos.html` y `tarifas.html`. |
 | `public/styles.css` | Tokens de la herramienta (claro y oscuro) y estilos del sitio del cliente. El sitio del cliente es siempre claro; sus colores viven en `.screen`. |
 | `public/data.js` | Todo el contenido: giros, colores, fuentes, funciones y paquetes. Expone `window.VITRINA_DATA`. El comentario del inicio explica cada campo. |
 | `public/app.js` | Estado, render del sitio, agenda, asistente por reglas, panel, propuesta y modo presentación. |
@@ -42,7 +56,9 @@ Esto es el muestrario, no la página final de un cliente. Generar sitios reales 
 - JavaScript sin framework y sin paso de build. Scripts clásicos, no `type="module"`, para que siga funcionando con `file://`.
 - El contenido va en `data.js`. `app.js` solo lo pinta.
 - Todo lo que ve el navegador va en `public/`. Lo que quede fuera (servidor, configuración, notas) nunca se entrega al público.
-- `public/terminos.html` y `public/privacidad.html` son los documentos legales de 185ChangarroWeb. Si cambia una regla, precio o plan, actualiza también `public/planes.js` y `public/tarifas.html` para que digan lo mismo, y la lista `PLANES` del script de `terminos.html` si cambia lo que incluye un plan en `planes.js`.
+- `public/terminos.html` y `public/privacidad.html` son los documentos legales de 185ChangarroWeb. Si cambia una regla, precio o plan, actualiza también `public/planes.js`, `public/tarifas.html`, `public/basicas.html` y `public/eventos.html` para que digan lo mismo, y la lista `PLANES` del script de `terminos.html` si cambia lo que incluye un plan.
+- Los precios se escriben **una sola vez, en `planes.js`**, y las páginas los pintan desde ahí. La excepción obligada son los Términos (secciones 3, 19 y 20), donde el precio va escrito porque es un documento legal: si cambia un precio en `planes.js`, hay que cambiarlo ahí a mano.
+- Las páginas de los tres servicios llevan la misma barra `nav` arriba (Básicas · Personalizables · Eventos), con `aria-current="page"` en la que se está viendo.
 - Antes de publicar una versión nueva de Tarifas o de los documentos legales, guarda una copia con fecha en `versiones/AAAA-MM-DD/`. Esas copias prueban qué incluía cada plan el día en que un cliente contrató; no se borran ni se editan. Si ya existe la carpeta de ese día, usa `AAAA-MM-DD-2`, `-3`, etc. Incluye los archivos que la página necesita para verse igual (por ejemplo, `planes.js` y el logo).
 - Todo en español de México. En el sitio del cliente se le habla de "tú" al cliente final. En el panel y la propuesta se le habla de "usted" al dueño del negocio.
 - Tiene que verse bien a 390 px de ancho, porque se enseña desde el celular. Nada de scroll horizontal.

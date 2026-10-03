@@ -24,6 +24,8 @@ const ROUTES = {
   '/muestra': 'muestra.html',
   '/admin': 'admin.html',
   '/tarifas': 'tarifas.html',
+  '/basicas': 'basicas.html',
+  '/eventos': 'eventos.html',
   '/terminos': 'terminos.html',
   '/privacidad': 'privacidad.html'
 };

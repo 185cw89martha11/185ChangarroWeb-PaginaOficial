@@ -61,6 +61,29 @@ h2{margin:0 0 8px; font-size:26px; line-height:1.15; letter-spacing:-.01em}
 .card p{margin:0; color:var(--muted)}
 .hero-cta{display:flex; flex-wrap:wrap; justify-content:center; gap:10px; margin-top:28px}
 
+/* Las tres puertas: Básicas, Personalizables y Eventos */
+.doors{display:grid; grid-template-columns:repeat(3, minmax(0,1fr)); gap:14px; align-items:stretch; margin-top:20px}
+.door{display:flex; flex-direction:column; gap:12px; background:var(--panel); border:1px solid var(--line); border-radius:18px; padding:20px; color:var(--ink); text-decoration:none}
+.door:hover,.door:focus-visible{border-color:var(--accent)}
+.door .num{font-size:11px; font-weight:700; letter-spacing:.14em; text-transform:uppercase; color:var(--muted)}
+.door h3{margin:0; font-size:20px; line-height:1.15}
+.door .for{margin:0; color:var(--muted); font-size:14px; flex:1}
+.door .desde{background:var(--panel-2); border-radius:12px; padding:10px 12px}
+.door .desde span{display:block; font-size:10.5px; font-weight:700; letter-spacing:.09em; text-transform:uppercase; color:var(--muted)}
+.door .desde b{font-family:var(--f-mono); font-size:24px; font-weight:500; font-variant-numeric:tabular-nums}
+.door .desde small{display:block; font-size:12px; color:var(--muted)}
+.door .ir{font-weight:700; color:var(--accent); font-size:14px}
+.door ul{margin:0; padding:0; list-style:none; display:flex; flex-direction:column; gap:6px; font-size:13.5px; color:var(--muted)}
+.door ul li{padding-left:13px; position:relative}
+.door ul li::before{content:""; position:absolute; left:0; top:.55em; width:5px; height:5px; border-radius:50%; background:var(--accent)}
+
+/* Premio por recomendar */
+.ref{background:var(--panel); border:1px solid var(--line); border-radius:20px; padding:24px}
+.refs{display:grid; grid-template-columns:repeat(3, minmax(0,1fr)); gap:12px; margin:18px 0 0}
+.refbox{background:var(--panel-2); border-radius:14px; padding:14px}
+.refbox b{display:block; font-family:var(--f-mono); font-size:26px; font-weight:500}
+.refbox span{display:block; font-size:13px; color:var(--muted)}
+
 /* Tarifas */
 .plans{display:grid; grid-template-columns:repeat(3, minmax(0,1fr)); gap:14px; align-items:start; margin-top:20px}
 .plan{background:var(--panel); border:1px solid var(--line); border-radius:16px; padding:18px; display:flex; flex-direction:column; gap:14px}
@@ -96,7 +119,7 @@ ul.checks{list-style:none; margin:0; padding:0; display:flex; flex-direction:col
 .foot{border-top:1px solid var(--line); padding-block:22px 40px; font-size:13px; color:var(--muted); display:flex; flex-wrap:wrap; gap:6px 16px}
 
 @media (max-width: 880px){
-  .plans, .steps{grid-template-columns:minmax(0,1fr)}
+  .plans, .steps, .doors, .refs{grid-template-columns:minmax(0,1fr)}
 }
 @media (max-width: 600px){
   .about{grid-template-columns:minmax(0,1fr)}
@@ -133,18 +156,28 @@ ul.checks{list-style:none; margin:0; padding:0; display:flex; flex-direction:col
     </div>
 
     <div class="hero-cta">
-      <a class="btn pri" href="#tarifas">Ver planes y precios</a>
+      <a class="btn pri" href="#servicios">Ver qué hacemos y cuánto cuesta</a>
       <a class="btn" href="#contratar">Quiero contratar</a>
     </div>
   </section>
 
-  <!-- Tarifas: los datos vienen de planes.js, igual que en tarifas.html -->
-  <section class="wrap" id="tarifas">
-    <p class="eyebrow">Tarifas</p>
-    <h2>Tres planes, todos con mantenimiento</h2>
-    <p class="lead">El dominio y las cuentas siempre quedan a nombre del negocio. Precios en pesos mexicanos, IVA incluido.</p>
-    <div class="plans" id="plans"></div>
-    <div class="more"><a class="btn" href="tarifas.html">Ver tarifas completas: tiempos de respuesta, pagos y catálogo de funciones</a></div>
+  <!-- Las tres puertas. Los precios salen de planes.js; aquí no se escribe ninguno a mano. -->
+  <section class="wrap" id="servicios">
+    <p class="eyebrow">Qué hacemos</p>
+    <h2>Tres servicios, del más sencillo al más completo</h2>
+    <p class="lead">Elija por dónde empezar. Cada uno tiene su página con todo el detalle. Precios en pesos mexicanos, IVA incluido.</p>
+    <div class="doors" id="doors"></div>
+  </section>
+
+  <!-- Premio por recomendar. Las reglas completas están en los Términos. -->
+  <section class="wrap" id="recomendar">
+    <div class="ref">
+      <p class="eyebrow">Premio por recomendar</p>
+      <h2>Si alguien contrata porque usted nos recomendó, le damos dinero</h2>
+      <p class="lead">Solo diga su nombre cuando contrate la persona que recomendó. El premio se paga cuando esa persona ya pagó su instalación y su primera mensualidad.</p>
+      <div class="refs" id="refs"></div>
+      <p class="small">Un premio por cada negocio nuevo. No aplica entre sucursales del mismo dueño ni para quien ya nos había pedido cotización. Vigencia y condiciones completas en la sección 19 de los <a href="terminos.html#recomendar">Términos y Condiciones</a>.</p>
+    </div>
   </section>
 
   <!-- Contratar y aceptación -->
@@ -155,13 +188,15 @@ ul.checks{list-style:none; margin:0; padding:0; display:flex; flex-direction:col
       <p class="lead">Así se contrata. La aceptación se hace por escrito y queda como constancia para ambas partes.</p>
 
       <ol class="steps">
-        <li><b>Elija su plan</b><p>Revise las Tarifas y lo que incluye cada plan.</p></li>
+        <li><b>Elija su servicio</b><p>Básica, personalizable o invitación para evento. Revise qué incluye cada uno.</p></li>
         <li><b>Lea los documentos</b><p>Los Términos y Condiciones y el Aviso de Privacidad.</p></li>
         <li><b>Acepte y envíe</b><p>Se prepara un mensaje con su aceptación para mandarlo por WhatsApp o correo.</p></li>
       </ol>
 
       <div class="docs">
-        <a class="btn" href="tarifas.html">Tarifas</a>
+        <a class="btn" href="basicas.html">Páginas Básicas</a>
+        <a class="btn" href="tarifas.html">Páginas Personalizables</a>
+        <a class="btn" href="eventos.html">Páginas para Eventos</a>
         <a class="btn" href="terminos.html">Términos y Condiciones</a>
         <a class="btn" href="privacidad.html">Aviso de Privacidad</a>
       </div>
@@ -178,7 +213,9 @@ ul.checks{list-style:none; margin:0; padding:0; display:flex; flex-direction:col
 
 <footer class="wrap foot">
   <span>© 2026 185ChangarroWeb</span>
-  <a href="tarifas.html">Tarifas</a>
+  <a href="basicas.html">Básicas</a>
+  <a href="tarifas.html">Personalizables</a>
+  <a href="eventos.html">Eventos</a>
   <a href="terminos.html">Términos y Condiciones</a>
   <a href="privacidad.html">Aviso de Privacidad</a>
 </footer>
@@ -198,21 +235,42 @@ ul.checks{list-style:none; margin:0; padding:0; display:flex; flex-direction:col
   if(WHATSAPP) wa.href = 'https://wa.me/' + WHATSAPP + '?text=' + encodeURIComponent(MENSAJE); else wa.hidden = true;
   if(CORREO) mail.href = 'mailto:' + CORREO + '?subject=' + encodeURIComponent(ASUNTO) + '&body=' + encodeURIComponent(MENSAJE); else mail.hidden = true;
 
-  // Planes: los precios oficiales de planes.js.
+  // Los precios oficiales salen de planes.js.
+  var P = window.PLANES_185;
   function fmt(n){ return Number(n||0).toLocaleString('es-MX'); }
-  var box = document.getElementById('plans');
-  window.PLANES_185.PLANS.forEach(function(p){
-    var a = document.createElement('article'); a.className = 'plan' + (p.featured ? ' featured' : '');
-    a.innerHTML = '<div class="plan-top"><h3>' + p.name + '</h3>' + (p.featured ? '<span class="badge">Recomendado</span>' : '') + '</div>'
-      + '<p class="for">' + p.forx + '</p>'
-      + '<div class="prices">'
-      + '<div class="price"><span>Instalación</span><b>$' + fmt(p.inst) + '</b><small>pago único</small></div>'
-      + '<div class="price"><span>Mensualidad</span><b>$' + fmt(p.mes) + '</b><small>al mes</small></div>'
-      + '</div>'
-      + '<ul class="checks">' + p.inc.map(function(x){ return '<li' + (x.indexOf('<b>Todo') === 0 ? ' class="all"' : '') + '><span>' + x + '</span></li>'; }).join('') + '</ul>'
-      + '<p class="for" style="margin:0">Lista en ' + p.time + '</p>';
-    box.appendChild(a);
+
+  // Las tres puertas, del más barato al más completo para un negocio.
+  var EVENTO_MIN = Math.min.apply(null, P.EVENTOS.PAQUETES.map(function(x){ return x.precio; }));
+  var PUERTAS = [
+    {href:'basicas.html', name:'Páginas Web Básicas', forx:P.BASICA.forx,
+      desde:'$' + fmt(P.BASICA.inst), pie:'pago único + $' + fmt(P.BASICA.mes) + ' al mes',
+      pts:['Una sola página, lista en ' + P.BASICA.time, 'Botón de WhatsApp, mapa y horarios', 'Hosting y respaldo incluidos']},
+    {href:'tarifas.html', name:'Páginas Web Personalizables', forx:'Para que la página trabaje por usted: agenda, catálogo, asistente y lo que elija del catálogo de funciones.',
+      desde:'$' + fmt(P.PLANS[0].inst), pie:'pago único + desde $' + fmt(P.PLANS[0].mes) + ' al mes',
+      pts:['Tres planes: ' + P.PLANS.map(function(p){ return p.name; }).join(', '), 'Hasta 15 funciones del catálogo', 'Dominio propio a nombre del negocio']},
+    {href:'eventos.html', name:'Páginas Web para Eventos', forx:'Invitaciones digitales para XV años, bodas, bautizos y cumpleaños. Se mandan por WhatsApp.',
+      desde:'$' + fmt(EVENTO_MIN), pie:'pago único, sin mensualidad',
+      pts:['Lista en ' + P.EVENTOS.time, 'Confirmación de asistencia por WhatsApp', 'Dos paquetes: Básica y Completa']}
+  ];
+  var doors = document.getElementById('doors');
+  PUERTAS.forEach(function(d, i){
+    var a = document.createElement('a'); a.className = 'door'; a.href = d.href;
+    a.innerHTML = '<p class="num">' + (i + 1) + ' de 3</p>'
+      + '<h3>' + d.name + '</h3>'
+      + '<p class="for">' + d.forx + '</p>'
+      + '<ul>' + d.pts.map(function(x){ return '<li>' + x + '</li>'; }).join('') + '</ul>'
+      + '<div class="desde"><span>Desde</span><b>' + d.desde + '</b><small>' + d.pie + '</small></div>'
+      + '<span class="ir">Ver detalles y qué incluye →</span>';
+    doors.appendChild(a);
   });
+
+  // Premio por recomendar. Eventos vale 0: no lleva premio.
+  var R = P.REFERIDOS;
+  document.getElementById('refs').innerHTML = [
+    ['$' + fmt(R.basica), 'por cada Página Básica contratada'],
+    ['$' + fmt(R.planes), 'por cada Página Personalizable contratada'],
+    [R.eventos ? '$' + fmt(R.eventos) : 'Sin premio', 'las invitaciones para eventos no llevan premio']
+  ].map(function(r){ return '<div class="refbox"><b>' + r[0] + '</b><span>' + r[1] + '</span></div>'; }).join('');
 })();
 </script>
 </body>

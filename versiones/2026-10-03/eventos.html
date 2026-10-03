@@ -1,0 +1,201 @@
+<!doctype html>
+<html lang="es-MX">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<link rel="icon" type="image/png" href="icono.png">
+<title>Páginas Web para Eventos — 185ChangarroWeb</title>
+<meta name="description" content="Invitaciones digitales para XV años, bodas y bautizos. Desde $350, listas en 24 a 48 horas y se mandan por WhatsApp.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Figtree:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap">
+<style>
+body{margin:0}[hidden]{display:none!important}
+:root{
+  --bg:#F1EFF7; --panel:#FFFFFF; --panel-2:#F7F5FB; --ink:#1C1826; --muted:#5E5873; --line:#DEDAE8;
+  --accent:#6B3FC4; --accent-ink:#FFFFFF; --accent-soft:#EEE8FA; --warn-bg:#EEE8FA; --warn-ink:#4A2A8A;
+  --grad:linear-gradient(90deg, #5670FE 0%, #9E6BE4 50%, #F567C8 100%); --grad-ink:#FFFFFF;
+  --f-ui:'Figtree', system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+  --f-mono:'JetBrains Mono', ui-monospace, Menlo, Consolas, monospace;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --bg:#110F17; --panel:#19161F; --panel-2:#211D29; --ink:#ECE8F4; --muted:#A29CB3; --line:#302B3A;
+    --accent:#B79AF2; --accent-ink:#140F1F; --accent-soft:#241C35; --warn-bg:#241C35; --warn-ink:#D9C8FA;
+    color-scheme:dark;
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#110F17; --panel:#19161F; --panel-2:#211D29; --ink:#ECE8F4; --muted:#A29CB3; --line:#302B3A;
+  --accent:#B79AF2; --accent-ink:#140F1F; --accent-soft:#241C35; --warn-bg:#241C35; --warn-ink:#D9C8FA;
+  color-scheme:dark;
+}
+*{box-sizing:border-box}
+body{background:var(--bg); color:var(--ink); font-family:var(--f-ui); font-size:15px; line-height:1.45}
+a{color:var(--accent); text-underline-offset:2px}
+:focus-visible{outline:2px solid var(--accent); outline-offset:2px}
+.wrap{max-width:1080px; margin:0 auto; padding-block:28px 56px; padding-inline:16px; display:flex; flex-direction:column; gap:22px}
+
+.head{display:flex; flex-wrap:wrap; align-items:flex-end; justify-content:space-between; gap:14px}
+.brand{display:flex; align-items:center; gap:12px}
+.logo{height:40px; width:auto; border-radius:8px; background:#fff; flex:none; display:block}
+.home{display:block; flex:none; border-radius:8px}
+.eyebrow{margin:0; font-size:11px; font-weight:700; letter-spacing:.14em; text-transform:uppercase; color:var(--muted)}
+h1{margin:2px 0 0; font-size:30px; line-height:1.1; letter-spacing:-.015em; font-weight:800; text-wrap:balance}
+.lead{margin:0; color:var(--muted); max-width:62ch}
+.nav{display:flex; flex-wrap:wrap; gap:8px}
+.nav a{display:inline-flex; align-items:center; border:1px solid var(--line); background:var(--panel); color:var(--ink); border-radius:10px; padding:8px 13px; font-weight:700; font-size:13.5px; text-decoration:none}
+.nav a[aria-current="page"]{border-color:var(--accent); color:var(--accent)}
+
+.paquetes{display:grid; grid-template-columns:repeat(2, minmax(0,1fr)); gap:14px; align-items:start}
+.paq{background:var(--panel); border:1px solid var(--line); border-radius:16px; padding:18px; display:flex; flex-direction:column; gap:14px}
+.paq.featured{border-color:var(--accent); box-shadow:0 0 0 1px var(--accent)}
+.paq-top{display:flex; align-items:center; justify-content:space-between; gap:8px}
+.paq h2{margin:0; font-size:19px}
+.badge{font-size:10.5px; font-weight:700; letter-spacing:.07em; text-transform:uppercase; background:var(--accent); color:var(--accent-ink); padding:3px 8px; border-radius:6px; white-space:nowrap}
+.for{margin:-6px 0 0; color:var(--muted); font-size:14px}
+.precio{background:var(--panel-2); border-radius:12px; padding:11px 13px}
+.precio span{display:block; font-size:10.5px; font-weight:700; letter-spacing:.09em; text-transform:uppercase; color:var(--muted)}
+.precio b{display:block; font-family:var(--f-mono); font-size:30px; font-weight:500; line-height:1.1; font-variant-numeric:tabular-nums}
+.precio small{font-size:12px; color:var(--muted)}
+ul.checks{list-style:none; margin:0; padding:0; display:flex; flex-direction:column; gap:7px}
+.checks li{display:grid; grid-template-columns:18px 1fr; gap:8px; font-size:14px; line-height:1.4}
+.checks li::before{content:""; width:13px; height:7px; margin-top:5px; border-left:2px solid var(--accent); border-bottom:2px solid var(--accent); transform:rotate(-45deg)}
+.checks li.all{font-weight:700}
+
+.grid2{display:grid; grid-template-columns:repeat(2, minmax(0,1fr)); gap:14px}
+.card{background:var(--panel); border:1px solid var(--line); border-radius:16px; padding:18px}
+.card h3{margin:0 0 12px; font-size:16px}
+.rules{margin:0; padding:0; list-style:none; display:flex; flex-direction:column; gap:8px; font-size:14px}
+.rules li{padding-left:14px; position:relative}
+.rules li::before{content:""; position:absolute; left:0; top:.6em; width:5px; height:5px; border-radius:50%; background:var(--accent)}
+.note{background:var(--warn-bg); color:var(--warn-ink); border-radius:10px; padding:9px 11px; font-size:13px; margin:12px 0 0}
+
+.muestra{background:var(--accent-soft); border:2px solid var(--accent); border-radius:18px; padding:20px; display:flex; flex-wrap:wrap; align-items:center; justify-content:space-between; gap:12px 18px}
+.muestra h3{margin:0 0 4px; font-size:18px; color:var(--accent)}
+.muestra p{margin:0; font-size:14.5px; max-width:60ch}
+.acciones{display:flex; flex-wrap:wrap; gap:8px}
+.acciones a{display:inline-flex; align-items:center; border-radius:10px; padding:10px 16px; font-weight:700; font-size:14px; text-decoration:none; border:1px solid var(--accent); color:var(--accent); background:var(--panel)}
+.acciones a.pri{background:var(--grad); color:var(--grad-ink); border-color:transparent; text-shadow:0 1px 2px rgba(40,20,70,.35)}
+.foot{font-size:12.5px; color:var(--muted); margin:0}
+
+@media (max-width: 880px){
+  .paquetes,.grid2{grid-template-columns:minmax(0,1fr)}
+  h1{font-size:25px}
+}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header class="head">
+    <div class="brand"><a class="home" href="index.html" aria-label="Ir al inicio de 185ChangarroWeb"><img class="logo" src="logo.png" alt="" width="61" height="40"></a><div><p class="eyebrow">185ChangarroWeb</p><h1>Páginas Web para Eventos</h1></div></div>
+    <nav class="nav" aria-label="Servicios">
+      <a href="basicas.html">Básicas</a>
+      <a href="tarifas.html">Personalizables</a>
+      <a href="eventos.html" aria-current="page">Eventos</a>
+    </nav>
+  </header>
+
+  <p class="lead">Invitaciones digitales para XV años, bodas, bautizos, cumpleaños y graduaciones. En vez de repartir tarjetas, manda un enlace por WhatsApp y cada invitado la abre en su celular, con su foto, su música y el mapa del lugar.</p>
+  <p class="lead" style="font-size:13px">Versión del 3 de octubre de 2026. Aquí se habla de tú, porque no es un servicio para negocios.</p>
+
+  <section class="muestra">
+    <div>
+      <h3>Mira una invitación de verdad</h3>
+      <p>Es una invitación de XV años de ejemplo, con el paquete Completo. Los nombres y las fotos son inventados. Ábrela en tu celular.</p>
+    </div>
+    <div class="acciones">
+      <a class="pri" href="ejemplodeevento-muestra/">Ver la invitación de ejemplo →</a>
+    </div>
+  </section>
+
+  <section class="paquetes" id="paquetes" aria-label="Paquetes de invitación"></section>
+
+  <div class="grid2">
+    <section class="card">
+      <h3>Cómo funciona</h3>
+      <ul class="rules">
+        <li>Me mandas los datos del evento (nombres, fecha, hora, lugar) y tus fotos por WhatsApp.</li>
+        <li>Te la entrego en <b id="tiempo"></b>, con un enlace y un código QR para que la mandes.</li>
+        <li>Incluye <b>un ajuste</b> de textos o fotos antes de entregarla. Después de entregada, cada cambio cuesta <b id="cambio"></b>.</li>
+        <li>Se paga completa al encargarla, porque se hace de inmediato.</li>
+        <li>Las confirmaciones de asistencia llegan a tu WhatsApp. La invitación <b>no guarda datos</b> de tus invitados.</li>
+      </ul>
+    </section>
+
+    <section class="card">
+      <h3>Cuánto tiempo está en línea</h3>
+      <ul class="rules">
+        <li>La invitación vive en internet desde que te la entrego y hasta <b id="vigencia"></b>. Después se baja.</li>
+        <li>¿La quieres dejar de recuerdo? Son <b id="extra"></b> por cada 3 meses más.</li>
+        <li><b>No hay mensualidad.</b> Es un pago único y ya.</li>
+      </ul>
+      <p class="note"><b>Esto no lleva premio por recomendar.</b> El premio por recomendar aplica solo en las <a href="basicas.html">Páginas Básicas</a> y en las <a href="tarifas.html">Personalizables</a>.</p>
+    </section>
+  </div>
+
+  <section class="card">
+    <h3>Qué necesito de ti</h3>
+    <div class="grid2">
+      <ul class="checks">
+        <li>Nombres de los festejados y de quienes invitan</li>
+        <li>Fecha, hora y dirección exacta del lugar</li>
+        <li>Número de WhatsApp para las confirmaciones</li>
+      </ul>
+      <ul class="checks">
+        <li>Fotos (entre más, mejor; se acomodan solas)</li>
+        <li>Itinerario, código de vestimenta y mesa de regalos, si llevas</li>
+        <li>Una canción, si quieres música de fondo</li>
+      </ul>
+    </div>
+    <p class="note">Si las fotos son de menores de edad, necesito que quien tenga la patria potestad esté de acuerdo en que se publiquen. La invitación no aparece en buscadores: solo la ve quien tiene el enlace.</p>
+  </section>
+
+  <section class="muestra">
+    <div>
+      <h3>¿Hacemos la tuya?</h3>
+      <p>Escríbeme por WhatsApp con la fecha de tu evento y te digo si alcanzo a entregarla a tiempo.</p>
+    </div>
+    <div class="acciones">
+      <a class="pri" id="c-wa" href="#" target="_blank" rel="noopener">Pedir mi invitación por WhatsApp</a>
+      <a id="c-mail" href="#">Escribir por correo</a>
+    </div>
+  </section>
+
+  <p class="foot">Precios en pesos mexicanos, IVA incluido.</p>
+  <p class="foot"><a href="index.html">Inicio</a> · <a href="basicas.html">Páginas Básicas</a> · <a href="tarifas.html">Páginas Personalizables</a> · <a href="terminos.html">Términos y Condiciones</a> · <a href="privacidad.html">Aviso de Privacidad</a></p>
+</div>
+
+<script src="planes.js"></script>
+<script>
+(function(){
+  var E = window.PLANES_185.EVENTOS;
+  function fmt(n){ return Number(n||0).toLocaleString('es-MX'); }
+
+  document.getElementById('tiempo').textContent = E.time;
+  document.getElementById('cambio').textContent = '$' + fmt(E.cambio);
+  document.getElementById('vigencia').textContent = E.vigencia;
+  document.getElementById('extra').textContent = '$' + fmt(E.extra);
+
+  var box = document.getElementById('paquetes');
+  E.PAQUETES.forEach(function(p){
+    var a = document.createElement('article'); a.className = 'paq' + (p.featured ? ' featured' : '');
+    a.innerHTML = '<div class="paq-top"><h2>' + p.name + '</h2>' + (p.featured ? '<span class="badge">La más pedida</span>' : '') + '</div>'
+      + '<p class="for">' + p.forx + '</p>'
+      + '<div class="precio"><span>Precio</span><b>$' + fmt(p.precio) + '</b><small>pago único, sin mensualidad</small></div>'
+      + '<ul class="checks">' + p.inc.map(function(x){ return '<li' + (x.indexOf('<b>Todo') === 0 ? ' class="all"' : '') + '><span>' + x + '</span></li>'; }).join('') + '</ul>';
+    box.appendChild(a);
+  });
+
+  // Datos de contacto de 185ChangarroWeb (los mismos de la portada).
+  var WHATSAPP = '523151260581';
+  var CORREO = '185changarroweb@gmail.com';
+  var MENSAJE = 'Hola, 185ChangarroWeb. Quiero una invitación digital para mi evento.';
+  var ASUNTO = 'Invitación digital para un evento';
+  var wa = document.getElementById('c-wa'), mail = document.getElementById('c-mail');
+  if(WHATSAPP) wa.href = 'https://wa.me/' + WHATSAPP + '?text=' + encodeURIComponent(MENSAJE); else wa.hidden = true;
+  if(CORREO) mail.href = 'mailto:' + CORREO + '?subject=' + encodeURIComponent(ASUNTO) + '&body=' + encodeURIComponent(MENSAJE); else mail.hidden = true;
+})();
+</script>
+</body>
+</html>
