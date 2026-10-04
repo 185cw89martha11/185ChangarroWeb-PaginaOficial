@@ -15,7 +15,7 @@
       raiz.classList.remove('intro-on');
       intro.classList.add('sale');
       window.scrollTo(0, 0);
-      setTimeout(function () { intro.remove(); }, 2300);
+      setTimeout(function () { intro.remove(); }, 2700);
     };
     var abreCarta = function () {
       if (abierta || !intro.classList.contains('listo')) return;
@@ -111,6 +111,11 @@
         pon(false);
       }
     });
+    // Si se sale de la página, se cambia de pestaña o se deja Chrome, la música se detiene.
+    var deten = function () { if (!audio.paused) { audio.pause(); pon(false); } };
+    window.addEventListener('pagehide', deten);
+    window.addEventListener('beforeunload', deten);
+    document.addEventListener('visibilitychange', function () { if (document.hidden) deten(); });
   }
 
   // ---------- confirmación por WhatsApp ----------
@@ -119,24 +124,40 @@
     var inNombre = document.getElementById('nombre');
     var selPases = document.getElementById('npases');
     var fijo = rsvp.dataset.nombre;
+    var esDemo = rsvp.dataset.demo === '1';
+    var avisoRsvp = document.getElementById('aviso-rsvp');
     var arma = function () {
       var nombre = fijo || (inNombre ? inNombre.value.trim() : '');
       var n = selPases.value;
       var txt = 'Confirmo asistencia de ' + (nombre || '(escribe tu nombre)') + ', ' + n + (n === '1' ? ' pase' : ' pases');
       rsvp.href = 'https://wa.me/' + rsvp.dataset.wa + '?text=' + encodeURIComponent(txt);
     };
-    arma();
-    if (inNombre) inNombre.addEventListener('input', arma);
-    selPases.addEventListener('change', arma);
+    if (!esDemo) {
+      arma();
+      if (inNombre) inNombre.addEventListener('input', arma);
+      selPases.addEventListener('change', arma);
+    }
     rsvp.addEventListener('click', function (ev) {
       if (!fijo && inNombre && !inNombre.value.trim()) {
         ev.preventDefault();
         inNombre.focus();
-        inNombre.setCustomValidity('');
         inNombre.placeholder = 'Escribe tu nombre primero';
+        return;
+      }
+      if (esDemo) {
+        ev.preventDefault();
+        if (avisoRsvp) avisoRsvp.hidden = false;
       }
     });
   }
+
+  // ---------- avisos de la demo (botones que no llevan a ningún lado) ----------
+  Array.prototype.forEach.call(document.querySelectorAll('[data-aviso]'), function (btn) {
+    btn.addEventListener('click', function () {
+      var aviso = document.getElementById(btn.dataset.aviso);
+      if (aviso) aviso.hidden = false;
+    });
+  });
 
   // ---------- galería ----------
   var visor = document.querySelector('.visor');

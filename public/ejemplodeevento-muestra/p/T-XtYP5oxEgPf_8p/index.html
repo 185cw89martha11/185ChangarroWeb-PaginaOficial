@@ -17,6 +17,8 @@
 <body class="es-demo">
 
 <div class="intro" id="intro" role="dialog" aria-label="Invitación">
+  <div class="puerta izq" aria-hidden="true"></div>
+  <div class="puerta der" aria-hidden="true"></div>
   <div class="intro-fondo" aria-hidden="true"></div>
   <button type="button" class="btn claro intro-saltar">Entrar ya</button>
   <div class="carta">
@@ -34,12 +36,12 @@
     </div></div>
   </div>
   <div class="hoja" aria-live="polite">
-    <p class="h-orn" aria-hidden="true">✦ ❦ ✦</p>
+    <p class="h-orn" aria-hidden="true"><svg viewBox="0 0 24 24" width="34" height="34" aria-hidden="true" focusable="false"><path d="M12 7c-.9-1.4-2.4-2.2-4-2.2-2.8 0-5 2.4-5 5.6 0 4.3 3.2 9.1 6 9.1 1 0 1.6-.5 3-.5s2 .5 3 .5c2.8 0 6-4.8 6-9.1 0-3.2-2.2-5.6-5-5.6-1.6 0-3.1.8-4 2.2Z"/><path d="M12.7 5.3c.1-1.7 1.5-3.1 3.2-3.3.2 1.8-1.3 3.3-3.2 3.3Z"/></svg></p>
     <p class="h-ven">Ven a la fiesta de</p>
     <p class="h-nombre">Fulanita de Tal</p>
     <p class="h-form">Confirma tu lugar</p>
     <p class="h-pagina">en esta invitación</p>
-    <p class="h-orn" aria-hidden="true">✦ ❦ ✦</p>
+    <p class="h-orn" aria-hidden="true"><svg viewBox="0 0 24 24" width="34" height="34" aria-hidden="true" focusable="false"><path d="M12 7c-.9-1.4-2.4-2.2-4-2.2-2.8 0-5 2.4-5 5.6 0 4.3 3.2 9.1 6 9.1 1 0 1.6-.5 3-.5s2 .5 3 .5c2.8 0 6-4.8 6-9.1 0-3.2-2.2-5.6-5-5.6-1.6 0-3.1.8-4 2.2Z"/><path d="M12.7 5.3c.1-1.7 1.5-3.1 3.2-3.3.2 1.8-1.3 3.3-3.2 3.3Z"/></svg></p>
     <div class="h-barra" aria-hidden="true"><span></span></div>
   </div>
 </div>
@@ -94,7 +96,8 @@
   <h2>Ubicación</h2>
   <p class="dato-grande">Ejemplo de un salón/lugar</p>
   <p>Av. Ejemplo 123, Col. Centro</p>
-  <p><a class="btn" href="https://maps.google.com/?q=Zocalo+Ciudad+de+Mexico" target="_blank" rel="noopener noreferrer">Cómo llegar</a></p>
+  <p><button type="button" class="btn" data-aviso="aviso-mapa">Cómo llegar</button></p>
+  <p class="aviso-demo" id="aviso-mapa" role="status" hidden>Este es un ejemplo, no existe el lugar de la fiesta porque la fiesta tampoco existe.</p>
 </section>
 <section class="seccion alt" id="conoce">
   <h2>Conoce el lugar</h2>
@@ -127,9 +130,11 @@
   <h2>Mesa de regalos</h2>
   <p>Tu presencia es el mejor regalo. Si deseas tener un detalle:</p>
   <div class="botones">
-    <a class="btn sec" href="https://www.liverpool.com.mx/" target="_blank" rel="noopener noreferrer">Liverpool (ejemplo)</a>
-    <a class="btn sec" href="https://www.amazon.com.mx/" target="_blank" rel="noopener noreferrer">Amazon México (ejemplo)</a>
+    <button type="button" class="btn sec" data-aviso="aviso-regalos">Liverpool (ejemplo)</button>
+    <button type="button" class="btn sec" data-aviso="aviso-regalos">Amazon México (ejemplo)</button>
   </div>
+  <p class="aviso-demo" id="aviso-regalos" role="status" hidden>Esto es un ejemplo, no existe la fiesta.</p>
+  <p class="nota">Cualquier regalo importa.</p>
 </section>
 <section class="seccion" id="galeria">
   <h2>Galería</h2>
@@ -152,8 +157,8 @@
   <p class="dato-grande">Tía Lupita · 2 pases</p>
   <label for="npases">¿Cuántos pases confirmas?</label>
   <select id="npases"><option value="2">2</option><option value="1">1</option></select>
-  <p><a class="btn" id="rsvp" href="https://wa.me/5215555550100?text=Confirmo%20asistencia%20de%20T%C3%ADa%20Lupita%2C%202%20pases" target="_blank" rel="noopener noreferrer"
-     data-wa="5215555550100" data-nombre="Tía Lupita">Confirmar por WhatsApp</a></p>
+  <p><button type="button" class="btn" id="rsvp" data-demo="1" data-nombre="Tía Lupita">Confirmar por WhatsApp</button></p>
+  <p class="aviso-demo" id="aviso-rsvp" role="status" hidden>Esto es un ejemplo, no hay ninguna fiesta.</p>
 </section>
 </main>
 

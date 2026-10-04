@@ -29,6 +29,9 @@ p{margin:.5rem 0}
 .eyebrow-osc{text-transform:uppercase;letter-spacing:.15em;font-size:.95rem}
 .dato-grande{font-size:1.45rem;font-weight:700}
 .nota{font-style:italic}
+/* avisos de la demo: "esto es un ejemplo" */
+.aviso-demo{max-width:420px;margin:1rem auto 0;padding:.9rem 1.1rem;border:2px dashed var(--acento);border-radius:14px;background:var(--fondo);color:var(--texto);font-weight:700}
+.aviso-demo[hidden]{display:none}
 
 /* botones (táctiles, mínimo 52px) */
 .btn{display:inline-flex;align-items:center;justify-content:center;min-height:52px;min-width:52px;padding:.8rem 1.6rem;margin:.4rem;border:2px solid var(--acento);border-radius:999px;background:var(--acento);color:var(--acento-texto);font:700 1.05rem var(--f-texto);text-decoration:none;cursor:pointer}
@@ -103,9 +106,17 @@ body.menu-abierto{overflow:hidden}
 .intro-on .intro{display:block}
 .intro-on body{overflow:hidden}
 .intro-on main,.intro-on .pie,.intro-on .menu-btn,.intro-on .franja-demo{visibility:hidden}
-.intro{position:fixed;inset:0;z-index:100;overflow:hidden;color:#fff;background:var(--texto);background:radial-gradient(circle at 50% 30%,color-mix(in srgb,var(--acento) 65%,#000),#12081f 85%)}
-/* salida: primero la carta/hoja sube; 1 s después el fondo la sigue */
-.intro.sale{transform:translateY(-105%);transition:transform .9s cubic-bezier(.7,0,.8,.4) 1s;pointer-events:none}
+.intro{position:fixed;inset:0;z-index:100;overflow:hidden;color:#fff;background:transparent}
+/* las dos hojas del fondo: al final se abren como puerta y dejan ver la invitación */
+.puerta{position:absolute;top:0;bottom:0;width:50.2%;background:var(--texto);background:radial-gradient(circle at 50% 30%,color-mix(in srgb,var(--acento) 65%,#000),#12081f 85%);background-size:200% 100%}
+.puerta.izq{left:0;background-position:left center}
+.puerta.der{right:0;background-position:right center}
+.intro.sale .puerta{transition:transform 1.2s cubic-bezier(.65,.02,.4,1) .85s}
+.intro.sale .puerta.izq{transform:translateX(-100%)}
+.intro.sale .puerta.der{transform:translateX(100%)}
+/* salida: la carta sube y no vuelve; luego el fondo se abre como puerta */
+.intro.sale{display:block;pointer-events:none}
+.intro.sale .intro-fondo{opacity:0;animation:none;transition:opacity .5s}
 .intro.sale .intro-saltar{visibility:hidden}
 .intro-fondo{position:absolute;inset:0;pointer-events:none;animation:titila 3.2s ease-in-out infinite alternate;
  background-image:radial-gradient(2px 2px at 12% 18%,#fff 50%,transparent),radial-gradient(3px 3px at 80% 12%,#fde68a 50%,transparent),radial-gradient(2px 2px at 30% 70%,#fff 50%,transparent),radial-gradient(3px 3px at 88% 64%,#fff 50%,transparent),radial-gradient(2px 2px at 55% 90%,#fde68a 50%,transparent),radial-gradient(2px 2px at 66% 40%,#fff 50%,transparent),radial-gradient(3px 3px at 8% 52%,#fde68a 50%,transparent)}
@@ -132,7 +143,8 @@ body.menu-abierto{overflow:hidden}
 .hoja::before{content:'';position:absolute;inset:10px;border:2px solid var(--acento);border-radius:3px;pointer-events:none}
 .hoja::after{content:'';position:absolute;inset:16px;border:1px solid var(--acento);opacity:.5;border-radius:2px;pointer-events:none}
 .intro.abierta .hoja{opacity:1;transform:none}
-.h-orn{margin:.4rem 0;color:var(--acento);letter-spacing:.5em;font-size:1.1rem}
+.h-orn{margin:.4rem 0;line-height:0}
+.h-orn svg{display:inline-block;fill:var(--acento)}
 .h-ven{margin:1rem 0 0;text-transform:uppercase;letter-spacing:.22em;font-size:.95rem;font-weight:700}
 .h-nombre{margin:.2rem 0 1rem;font:400 clamp(3.4rem,18vw,5rem)/1 var(--f-titulo);color:var(--acento)}
 .h-form{margin:0;font-size:clamp(1.7rem,8.5vw,2.3rem);font-weight:700;line-height:1.15}
