@@ -6,3 +6,10 @@ Thumbs.db
 .env.local
 datos/
 notas/
+
+# Material de trabajo que NO se publica (capturas, fotos originales, QR sueltos).
+# Ojo: todo lo que viva dentro de public/ el servidor lo entrega al público.
+IMAGENES/
+public/Screenshot*.png
+public/Clínica Dental San Pablo -- Tepatitlán/
+public/Mariscos8Tostadas -- Puerto Vallarta/

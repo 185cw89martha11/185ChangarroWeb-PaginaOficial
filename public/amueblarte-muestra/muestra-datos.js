@@ -79,9 +79,9 @@ window.MUESTRA_DATOS = {
       paquetes: [
         { n: 1, precio: 155 },
         { n: 5, precio: 700 },
-        { n: 10, precio: 1350 },
-        { n: 20, precio: 2500 },
-        { n: 40, precio: 4750 },
+        { n: 10, precio: 1260 },
+        { n: 20, precio: 2240 },
+        { n: 40, precio: 4480 },
         { n: 60, precio: 6150 }
       ],
       incluye: [
