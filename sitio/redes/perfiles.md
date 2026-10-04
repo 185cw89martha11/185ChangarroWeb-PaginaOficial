@@ -6,6 +6,8 @@ Use el mismo nombre en todas partes: **185ChangarroWeb**. Si el usuario `@185cha
 
 **Colores de la marca:** azul `#5670FE` → morado `#9E6BE4` → rosa `#F567C8` (degradado), tinta `#1C1826` y acento `#6B3FC4`. Letra: Figtree.
 
+> Los textos listos para publicar las **invitaciones digitales** están en [publicaciones-eventos.md](publicaciones-eventos.md).
+
 ---
 
 ## WhatsApp Business (523151260581)
@@ -23,6 +25,7 @@ Use el mismo nombre en todas partes: **185ChangarroWeb**. Si el usuario `@185cha
   - `/planes` → la respuesta "¿Cuánto cuesta?" de [guiones.md](../ventas/guiones.md#3-respuestas-a-dudas-y-objeciones).
   - `/mensualidad` → "¿Por qué hay que pagar cada mes?".
   - `/contratar` → el mensaje de cierre.
+  - `/eventos` → las invitaciones digitales, de [publicaciones-eventos.md](publicaciones-eventos.md#6-tu-propio-whatsapp).
   - `/datos` → la lista de información que necesitamos.
   - `/pago` → los datos de pago.
 - **Etiquetas:** Nuevo · Vista previa enviada · Interesado · Anticipo pagado · Cliente activo.

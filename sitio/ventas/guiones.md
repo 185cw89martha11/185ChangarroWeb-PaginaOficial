@@ -2,6 +2,8 @@
 
 Trate de **usted** a los dueños y sea breve, amable y concreto. La vista previa con el nombre de su negocio hace la mitad del trabajo.
 
+> **¿Vas a vender una invitación digital?** Ese servicio tiene su propio guion, y ahí se habla de **tú**: [guiones-eventos.md](guiones-eventos.md).
+
 > `/prospectar/` arma el primer mensaje solo (sale de `config.json` → `"mensajeProspecto"`). Aquí están las variantes y todo lo que sigue. Los precios son los oficiales, con IVA incluido.
 
 ---

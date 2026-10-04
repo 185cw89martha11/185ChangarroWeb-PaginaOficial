@@ -35,6 +35,28 @@ Cada instalación se cobra 50% al contratar y 50% al entregar, así que el diner
 ```
 Los planes de 185ChangarroWeb son más completos (y más caros) que una página "barata", así que **la vista previa y la visita en persona son clave**: el dueño tiene que ver *su* página para entender lo que paga.
 
+## 2-bis. La venta más rápida son las invitaciones
+
+Si todavía no cae el primer cliente, **empiece por aquí**, no por las páginas de negocio.
+
+| | Página de negocio | Invitación digital |
+|---|---|---|
+| Precio | $1,800 a $3,900 + mensualidad | $350 o $500, pago único |
+| Quién decide | El dueño, pensando en si le conviene | Una familia, con fecha de fiesta encima |
+| Qué tiene que entender | Dominio, hosting, mantenimiento | Nada: recibe un enlace y lo reenvía |
+| Cuánto tarda en decidir | Semanas | Una plática |
+| Se promociona sola | No | **Sí**: cada invitación lleva el WhatsApp de ventas en el pie |
+
+Lo último es lo importante. Un evento de 150 invitados pone la marca frente a 150 familias
+que también van a tener su fiesta. **Las primeras invitaciones son publicidad que además se
+cobra.**
+
+Esto no sustituye las páginas de negocio: son el ingreso grande, por la mensualidad. Pero
+las invitaciones **rompen el hielo, dan testimonios reales y dan dinero esta semana**.
+
+- Guiones: [ventas/guiones-eventos.md](ventas/guiones-eventos.md)
+- Publicaciones listas: [redes/publicaciones-eventos.md](redes/publicaciones-eventos.md)
+
 ## 3. Plan de 14 días
 
 ### Día 0: Preparación (2 horas)
