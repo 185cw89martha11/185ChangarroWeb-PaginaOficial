@@ -162,6 +162,14 @@ desesperados).
 
 ---
 
+## 6-bis. Dónde sigue esto
+
+- Publicaciones listas para redes: [../redes/publicaciones-eventos.md](../redes/publicaciones-eventos.md)
+- Un contenido al día por 30 días: [../redes/calendario-30-dias-eventos.md](../redes/calendario-30-dias-eventos.md)
+- El video que más vende, paso a paso: [../redes/video-invitacion.md](../redes/video-invitacion.md)
+
+---
+
 ## 7. Las tres reglas
 
 1. **Manda la muestra en el primer mensaje.** Siempre. Es tu mejor argumento y no te cuesta nada.

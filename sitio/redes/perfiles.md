@@ -4,6 +4,8 @@ Use el mismo nombre en todas partes: **185ChangarroWeb**. Si el usuario `@185cha
 
 **Foto de perfil:** el logo compacto "185". Descárguelo como PNG en `redes/generador-de-imagenes.html` → plantilla "Logo (foto de perfil)", o use `src/static/logo.svg`. El logo largo (`logo.png` del portal) sirve para portadas y banners.
 
+**Letra:** Figtree. El logo no usa fuente (está dibujado); qué tipografía combina y cuáles son libres para uso comercial, en [tipografia.md](tipografia.md).
+
 **Colores de la marca:** azul `#5670FE` → morado `#9E6BE4` → rosa `#F567C8` (degradado), tinta `#1C1826` y acento `#6B3FC4`. Letra: Figtree.
 
 > Los textos listos para publicar las **invitaciones digitales** están en [publicaciones-eventos.md](publicaciones-eventos.md).

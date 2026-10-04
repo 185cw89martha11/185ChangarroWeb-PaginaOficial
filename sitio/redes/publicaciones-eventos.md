@@ -12,6 +12,9 @@ cosa, haz el video.
 
 ## 1. El video que tienes que grabar (15–20 segundos)
 
+> **Guion completo, toma por toma, y cómo editarlo:** [video-invitacion.md](video-invitacion.md).
+> **Qué fuente usar:** [tipografia.md](tipografia.md).
+
 Con tu propio celular, sin edición:
 
 1. Abre la invitación de ejemplo con la pantalla limpia.

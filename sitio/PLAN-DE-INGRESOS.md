@@ -56,6 +56,9 @@ las invitaciones **rompen el hielo, dan testimonios reales y dan dinero esta sem
 
 - Guiones: [ventas/guiones-eventos.md](ventas/guiones-eventos.md)
 - Publicaciones listas: [redes/publicaciones-eventos.md](redes/publicaciones-eventos.md)
+- Un contenido al día por 30 días: [redes/calendario-30-dias-eventos.md](redes/calendario-30-dias-eventos.md)
+- El video que más vende: [redes/video-invitacion.md](redes/video-invitacion.md)
+- Qué fuente usar: [redes/tipografia.md](redes/tipografia.md)
 
 ## 3. Plan de 14 días
 
