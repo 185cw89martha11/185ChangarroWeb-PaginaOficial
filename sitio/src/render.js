@@ -359,8 +359,11 @@
     return (words[0] || name).charAt(0).toUpperCase();
   }
 
+  /* Favicon: el color del giro y su emoji. A propósito NO lleva la inicial ni nada parecido al logotipo
+     del negocio: estos ejemplos son de negocios ficticios y un favicon con letra se podría confundir con
+     la marca de un negocio real. El emoji es un carácter Unicode, no una imagen con derechos de autor. */
   function favicon(m) {
-    const svg = '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64"><rect width="64" height="64" rx="16" fill="' + m.theme.primary + '"/><text x="32" y="44" text-anchor="middle" font-family="Arial,Helvetica,sans-serif" font-size="36" font-weight="700" fill="' + m.theme.onPrimary + '">' + esc(initial(m.name)) + '</text></svg>';
+    const svg = '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64"><rect width="64" height="64" rx="16" fill="' + m.theme.primary + '"/><text x="32" y="45" text-anchor="middle" font-size="38">' + esc(m.P.emoji) + '</text></svg>';
     return 'data:image/svg+xml,' + encodeURIComponent(svg);
   }
 
@@ -453,7 +456,8 @@
     if (m.about) nav.push(['#nosotros', 'Nosotros']);
     if (m.hasHours || m.mapQ) nav.push(['#visitanos', 'Horario y ubicación']);
     if (m.faq.length) nav.push(['#preguntas', 'Preguntas']);
-    const mark = m.logo ? '<img class="brand-logo" src="' + esc(m.logo) + '" alt="">' : '<span class="brand-mark" aria-hidden="true">' + esc(initial(m.name)) + '</span>';
+    // Sin logo propio, el distintivo es el emoji del giro (ver favicon): nada de iniciales que parezcan una marca.
+    const mark = m.logo ? '<img class="brand-logo" src="' + esc(m.logo) + '" alt="">' : '<span class="brand-mark" aria-hidden="true">' + esc(P.emoji) + '</span>';
 
     let banner = '';
     if (mode === 'example') {

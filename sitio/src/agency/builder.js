@@ -9,7 +9,7 @@
   var fullLink = document.querySelector('[data-full]');
   var publish = document.querySelector('[data-publish]');
   var DRAFT = 'py-builder:v1';
-  var PAY = ['Efectivo', 'Transferencia', 'Tarjeta', 'Mercado Pago'];
+  var PAY = ['Efectivo', 'Transferencia', 'Tarjeta', 'Otro método de pago'];
   var SHORT_KEYS = ['tipo', 'nombre', 'whatsapp', 'zona', 'direccion', 'telefono', 'eslogan', 'color'];
   var touched = {}, colorCustom = false, lastUrl = '', timer = null, seq = 0;
 

@@ -29,6 +29,7 @@ const PLANES = [
   'Otra página (con cotización)'
 ];
 const MEDIOS = ['WhatsApp', 'Llamada o SMS', 'Correo', 'Facebook', 'Instagram', 'Otra red social'];
+const FOTOS = ['Sí', 'No'];
 
 // ---------- almacén ----------
 function almacen() {
@@ -156,10 +157,20 @@ async function manejar(req, res, pathname) {
         privacidad: b.privacidad === true,
         ejemplo: b.ejemplo === true,
         promociones: b.promociones === true,
+        // Solo en invitaciones para evento: si quienes salen en las fotos son mayores de edad y, si no,
+        // la declaración de quien ejerce la patria potestad o la tutela (sección 20 de los Términos).
+        fotosMayores: FOTOS.includes(texto(b.fotosMayores, 10)) ? texto(b.fotosMayores, 10) : '',
+        tutorConsiente: b.tutorConsiente === true,
         mensaje: texto(b.mensaje, 6000)
       };
       if (!s.nombre || !s.negocio || !s.contacto || !PLANES.includes(s.plan) || !MEDIOS.includes(s.medio) || !s.terminos || !s.privacidad) {
         return json(res, 400, { ok: false, error: 'Faltan datos.' });
+      }
+      if (/^Evento/.test(s.plan)) {
+        if (!s.fotosMayores) return json(res, 400, { ok: false, error: 'Falta decir si quienes aparecen en las fotografías son mayores de edad.' });
+        if (s.fotosMayores === 'No' && !s.tutorConsiente) return json(res, 400, { ok: false, error: 'Falta la autorización de quien ejerce la patria potestad o la tutela.' });
+      } else if (s.fotosMayores || s.tutorConsiente) {
+        s.fotosMayores = ''; s.tutorConsiente = false; // ese dato solo existe en eventos
       }
       limEnvios.sumar(ip(req));
       await agregar(s);

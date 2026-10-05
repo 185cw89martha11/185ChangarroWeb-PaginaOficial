@@ -100,10 +100,13 @@
     "La primera mensualidad se paga un mes después de publicada la página.",
     "Dominio: el primer año de un .xyz, .online, .site o .shop va incluido; un .com o .com.mx cuesta $100 más. La renovación se paga aparte cada año: $500, o $1,000 para .com y .com.mx.",
     "Sin plazo forzoso: se puede cancelar con 30 días de aviso.",
+    "Subir de plan cuesta $1,300 por nivel, o $2,400 de Esencial a Negocio + Asistente Pro. Desde la Básica se descuenta lo que ya pagó de instalación: $1,100 a Esencial, $2,100 a Negocio y $3,100 a Negocio + Asistente Pro. Bajar de plan no tiene costo.",
+    "La atención y el mantenimiento duran mientras la mensualidad esté al corriente. Al cancelar, o si dejamos de dar el servicio (avisando con 30 días), le entregamos los archivos de su página y ahí termina la atención.",
+    "Todo lo que nos mande tiene que ser suyo o libre de derechos de autor (fotos, logo, textos, música, video, tipografías). No publicamos material con copyright de otra persona: pueden tumbar la página y el negocio se mete en problemas legales.",
     "La contratación se confirma aceptando por escrito, por WhatsApp o correo electrónico, el plan y los Términos y Condiciones."
   ],
   "mensajeProspecto": "Hola, buen día 👋 Le escribo de 185ChangarroWeb[, soy {tuNombre}]. Encontré {negocio} {fuente} y le preparé una vista previa de cómo se vería su página web, sin ningún compromiso:\n\n{link}\n\nIncluye {catalogo}, botón de WhatsApp, horario y mapa para que sus clientes lo encuentren fácil. La página queda con dominio a nombre de su negocio y con mantenimiento cada mes: desde {instalacion} de instalación y {mensualidad} al mes, IVA incluido.\n\nSi no le interesa, no se preocupe, no le vuelvo a escribir. ¡Gracias por su tiempo!",
-  "planesFuente": "Copiado de planes.js el 2026-10-03. No edites aquí: cambia planes.js y corre \"npm run planes\".",
+  "planesFuente": "Copiado de planes.js el 2026-10-04. No edites aquí: cambia planes.js y corre \"npm run planes\".",
   "basica": {
     "id": "basica",
     "nombre": "Básica",
@@ -120,7 +123,7 @@
       "Datos del negocio en el pie y aviso de privacidad",
       "Dirección web incluida (dominio propio se cotiza aparte)",
       "Hosting, candado de seguridad (https) y respaldo mensual",
-      "Un cambio al mes: precios, horarios o una foto"
+      "Un cambio a la semana: precios, horarios o una foto"
     ],
     "noIncluye": [
       "Agenda de citas o reservas",
@@ -166,7 +169,7 @@
           "Itinerario de la fiesta",
           "Código de vestimenta",
           "Mesa de regalos",
-          "Música de fondo"
+          "Música de fondo libre de derechos"
         ]
       }
     ]

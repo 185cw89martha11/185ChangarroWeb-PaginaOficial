@@ -46,7 +46,7 @@ section[id],.cat{scroll-margin-top:calc(84px + var(--bar-h,0px))}
 .brand{display:flex;align-items:center;gap:10px;min-width:0;color:var(--text);text-decoration:none;font:var(--hw) 1.12rem/1.1 var(--font-head)}
 .upper .brand{text-transform:uppercase;letter-spacing:.02em}
 .brand>span:last-child{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
-.brand-mark{flex:none;width:38px;height:38px;border-radius:11px;display:grid;place-items:center;background:var(--primary);color:var(--on-primary);font-size:1.05rem}
+.brand-mark{flex:none;width:38px;height:38px;border-radius:11px;display:grid;place-items:center;background:var(--primary);color:var(--on-primary);font-size:1.25rem;line-height:1}
 .brand-logo{flex:none;width:40px;height:40px;object-fit:contain;border-radius:10px}
 .nav{margin-left:auto;display:flex;gap:2px}
 .nav a{padding:8px 12px;border-radius:999px;color:var(--muted);text-decoration:none;font-weight:500;font-size:.95rem;white-space:nowrap}

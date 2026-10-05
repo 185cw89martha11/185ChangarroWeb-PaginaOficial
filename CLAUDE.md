@@ -19,7 +19,7 @@ Qué aporta cada parte a la misma URL:
 | Viene de | Rutas |
 |---|---|
 | `sitio/` (generado) | `/` (portada), `/crear/`, `/ejemplos/<giro>/`, `/vista-previa/`, `/prospectar/`, `/herramientas/link-de-whatsapp/`, `/privacidad-del-sitio/`, `404.html`, `robots.txt`, `sitemap.xml`, `logo.svg`, `favicon.svg` |
-| El portal (a mano) | `/tarifas`, `/basicas`, `/eventos`, `/terminos`, `/privacidad`, `/admin`, `/demo`, `/muestra`, `/api/`, y las muestras de cada negocio |
+| El portal (a mano) | `/tarifas`, `/basicas`, `/eventos`, `/terminos`, `/privacidad`, `/admin`, `/demo`, `/muestra`, `/api/` y la invitación de ejemplo |
 
 Dos nombres se cambiaron para que no chocaran con el portal: la vista previa del sitio comercial es `/vista-previa/` (porque `/demo` ya es la demo de ventas) y su aviso de cookies es `/privacidad-del-sitio/` (porque `/privacidad` es el Aviso de Privacidad legal).
 
@@ -33,7 +33,9 @@ Dos nombres se cambiaron para que no chocaran con el portal: la vista previa del
 
 El **premio por recomendar** es $150 en Básicas y $200 en Personalizables. En Eventos no hay premio: el ticket no lo aguanta. Las reglas completas están en la sección 19 de los Términos.
 
-Regla que no se rompe: las muestras de negocios (Mariscos, Clínica Dental, AmueblArte) se hicieron para enseñar el trabajo y traen cosas de los planes personalizables. Una Básica incluye exactamente la lista `BASICA.inc` de `planes.js`, ni más ni menos, y `basicas.html` lo dice con todas sus letras para no prometer de más.
+Regla que no se rompe: los ejemplos (`/ejemplos/<giro>/`) traen cosas de los planes personalizables. Una Básica incluye exactamente la lista `BASICA.inc` de `planes.js`, ni más ni menos, y `basicas.html` lo dice con todas sus letras para no prometer de más.
+
+**No se publica la página de un negocio real sin su permiso por escrito.** El 4 de octubre de 2026 se retiraron las muestras de Mariscos 8 Tostadas, Clínica Dental San Pablo y AmueblArte a `retirado-2026-10-04/` (fuera de `public/`, así que sus URLs dan 404): se hicieron sin que esos negocios contrataran ni autorizaran el uso de su nombre, sus fotos y sus datos. Lo que se le enseña a un prospecto son los 6 ejemplos de negocios **ficticios**, la demo de ventas y la plantilla `/muestra`. Para hacer la muestra de un negocio real, se usa la plantilla con su nombre y se le enseña **en privado**, no se publica en el sitio.
 
 ## Qué es
 
@@ -71,9 +73,8 @@ Esto es el muestrario, no la página final de un cliente. Generar sitios reales 
 | `solicitudes.js` | API `/api/...`: recibe las aceptaciones de `terminos.html`, las deja en el buzón (Hoja de Google vía Apps Script, o `datos/solicitudes.json` en esta computadora) y da acceso al panel con la clave. |
 | `integraciones/` | Código del Apps Script de la Hoja de Google y pasos para configurarlo. |
 | `server.js` | Servidor de Node sin dependencias. Entrega solo lo que está en `public/`, con rutas limpias, `/salud` y `/api/`. Escucha en `process.env.PORT` y `0.0.0.0`, como pide Render. |
-| `public/amueblarte-muestra/` | Muestra de AmueblArte de **Ocotlán, Jalisco** (mueblería para el hogar: recámaras, salas, comedores, mesas y camas; NO es la AmueblArte de la CDMX, que vende mobiliario para restaurantes). Copia de la base de Mariscos con código propio: menú de 4 páginas, catálogo de 5 categorías con galería, lista de cotización por WhatsApp (se recuerda en el navegador), "Cómo trabajamos", acabados, "Combina con", aviso de privacidad y Términos de ejemplo, resumen imprimible de la petición y visor 3D (model-viewer, se baja de jsDelivr solo al abrir un 3D y se apaga al dejar de verse; los .glb no cargan con `file://`, hace falta servidor). El AR no aparece en la muestra: es un extra de cotización y el visor 3D lo explica. Datos en `muestra-datos.js`; las fotos salen de sus redes y se les recortó el logo de Facebook y el zoom. |
+| `retirado-2026-10-04/` | **Fuera de `public/`: el servidor nunca lo entrega.** Las muestras retiradas de Mariscos 8 Tostadas, Clínica Dental San Pablo y AmueblArte, más `amueblarte-modelos.js`. No se borraron por si alguno diera permiso después; para volver a publicar una hace falta su autorización por escrito (sección 13 de los Términos). Ver su `LEEME.md`. |
 | `public/ejemplodeevento-muestra/` | Invitación digital de ejemplo de XV años (paquete Completa, datos inventados, con etiqueta DEMO), en `/ejemplodeevento-muestra/`; `/15anos-demo/` y `/15años-demo/` redirigen ahí. No se escribe a mano: es la salida de `build.js` del sistema de invitaciones (proyecto aparte, fuera de este repositorio). **Nunca se edita esta carpeta directamente**: el siguiente `build.js` borra el cambio. Lo que se toca es `invitaciones/plantilla/estilos.css` y `invitaciones/render.js`, y luego se copia `dist/` encima. Ya pasó una vez con la galería en rejilla, que vivió solo aquí hasta que se regresó a la plantilla. No lleva solicitudes ni datos personales: la confirmación abre WhatsApp. Lleva `noindex`; `public/robots.txt` y el encabezado `X-Robots-Tag` del servidor la excluyen de buscadores. |
-| `herramientas/amueblarte-modelos.js` | Genera los 9 .glb de demostración de `modelos/` (`node herramientas/amueblarte-modelos.js`). |
 | `package.json`, `render.yaml`, `.node-version` | Configuración de Node y de Render. |
 
 ## Reglas del proyecto
@@ -89,10 +90,15 @@ Esto es el muestrario, no la página final de un cliente. Generar sitios reales 
 - Tiene que verse bien a 390 px de ancho, porque se enseña desde el celular. Nada de scroll horizontal.
 - La herramienta usa tokens en `:root` con modo oscuro. El sitio del cliente no cambia con el tema.
 - `localStorage` solo para comodidad (último negocio configurado), siempre dentro de `try/catch`. La demo tiene que funcionar sin él.
-- Los precios y textos no se editan desde la página (sin botones de "Editar precios" ni campos editables): solo se cambian en el código. La excepción es la muestra de Mariscos 8 Tostadas, que se deja como está.
+- Los precios y textos no se editan desde la página (sin botones de "Editar precios" ni campos editables): solo se cambian en el código.
 - En todas las páginas, el logo de 185ChangarroWeb es un enlace a la portada (`index.html`, o `../index.html` en las muestras que viven en su propia carpeta). El logo es `logo.svg`, que ya trae su propio fondo oscuro: no se le pone recuadro blanco.
+- **Hasta cuándo dura la atención.** En Eventos, el soporte termina **3 días naturales después de la fecha del evento** (sección 20 de los Términos). En las páginas de negocio, mientras la mensualidad esté al corriente: termina al cancelar, a los 60 días de pausa por falta de pago, o si 185ChangarroWeb deja el servicio avisando con 30 días (secciones 8 y 14). Si esto cambia, hay que cambiarlo también en `eventos.html`, `basicas.html`, `tarifas.html` y `pagos` de `sitio/config.json`.
+- **Mantenimiento por plan:** Básica, **1 cambio a la semana**; Esencial y Negocio, 3 al mes; Pro, hasta 3 cambios pequeños al día. Vive en `BASICA.inc` de `planes.js`, en `mantenimiento` de `sitio/config.json`, en `tarifas.html`, en `basicas.html` y en la sección 8 de los Términos.
+- **El formulario de aceptación pregunta por las fotos cuando el plan es de Evento:** si todas las personas que aparecerán son mayores de edad y, si no, la declaración del padre, la madre o el tutor legal. Es obligatorio y lo valida también el servidor (`solicitudes.js`). Si se toca, hay que mover `terminos.html`, `solicitudes.js`, `admin.js` (`CAMPOS`), las secciones 2 y 4 del Aviso de Privacidad y la sección 20 de los Términos.
 - El asistente contesta solo con datos de `data.js` y, si no sabe algo, manda a WhatsApp. No debe inventar respuestas. No lo conectes a una IA sin que 185ChangarroWeb lo pida, porque eso tiene costo.
 - Las reseñas de ejemplo siempre llevan la etiqueta "Ejemplo". En sitios reales de clientes van solo reseñas reales.
+- **Nada con derechos de autor de terceros.** Ni en los ejemplos, ni en las muestras, ni en lo que se le hace a un cliente: fotos, música, tipografías, logotipos, personajes y marcas tienen que ser propios, con licencia o de uso libre. Por eso el favicon y el distintivo de los ejemplos son el color del giro más su **emoji** (`P.emoji` en `render.js`), no una inicial que parezca el logotipo de alguien. La obligación está en la sección 11 (negocios) y la 20 (eventos) de los Términos, y se avisa en `/crear/`, Básicas, Tarifas y Eventos.
+- Los nombres de los negocios de ejemplo son claramente inventados (Don Perengano, Fulanito, Dra. Menganita, Don Fulano). Nunca el nombre de un negocio real.
 - El QR es decorativo a propósito y no se puede escanear: el dominio de ejemplo podría existir y llevar al negocio de otra persona. Cámbialo por un QR real solo cuando exista el dominio del cliente.
 - Los botones de WhatsApp, Llamar y mapa muestran un aviso en pantalla en vez de abrir enlaces, porque el número y la dirección son de ejemplo.
 - El aviso de privacidad siempre va incluido. Es obligatorio cuando la página pide datos personales. Lo demás que va por ley está en "Base legal de la página del cliente".

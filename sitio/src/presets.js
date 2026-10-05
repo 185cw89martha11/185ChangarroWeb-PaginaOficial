@@ -130,7 +130,7 @@
       horario: { lun: '10:00-20:00', mar: '10:00-20:00', mie: '10:00-20:00', jue: '10:00-20:00', vie: '10:00-20:00', sab: '09:00-20:00', dom: '10:00-15:00' },
       pagos: ['Efectivo', 'Transferencia', 'Tarjeta'],
       entrega: '',
-      example: { nombre: 'Barbería Zutanito', zona: 'Guadalajara, Jal.' }
+      example: { nombre: 'Barbería Fulanito', zona: 'Guadalajara, Jal.' }
     },
 
     salud: {

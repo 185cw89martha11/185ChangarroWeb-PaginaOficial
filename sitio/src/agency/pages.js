@@ -71,12 +71,12 @@ module.exports = function pages(cfg, PY, PRESETS, ver) {
   /* ================= INICIO ================= */
   const faqs = [
     ['¿Puedo ver mi página antes de contratar?', 'Sí. Con nuestro creador, o pidiéndonosla por WhatsApp, ve una vista previa gratis con el nombre de su negocio, en su celular. Si le convence, elige su plan; si no, no pasa nada.'],
-    ['¿Cuánto cuesta?', 'Hay tres planes. Cada uno tiene un pago de instalación y una mensualidad que incluye el mantenimiento: ' + plans.map((p) => p.nombre + ' (' + money(p.instalacion) + ' + ' + money(p.mensualidad) + ' al mes)').join(', ') + '. Precios en pesos mexicanos, IVA incluido.'],
+    ['¿Cuánto cuesta?', (cfg.basica ? 'La Página Básica, que es una sola hoja con contenido fijo, cuesta ' + money(cfg.basica.instalacion) + ' de instalación y ' + money(cfg.basica.mensualidad) + ' al mes. Además hay tres planes personalizables' : 'Hay tres planes') + '. Cada uno tiene un pago de instalación y una mensualidad que incluye el mantenimiento: ' + plans.map((p) => p.nombre + ' (' + money(p.instalacion) + ' + ' + money(p.mensualidad) + ' al mes)').join(', ') + '. Las invitaciones para eventos van aparte y son de pago único. Precios en pesos mexicanos, IVA incluido.'],
     ['¿Qué incluye la mensualidad?', 'El mantenimiento de su página: ' + (cfg.mantenimiento || []).map((x) => x.charAt(0).toLowerCase() + x.slice(1)).join('; ') + '.'],
     ['¿Cómo se paga?', (cfg.pagos || []).slice(0, 2).join(' ')],
     ['¿El dominio es mío?', 'Sí. El dominio y las cuentas siempre quedan a nombre de su negocio. ' + ((cfg.pagos || []).find((x) => /^Dominio/.test(x)) || '')],
     ['¿Cuánto tarda?', 'Depende del plan: ' + plans.map((p) => p.nombre + ', ' + p.tiempo).join('; ') + ', después de recibir su información.'],
-    ['¿Qué necesitan de mi parte?', 'Su logo (si no tiene, se hace uno sencillo), fotos del local o productos (opcionales, pero ayudan mucho), su lista de servicios o productos con precios, horarios, dirección, número de WhatsApp y sus redes sociales, si las tiene.'],
+    ['¿Qué necesitan de mi parte?', 'Su logo (si no tiene, se hace uno sencillo), fotos del local o productos (opcionales, pero ayudan mucho), su lista de servicios o productos con precios, horarios, dirección, número de WhatsApp y sus redes sociales, si las tiene. Todo lo que nos mande tiene que ser suyo o libre de derechos de autor: no podemos publicar fotos, música, tipografías, logotipos o personajes con copyright de otra persona, porque pueden tumbar la página y el negocio se mete en problemas legales.'],
     ['¿Cómo me llegan los pedidos?', 'Su cliente elige productos en la página, escribe su nombre y si es para recoger o a domicilio, y se abre WhatsApp con el pedido completo y el total. Le llega como un mensaje normal, sin comisión por pedido.'],
     ['¿Voy a salir en Google?', 'Su página se hace con la información que Google usa para entender a los negocios locales y, desde el plan Negocio, damos de alta y arreglamos su ficha de Google Maps. Nadie puede garantizar el primer lugar, pero con página y ficha completas tiene muchas más oportunidades de aparecer.'],
     ['¿Hay plazo forzoso?', 'No. Se puede cancelar con 30 días de aviso. Si el pago se atrasa más de 15 días, la página se pausa, pero no se borra.']
@@ -113,15 +113,15 @@ module.exports = function pages(cfg, PY, PRESETS, ver) {
   const EV = cfg.eventos;
   const eventosHtml = !EV || !EV.paquetes || !EV.paquetes.length ? '' :
     '<section class="a-sec" id="eventos"><div class="wrap"><div class="head"><span class="kicker">Para fiestas</span>' +
-    '<h2>¿Lo suyo no es un negocio, sino una fiesta?</h2>' +
-    '<p>Invitaciones digitales para XV años, bodas, bautizos y graduaciones. Manda un enlace por WhatsApp y cada invitado la abre en su celular. Pago único, sin mensualidad.</p></div>' +
+    '<h2>Su fiesta merece una invitación bonita</h2>' +
+    '<p>Invitaciones digitales para XV años, bodas, bautizos, cumpleaños y graduaciones. Manda un enlace por WhatsApp y cada invitado la abre en su celular. Pago único, sin mensualidad.</p></div>' +
     '<div class="grid g2">' + EV.paquetes.map((p) => '<article class="plan' + (p.destacado ? ' top' : '') + '">' +
       (p.destacado ? '<span class="tag">La más pedida</span>' : '') +
       '<h3>' + esc(p.nombre) + '</h3><p class="for">' + esc(p.para) + '</p>' +
       '<div class="prices"><div class="price-box wide"><span>Precio</span><b>' + money(p.precio) + '</b><small>pago único, sin mensualidad</small></div></div>' +
       '<ul>' + (p.incluye || []).map((x) => '<li' + (/^Todo lo de/.test(x) ? ' class="all"' : '') + '><span>' + esc(x) + '</span></li>').join('') + '</ul>' +
       '<a class="btn ' + (p.destacado ? 'btn-pri' : 'btn-ghost') + ' btn-block"' + out(wa('Hola, ' + brand + ' 👋 Quiero una invitación digital (' + p.nombre + ', ' + money(p.precio) + ') para mi evento.')) + '>Pedir esta invitación</a></article>').join('') + '</div>' +
-    '<div class="notice"><p>Lista en <b>' + esc(EV.tiempo) + '</b>. Queda en línea hasta <b>' + esc(EV.vigencia) + '</b>; para dejarla más tiempo son ' + money(EV.extra) + ' por cada 3 meses. Las confirmaciones llegan a su WhatsApp: la invitación no guarda datos de sus invitados.</p>' +
+    '<div class="notice"><p>Lista en <b>' + esc(EV.tiempo) + '</b>. Queda en línea hasta <b>' + esc(EV.vigencia) + '</b>; para dejarla más tiempo son ' + money(EV.extra) + ' por cada 3 meses. La atención termina <b>3 días después del evento</b>. Las confirmaciones llegan a su WhatsApp: la invitación no guarda datos de sus invitados. Las fotos y la música deben ser suyas o libres de derechos de autor.</p>' +
     (portal ? '<a class="btn btn-pri btn-sm"' + out(esc(portal + '/ejemplodeevento-muestra/')) + '>Ver una invitación de ejemplo</a>' : '') +
     (DOCS.eventos ? '<a class="btn btn-ghost btn-sm"' + out(esc(DOCS.eventos)) + '>Todos los detalles</a>' : '') + '</div>' +
     '</div></section>';
@@ -167,7 +167,7 @@ module.exports = function pages(cfg, PY, PRESETS, ver) {
         .map((x) => '<div class="box"><h3>' + x[0] + '</h3><p>' + x[1] + '</p></div>').join('') + '</div></div></section>' +
 
       '<section class="a-sec alt" id="incluye"><div class="wrap"><div class="head"><span class="kicker">Lo que tiene su página</span><h2>Hecha para que le escriban y le compren</h2><p>Nada de cosas raras ni tecnicismos: una página clara que convierte visitas en mensajes de WhatsApp.</p></div><div class="grid g4">' +
-      [['📱', 'Hecha para celular', 'Se ve perfecta en cualquier teléfono y carga rápido, incluso con datos.'],
+      [['📱', 'Hecha para celular y para computadora', 'Se ve perfecta en cualquier teléfono y también en computadora, y carga rápido incluso con datos.'],
         ['💬', 'Botón de WhatsApp', 'Sus clientes le escriben con un toque, con el mensaje ya escrito.'],
         ['🛒', 'Pedidos por WhatsApp', 'El cliente arma su pedido y le llega listo, con total y dirección.'],
         ['🕒', 'Horario inteligente', 'Muestra si está «Abierto ahora» o a qué hora abre.'],
@@ -252,14 +252,15 @@ module.exports = function pages(cfg, PY, PRESETS, ver) {
       '</div></details>' +
       '<details class="grp"><summary>4. Detalles extra <small class="hint">opcional</small></summary><div class="grp-in">' +
       '<label class="fld">Sobre su negocio <small>(si la deja vacía usamos la sugerida)</small><textarea name="nosotros" rows="4" maxlength="1500"></textarea></label>' +
-      '<div class="fld">Formas de pago<div class="checks-ui">' + ['Efectivo', 'Transferencia', 'Tarjeta', 'Mercado Pago'].map((p) => '<label><input type="checkbox" name="pagos" value="' + p + '"> ' + p + '</label>').join('') + '</div></div>' +
+      '<div class="fld">Formas de pago<div class="checks-ui">' + ['Efectivo', 'Transferencia', 'Tarjeta', 'Otro método de pago'].map((p) => '<label><input type="checkbox" name="pagos" value="' + p + '"> ' + p + '</label>').join('') + '</div></div>' +
       '<label class="fld">Entregas a domicilio <small>(vacío si no hace entregas)</small><input name="entrega" maxlength="200"></label>' +
       '<label class="fld">Correo del negocio <small>(opcional)</small><input name="correo" type="email" maxlength="120"></label>' +
       '<label class="fld" data-only="salud">Cédula profesional <small>(ej. Céd. Prof. 1234567)</small><input name="cedula" maxlength="100"></label>' +
       '<label class="fld">Facebook <small>(enlace o @usuario)</small><input name="facebook" maxlength="200"></label>' +
       '<label class="fld">Instagram<input name="instagram" maxlength="200" placeholder="@sunegocio"></label>' +
       '<label class="fld">TikTok<input name="tiktok" maxlength="200" placeholder="@sunegocio"></label>' +
-      '<label class="fld">Foto de portada <small>(enlace https a una imagen, opcional)</small><input name="portada" type="url" maxlength="500"></label>' +
+      '<label class="fld">Foto de portada <small>(opcional)</small><input name="portada" type="url" maxlength="500" placeholder="https://ejemplo.com/mi-foto.jpg"><small class="hint">Pegue el enlace directo de la imagen y que <b>termine en .jpg</b>. Un enlace que no acabe en una imagen (por ejemplo, el de una publicación de Facebook) no se puede mostrar.</small></label>' +
+      '<p class="hint" style="margin:4px 0 0"><b>Importante:</b> la foto, el logo y los textos que use tienen que ser suyos o libres de derechos de autor. No podemos publicar imágenes, música, tipografías, logotipos ni personajes con copyright de otra persona: pueden tumbar la página y meterlo en problemas legales.</p>' +
       '</div></details></form>' +
       '<div class="preview"><div class="pv-bar"><div class="seg-sm"><button type="button" class="on" data-dev="mobile">📱 Celular</button><button type="button" data-dev="desktop">🖥️ Computadora</button></div><a href="../vista-previa/" target="_blank" rel="noopener" data-full>Abrir en pantalla completa ↗</a></div>' +
       '<div class="pv-stage"><div class="pv-frame" id="pvf"><iframe id="pv" title="Vista previa de su página"></iframe></div></div></div></div></main>' +

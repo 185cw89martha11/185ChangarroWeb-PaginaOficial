@@ -6,7 +6,7 @@
 (function(){
   'use strict';
   var DB = '185cw-admin', ITER = 600000, INACTIVO_MS = 15 * 60 * 1000;
-  var CAMPOS = ['id','recibida','version','nombre','negocio','plan','medio','contacto','terminos','privacidad','ejemplo','promociones','mensaje'];
+  var CAMPOS = ['id','recibida','version','nombre','negocio','plan','medio','contacto','terminos','privacidad','ejemplo','promociones','fotosMayores','tutorConsiente','mensaje'];
   var S = { clave:null, key:null, token:null, almacen:undefined, lista:[], tab:'nuevas', confirmar:null, marcada:null };
   var enc = new TextEncoder(), dec = new TextDecoder();
   function $(id){ return document.getElementById(id); }
@@ -210,6 +210,8 @@
         + fila('Aviso de Privacidad', consentimiento(s.privacidad))
         + fila('Mostrar como ejemplo', consentimiento(s.ejemplo))
         + fila('Avisos y promociones', consentimiento(s.promociones))
+        + (s.fotosMayores ? fila('Mayores de edad en las fotos', esc(s.fotosMayores)) : '')
+        + (s.fotosMayores === 'No' ? fila('Autoriza el padre, madre o tutor', consentimiento(s.tutorConsiente)) : '')
         + fila('Versión de los documentos', esc(s.version))
         + '</div>'
         + '<details><summary>Mensaje de aceptación completo</summary><pre>' + esc(s.mensaje) + '</pre></details>'
@@ -263,6 +265,8 @@
         + '<tr><td>Acepta Aviso de Privacidad</td><td>' + siNo(s.privacidad) + '</td></tr>'
         + '<tr><td>Autoriza mostrar su página como ejemplo</td><td>' + siNo(s.ejemplo) + '</td></tr>'
         + '<tr><td>Quiere avisos y promociones</td><td>' + siNo(s.promociones) + '</td></tr>'
+        + (s.fotosMayores ? '<tr><td>Todas las personas de las fotografías son mayores de edad</td><td>' + esc(s.fotosMayores) + '</td></tr>' : '')
+        + (s.fotosMayores === 'No' ? '<tr><td>Declara ser padre, madre o tutor legal y autoriza publicar la imagen de la persona menor de edad</td><td>' + siNo(s.tutorConsiente) + '</td></tr>' : '')
         + '<tr><td>Versión de los documentos</td><td>' + esc(s.version) + '</td></tr>'
         + '<tr><td>Recibida</td><td>' + esc(fecha(s.recibida)) + '</td></tr>'
         + (x.guardada ? '<tr><td>Guardada</td><td>' + esc(fecha(x.guardada)) + '</td></tr>' : '')
