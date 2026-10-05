@@ -581,13 +581,36 @@
     }
     let preview = '';
     if (!live) {
-      preview = '<dialog class="sheet" id="py-preview" aria-labelledby="py-prev-t"><div class="sheet-in"><div class="sheet-head"><h2 id="py-prev-t">Así le llega el mensaje al negocio</h2><button type="button" class="x" data-close aria-label="Cerrar">' + icon('x') + '</button></div>' +
+      preview = '<dialog class="sheet" id="py-preview" aria-labelledby="py-prev-t"><div class="sheet-in"><div class="sheet-head"><h2 id="py-prev-t">Así le llegaría el mensaje al negocio</h2><button type="button" class="x" data-close aria-label="Cerrar">' + icon('x') + '</button></div>' +
         '<div class="wa-chat"><div class="wa-bubble" data-msg></div></div>' +
         (mode === 'example'
           ? '<p class="fine">Es un ejemplo: en una página real, el pedido llega directo al WhatsApp del negocio, sin comisiones.</p><a class="btn btn-primary btn-block"' + out(esc(waLink(agency.wa, exMsg))) + '>Quiero esto para mi negocio</a>'
-          : '<p class="fine">Cuando la página esté publicada, este mensaje llegará directo al WhatsApp del negocio.</p><a class="btn btn-wa btn-block" data-msg-open' + out('#') + '>' + icon('wa') + 'Probar en WhatsApp</a>') +
+          : '<p class="fine">Así se vería el mensaje cuando la página esté publicada. Desde una vista previa <b>no se envía</b>: el negocio no recibiría nada.</p>') +
         '</div></dialog>';
     }
+
+    /* --- Vista previa: aviso de que esto todavía no es una página web ---
+       Sale solo en `demo` y `preview`, es decir, en las páginas que se le enseñan a un negocio
+       que todavía no contrata. Es importante que quede claro y por escrito: estas páginas llevan
+       el nombre, el teléfono y la dirección de un negocio real que no las ha autorizado, y sin el
+       aviso cualquiera podría creer que es su página oficial y mandarle un pedido que nunca llega. */
+    let avisoDemo = '';
+    if (mode === 'demo' || mode === 'preview') {
+      avisoDemo = '<dialog class="sheet" id="py-aviso" aria-labelledby="py-aviso-t"><div class="sheet-in"><div class="sheet-head"><h2 id="py-aviso-t">Esto es una vista previa, todavía no es una página web</h2></div>' +
+        '<p>Lo que estás viendo es una <b>muestra</b> que ' + esc(agency.brand) + ' preparó para enseñar cómo quedaría la página de <b>' + esc(m.name) + '</b>. ' +
+        'No es su página oficial, el negocio no la ha contratado ni autorizado, y los textos, precios, fotos y datos de contacto pueden ser de ejemplo.</p>' +
+        '<p>Por eso aquí <b>nada se envía de verdad</b>: los botones de pedido, WhatsApp, llamar y mapa no funcionan, para no mandarle mensajes a nadie por error. No hagas pedidos ni pagos desde esta página.</p>' +
+        '<div class="sheet-btns"><button type="button" class="btn btn-primary btn-block" data-close>Entendido, solo estoy viendo</button>' +
+        '<a class="btn btn-wa btn-block"' + out(esc(waLink(agency.wa, 'Hola 👋 Vi la vista previa de «' + m.name + '» y quiero platicar sobre mi página.'))) + '>' + icon('wa') + 'Soy del negocio, quiero mi página</a></div>' +
+        '</div></dialog>';
+    }
+
+    /* Aviso de cookies y privacidad de 185ChangarroWeb: va en los ejemplos, que son páginas
+       nuestras dentro de nuestro sitio. En la página publicada de un cliente no va: esa es suya
+       y lleva su propio aviso de privacidad. */
+    const avisoCookies = mode === 'example'
+      ? '<script src="' + esc(home) + 'aviso-visitantes.js" data-base="' + esc(home) + '"></script>'
+      : '';
 
     const runtime = {
       mode, slug: m.slug, name: m.name, wa: contactWa, tz: m.tz, h24: m.h24, hours: m.hours,
@@ -611,8 +634,8 @@
       (live && m.stats.cf ? '<script defer src="https://static.cloudflareinsights.com/beacon.min.js" data-cf-beacon="' + esc('{"token": "' + m.stats.cf + '"}') + '"></script>' : '') +
       '</head>';
 
-    return head + '<body class="mode-' + T.mode + (m.upper ? ' upper' : '') + ' is-' + mode + '">' + banner + header + '<main>' + hero + perks + catalog + about + gallery + visit + faq + band + '</main>' + footer + fab + cart + preview +
-      '<script type="application/json" id="py-data">' + JSON.stringify(runtime).replace(/</g, '\\u003c') + '</script><script>' + assets.js + '</script></body></html>';
+    return head + '<body class="mode-' + T.mode + (m.upper ? ' upper' : '') + ' is-' + mode + '">' + banner + header + '<main>' + hero + perks + catalog + about + gallery + visit + faq + band + '</main>' + footer + fab + cart + preview + avisoDemo +
+      '<script type="application/json" id="py-data">' + JSON.stringify(runtime).replace(/</g, '\\u003c') + '</script><script>' + assets.js + '</script>' + avisoCookies + '</body></html>';
   }
 
   /* ---------- cartel con código QR para imprimir ---------- */

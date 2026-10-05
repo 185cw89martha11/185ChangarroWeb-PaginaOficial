@@ -1,0 +1,101 @@
+/* Estilos de las páginas legales (terminos.html y privacidad.html). */
+body{margin:0}[hidden]{display:none!important}
+:root{
+  --bg:#F1EFF7; --panel:#FFFFFF; --panel-2:#F7F5FB; --ink:#1C1826; --muted:#5E5873; --line:#DEDAE8;
+  --accent:#6B3FC4; --accent-ink:#FFFFFF; --accent-soft:#EEE8FA; --warn-bg:#EEE8FA; --warn-ink:#4A2A8A;
+  --grad:linear-gradient(90deg, #5670FE 0%, #9E6BE4 50%, #F567C8 100%); --grad-ink:#FFFFFF;
+  --f-ui:'Figtree', system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+  --f-mono:'JetBrains Mono', ui-monospace, Menlo, Consolas, monospace;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --bg:#110F17; --panel:#19161F; --panel-2:#211D29; --ink:#ECE8F4; --muted:#A29CB3; --line:#302B3A;
+    --accent:#B79AF2; --accent-ink:#140F1F; --accent-soft:#241C35; --warn-bg:#241C35; --warn-ink:#D9C8FA;
+    color-scheme:dark;
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#110F17; --panel:#19161F; --panel-2:#211D29; --ink:#ECE8F4; --muted:#A29CB3; --line:#302B3A;
+  --accent:#B79AF2; --accent-ink:#140F1F; --accent-soft:#241C35; --warn-bg:#241C35; --warn-ink:#D9C8FA;
+  color-scheme:dark;
+}
+*{box-sizing:border-box}
+body{background:var(--bg); color:var(--ink); font-family:var(--f-ui); font-size:15.5px; line-height:1.6}
+a{color:var(--accent); text-underline-offset:2px}
+:focus-visible{outline:2px solid var(--accent); outline-offset:2px}
+
+.wrap{max-width:780px; margin:0 auto; padding-block:28px 56px; padding-inline:16px; display:flex; flex-direction:column; gap:20px}
+.brand{display:flex; align-items:center; gap:12px}
+.logo{height:40px; width:auto; border-radius:8px;  flex:none; display:block}
+.home{display:block; flex:none; border-radius:8px}
+.eyebrow{margin:0; font-size:11px; font-weight:700; letter-spacing:.14em; text-transform:uppercase; color:var(--muted)}
+h1{margin:2px 0 0; font-size:30px; line-height:1.1; letter-spacing:-.015em; font-weight:800; text-wrap:balance}
+.meta{margin:0; color:var(--muted); font-size:14px}
+
+.draft{background:var(--warn-bg); color:var(--warn-ink); border-radius:12px; padding:11px 14px; font-size:14px; margin:0}
+.fill{background:var(--warn-bg); color:var(--warn-ink); font-family:var(--f-mono); font-size:.88em; padding:1px 5px; border-radius:5px; white-space:nowrap}
+
+.toc{background:var(--panel); border:1px solid var(--line); border-radius:16px; padding:16px 18px}
+.toc h2{margin:0 0 8px; font-size:12px; letter-spacing:.1em; text-transform:uppercase; color:var(--muted)}
+.toc ol{margin:0; padding-left:22px; columns:2 240px; column-gap:24px; font-size:14.5px}
+.toc li{break-inside:avoid; margin-bottom:3px}
+
+.doc{background:var(--panel); border:1px solid var(--line); border-radius:16px; padding:8px 22px 22px}
+.doc section{padding-top:18px; scroll-margin-top:16px}
+.doc section + section{border-top:1px solid var(--line); margin-top:18px}
+.doc h2{margin:0 0 8px; font-size:18.5px; line-height:1.3}
+.doc h3{margin:14px 0 6px; font-size:15.5px}
+.doc p{margin:0 0 10px}
+.doc ul,.doc ol{margin:0 0 10px; padding-left:22px}
+.doc li{margin-bottom:5px}
+.doc table{width:100%; border-collapse:collapse; font-size:14.5px; margin:4px 0 12px}
+.doc th,.doc td{text-align:left; padding:8px 6px; border-bottom:1px solid var(--line); vertical-align:top}
+.doc th{font-size:11px; letter-spacing:.08em; text-transform:uppercase; color:var(--muted); font-weight:700}
+.doc td.num{font-family:var(--f-mono); font-size:13.5px; font-variant-numeric:tabular-nums; white-space:nowrap}
+.box{background:var(--panel-2); border-radius:12px; padding:12px 14px; margin:4px 0 12px}
+.box p:last-child,.box ul:last-child{margin-bottom:0}
+
+.accept{background:var(--panel); border:2px solid var(--accent); border-radius:16px; padding:18px 20px; scroll-margin-top:16px}
+.accept h2{margin:0 0 6px; font-size:19px}
+.acc-lead{margin:0 0 14px; color:var(--muted); font-size:14.5px}
+.acc-fields{display:grid; grid-template-columns:repeat(3, minmax(0,1fr)); gap:10px; margin-bottom:14px}
+.acc-field{display:flex; flex-direction:column; gap:4px; min-width:0}
+.acc-wide{grid-column:span 2}
+.acc-field label{font-size:13px; font-weight:600}
+.acc-field input,.acc-field select{font:inherit; color:inherit; border:1px solid var(--line); background:var(--panel-2); border-radius:10px; padding:9px 11px; width:100%}
+.acc-checks{display:flex; flex-direction:column; gap:9px; margin-bottom:14px}
+.acc-check{display:grid; grid-template-columns:20px 1fr; gap:8px; align-items:start; font-size:14.5px; line-height:1.45; cursor:pointer}
+.acc-check input{width:17px; height:17px; margin:2px 0 0; accent-color:var(--accent)}
+.acc-check em{font-style:normal; color:var(--muted); font-size:13px}
+.acc-err{margin:0 0 12px; background:var(--warn-bg); color:var(--warn-ink); border-radius:10px; padding:9px 12px; font-size:14px}
+.acc-btns{display:flex; flex-wrap:wrap; gap:8px}
+.acc-btn{font:inherit; font-weight:700; font-size:14px; border:1px solid var(--line); background:var(--panel); color:var(--ink); padding:10px 16px; border-radius:10px; cursor:pointer}
+.acc-btn.pri{background:var(--grad); color:var(--grad-ink); border-color:transparent; text-shadow:0 1px 2px rgba(40,20,70,.35)}
+.acc-done{margin-top:16px; border-top:1px solid var(--line); padding-top:14px}
+.acc-done p{margin:0 0 10px; font-size:14.5px}
+.acc-text{margin:0 0 10px; background:var(--panel-2); border-radius:10px; padding:12px; font-family:var(--f-mono); font-size:13px; line-height:1.5; white-space:pre-wrap; overflow-wrap:anywhere}
+
+.foot{font-size:13px; color:var(--muted); margin:0; display:flex; flex-wrap:wrap; gap:6px 16px}
+
+@media (max-width: 600px){
+  h1{font-size:25px}
+  .doc{padding:4px 16px 18px}
+  .doc table{font-size:13.5px}
+  .acc-fields{grid-template-columns:minmax(0,1fr)}
+  .acc-wide{grid-column:auto}
+  .accept{padding:16px}
+  .acc-btn{flex:1 1 100%}
+}
+@media print{
+  :root{--bg:#fff; --panel:#fff}
+  .draft,.toc,.foot,.accept{display:none}
+  .doc{border:0; padding:0}
+}
+
+/* Bloque de fotografías del formulario de aceptación: solo se ve cuando el plan es una invitación para evento. */
+.acc-evento{border:1px solid var(--line); border-radius:12px; padding:14px 16px; margin:0 0 14px; background:var(--panel-2)}
+.acc-evento[hidden]{display:none!important}
+.acc-evento legend{padding:0 6px; font-size:13px; font-weight:700; letter-spacing:.04em; text-transform:uppercase; color:var(--accent)}
+.acc-evento .acc-checks{margin-bottom:0}
+.acc-evento #acc-ev-tutor{margin-top:9px; padding-top:9px; border-top:1px dashed var(--line)}
+.acc-evento #acc-ev-tutor[hidden]{display:none!important}

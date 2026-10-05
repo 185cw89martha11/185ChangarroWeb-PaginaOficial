@@ -8,6 +8,7 @@
   "tuNombre": "",
   "noIndexar": [
     "/ejemplodeevento-muestra/",
+    "/boda-muestra/",
     "/admin",
     "/muestra"
   ],
@@ -179,5 +180,10 @@
     "planes": 200,
     "eventos": 0,
     "vigencia": "31 de marzo de 2027"
+  },
+  "responsable": {
+    "nombre": "Martha Leticia Gradilla Bermúdez",
+    "comercial": "185ChangarroWeb",
+    "domicilio": "Calle Aldama #103, Lo Arado, Casimiro Castillo, C.P. 48940, Jalisco, México"
   }
 }

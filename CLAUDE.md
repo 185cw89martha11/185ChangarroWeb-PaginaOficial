@@ -18,10 +18,37 @@ Qué aporta cada parte a la misma URL:
 
 | Viene de | Rutas |
 |---|---|
-| `sitio/` (generado) | `/` (portada), `/crear/`, `/ejemplos/<giro>/`, `/vista-previa/`, `/prospectar/`, `/herramientas/link-de-whatsapp/`, `/privacidad-del-sitio/`, `404.html`, `robots.txt`, `sitemap.xml`, `logo.svg`, `favicon.svg` |
+| `sitio/` (generado) | `/` (portada), `/crear/`, `/ejemplos/<giro>/`, `/vista-previa/`, `/prospectar/`, `/herramientas/link-de-whatsapp/`, `/privacidad-del-sitio/`, `404.html`, `robots.txt`, `sitemap.xml`, `logo.svg`, `favicon.svg`, `aviso-visitantes.js` |
 | El portal (a mano) | `/tarifas`, `/basicas`, `/eventos`, `/terminos`, `/privacidad`, `/admin`, `/demo`, `/muestra`, `/api/` y la invitación de ejemplo |
 
-Dos nombres se cambiaron para que no chocaran con el portal: la vista previa del sitio comercial es `/vista-previa/` (porque `/demo` ya es la demo de ventas) y su aviso de cookies es `/privacidad-del-sitio/` (porque `/privacidad` es el Aviso de Privacidad legal).
+Dos nombres se cambiaron para que no chocaran con el portal: la vista previa del sitio comercial es `/vista-previa/` (porque `/demo` ya es la demo de ventas) y el Aviso de Privacidad para Visitantes es `/privacidad-del-sitio/` (porque `/privacidad` es el Aviso de Privacidad de los clientes que contratan).
+
+## Los dos avisos de privacidad
+
+Son dos documentos distintos y no se mezclan:
+
+- **`/privacidad-del-sitio/` — Aviso de Privacidad para Visitantes.** Corto, para quien solo pasa a ver el sitio: qué guarda el navegador, cookies, Google Fonts y los registros técnicos del servidor. Se genera desde `pages.js`.
+- **`/privacidad` (`public/privacidad.html`) — Aviso de Privacidad completo.** Largo, para los negocios que contratan: comprobantes de pago, accesos a cuentas, fotos, el registro de aceptación. Se escribe a mano.
+
+Si cambia alguno, se sube la fecha de «Última actualización» **y la constante `VERSION` de `aviso-visitantes.js`**, para que a todos se les vuelva a pedir su aceptación.
+
+## El aviso de cookies tapa el sitio hasta que lo aceptan
+
+`sitio/src/static/aviso-visitantes.js` es el aviso de cookies y privacidad. Va en **todas** las páginas de 185ChangarroWeb y, mientras no lo acepten, tapa la página y bloquea todos los enlaces y formularios: no se puede entrar a otra subpágina. Si alguien llega directo a una subpágina, ve el mismo aviso ahí.
+
+- Se incluye solo:
+  `<script src="<ruta a la raíz>aviso-visitantes.js" data-base="<ruta a la raíz>"></script>`.
+  En las páginas generadas lo pone `layout()` de `pages.js`; en las del portal está escrito a mano antes de `</body>`.
+- **Las páginas legales no se tapan.** `terminos.html`, `privacidad.html`, `/privacidad-del-sitio/` y el 404 ponen `window.AVISO_185_LIBRE = true` antes del script: ahí solo sale una barra abajo, porque nadie puede aceptar algo que todavía no lo dejan leer.
+- **Dónde no va:** en la página publicada de un cliente (es suya y lleva su propio aviso), en las vistas previas (`/vista-previa/`, el marco de `/crear/`), en `muestra.html` (es la plantilla que se copia por negocio y se enseña en privado) y en las invitaciones de evento (un invitado que abre una invitación no tiene por qué toparse con el aviso de la agencia). Sí va en los ejemplos de `/ejemplos/<giro>/`, que son páginas nuestras.
+- La aceptación se guarda en `localStorage` (`cw185-aviso-visitantes`), con la sesión como respaldo. Si el navegador bloquea las dos, se pregunta una vez por visita: la página nunca se queda trabada.
+- `/privacidad-del-sitio/` trae un botón que borra todo lo que el sitio guardó en ese navegador, incluida la aceptación.
+
+## En una vista previa no funciona ningún botón
+
+Una vista previa (`/vista-previa/` y el marco de `/crear/`, o sea los modos `demo` y `preview` de `render.js`) lleva el nombre y a veces el **teléfono real** de un negocio que todavía no contrata. Si los botones funcionaran, cualquiera podría mandarle un pedido creyendo que ya es su página oficial, y el negocio nunca lo recibiría.
+
+Por eso, en esos dos modos, `site.js` bloquea todos los enlaces que salen de la página (WhatsApp, `tel:`, mapa, redes) y todos los formularios: en vez de salir, abren el aviso `#py-aviso`, que dice que esto es una vista previa y no una página web. El aviso se abre solo al entrar, una vez por pestaña, y no dentro del marco de `/crear/`. Lo único que sí funciona es la barra de arriba, que lleva al WhatsApp de 185ChangarroWeb. Si se agrega un botón nuevo a `render.js`, no hay que hacer nada: el bloqueo es por tipo de enlace, no por botón.
 
 ## Los tres servicios
 
@@ -74,7 +101,7 @@ Esto es el muestrario, no la página final de un cliente. Generar sitios reales 
 | `integraciones/` | Código del Apps Script de la Hoja de Google y pasos para configurarlo. |
 | `server.js` | Servidor de Node sin dependencias. Entrega solo lo que está en `public/`, con rutas limpias, `/salud` y `/api/`. Escucha en `process.env.PORT` y `0.0.0.0`, como pide Render. |
 | `retirado-2026-10-04/` | **Fuera de `public/`: el servidor nunca lo entrega.** Las muestras retiradas de Mariscos 8 Tostadas, Clínica Dental San Pablo y AmueblArte, más `amueblarte-modelos.js`. No se borraron por si alguno diera permiso después; para volver a publicar una hace falta su autorización por escrito (sección 13 de los Términos). Ver su `LEEME.md`. |
-| `public/ejemplodeevento-muestra/` | Invitación digital de ejemplo de XV años (paquete Completa, datos inventados, con etiqueta DEMO), en `/ejemplodeevento-muestra/`; `/15anos-demo/` y `/15años-demo/` redirigen ahí. No se escribe a mano: es la salida de `build.js` del sistema de invitaciones (proyecto aparte, fuera de este repositorio). **Nunca se edita esta carpeta directamente**: el siguiente `build.js` borra el cambio. Lo que se toca es `invitaciones/plantilla/estilos.css` y `invitaciones/render.js`, y luego se copia `dist/` encima. Ya pasó una vez con la galería en rejilla, que vivió solo aquí hasta que se regresó a la plantilla. No lleva solicitudes ni datos personales: la confirmación abre WhatsApp. Lleva `noindex`; `public/robots.txt` y el encabezado `X-Robots-Tag` del servidor la excluyen de buscadores. |
+| `public/ejemplodeevento-muestra/`, `public/boda-muestra/` | Las **dos invitaciones digitales de ejemplo**: una de XV años y una de boda (paquete Completa, datos inventados, con etiqueta DEMO), en `/ejemplodeevento-muestra/` y `/boda-muestra/`; `/15anos-demo/` y `/15años-demo/` redirigen a la de XV años. No se escribe a mano: es la salida de `build.js` del sistema de invitaciones (proyecto aparte, fuera de este repositorio). **Nunca se edita esta carpeta directamente**: el siguiente `build.js` borra el cambio. Lo que se toca es `invitaciones/plantilla/estilos.css` y `invitaciones/render.js`, y luego se copia `dist/` encima. Ya pasó una vez con la galería en rejilla, que vivió solo aquí hasta que se regresó a la plantilla. No lleva solicitudes ni datos personales: la confirmación abre WhatsApp, y en las demos ni eso: cada botón avisa que la fiesta no existe. Las fotos son ilustraciones vectoriales propias, hechas con `invitaciones/herramientas/generar-fotos-boda.js` (boda) y la música con `generar-demo.js`: nada de terceros. Llevan `noindex`; `public/robots.txt` y el encabezado `X-Robots-Tag` del servidor la excluyen de buscadores. |
 | `package.json`, `render.yaml`, `.node-version` | Configuración de Node y de Render. |
 
 ## Reglas del proyecto

@@ -48,7 +48,11 @@ module.exports = function pages(cfg, PY, PRESETS, ver) {
       (o.hideCta ? '' : '<a class="btn btn-pri btn-sm" href="' + rel + 'crear/">Ver mi página gratis</a>') + '</div></header>' +
       o.body(rel) + (o.noFooter ? '' : footer(rel)) +
       (o.waFloat ? '<a class="wa-float"' + out(wa(helloMsg)) + ' aria-label="Escríbanos por WhatsApp">' + icon('wa') + '</a>' : '') +
-      (o.scripts ? o.scripts(rel) : '') + '</body></html>';
+      (o.scripts ? o.scripts(rel) : '') +
+      // Aviso de cookies y privacidad: va en todas las páginas del sitio, al final, para que
+      // no retrase nada. Las páginas legales ponen window.AVISO_185_LIBRE y solo ven la barra.
+      '<script src="' + rel + 'aviso-visitantes.js?v=' + ver + '" data-base="' + rel + '"></script>' +
+      '</body></html>';
   }
 
   function footer(rel) {
@@ -122,7 +126,8 @@ module.exports = function pages(cfg, PY, PRESETS, ver) {
       '<ul>' + (p.incluye || []).map((x) => '<li' + (/^Todo lo de/.test(x) ? ' class="all"' : '') + '><span>' + esc(x) + '</span></li>').join('') + '</ul>' +
       '<a class="btn ' + (p.destacado ? 'btn-pri' : 'btn-ghost') + ' btn-block"' + out(wa('Hola, ' + brand + ' 👋 Quiero una invitación digital (' + p.nombre + ', ' + money(p.precio) + ') para mi evento.')) + '>Pedir esta invitación</a></article>').join('') + '</div>' +
     '<div class="notice"><p>Lista en <b>' + esc(EV.tiempo) + '</b>. Queda en línea hasta <b>' + esc(EV.vigencia) + '</b>; para dejarla más tiempo son ' + money(EV.extra) + ' por cada 3 meses. La atención termina <b>3 días después del evento</b>. Las confirmaciones llegan a su WhatsApp: la invitación no guarda datos de sus invitados. Las fotos y la música deben ser suyas o libres de derechos de autor.</p>' +
-    (portal ? '<a class="btn btn-pri btn-sm"' + out(esc(portal + '/ejemplodeevento-muestra/')) + '>Ver una invitación de ejemplo</a>' : '') +
+    (portal ? '<a class="btn btn-pri btn-sm"' + out(esc(portal + '/ejemplodeevento-muestra/')) + '>Ver una de XV años</a>' +
+      '<a class="btn btn-ghost btn-sm"' + out(esc(portal + '/boda-muestra/')) + '>Ver una de boda</a>' : '') +
     (DOCS.eventos ? '<a class="btn btn-ghost btn-sm"' + out(esc(DOCS.eventos)) + '>Todos los detalles</a>' : '') + '</div>' +
     '</div></section>';
 
@@ -328,17 +333,77 @@ module.exports = function pages(cfg, PY, PRESETS, ver) {
     scripts: (rel) => '<script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script><script src="' + rel + 'assets/tool.js?v=' + ver + '"></script>'
   });
 
-  /* ================= PRIVACIDAD DE ESTE SITIO ================= */
+  /* ================= AVISO DE PRIVACIDAD PARA VISITANTES =================
+     Este es el aviso corto, para quien solo pasa a ver el sitio: cookies, almacenamiento del
+     navegador y nada más. El Aviso de Privacidad largo (`/privacidad`) es el de los clientes que
+     contratan. Esta página se puede leer SIN aceptar el aviso (`AVISO_185_LIBRE`): nadie puede
+     aceptar algo que todavía no lo dejan leer. */
+  const RESP = cfg.responsable || {};
+  const guardados = [
+    ['<code>cw185-aviso-visitantes</code>', 'Que usted ya aceptó este aviso, para no volver a preguntárselo en cada página.'],
+    ['<code>py-builder:v1</code>', 'El último borrador del creador de vistas previas: el nombre del negocio, el giro, el color y lo demás que escribió, para que no lo pierda si cierra la página. <b>Por eso, al volver a entrar, el creador aparece con los datos de la vez pasada</b>, aunque sea en otro día o después de una actualización del sitio.'],
+    ['<code>py-prospectos:v1</code>', 'Solo en la herramienta interna de ' + esc(brand) + '. No se usa en las páginas públicas.'],
+    ['<code>py-cart:…</code>', 'En los ejemplos de negocios, lo que puso en el carrito de prueba.']
+  ];
   const privacy = layout({
     depth: 1, path: '/privacidad-del-sitio/',
-    title: 'Privacidad de este sitio | ' + brand,
-    description: 'Cómo tratan los datos el creador de vistas previas y las herramientas de ' + brand + '.',
-    body: () => '<main class="page"><div class="wrap prose"><h1>Privacidad de este sitio</h1>' +
-      '<p style="margin-top:12px">' + (DOCS.privacidad ? 'El responsable del tratamiento de sus datos y todos los detalles legales están en el <a' + out(esc(DOCS.privacidad)) + '>Aviso de Privacidad de ' + esc(brand) + '</a>. Esta página solo explica cómo funcionan las herramientas de este sitio.' : 'Esta página explica cómo funcionan las herramientas de este sitio.') + '</p>' +
-      '<h2>El creador de vistas previas y la herramienta de WhatsApp</h2><p>Funcionan dentro de su navegador. Lo que escribe no se envía a ningún servidor nuestro: viaja dentro del enlace que usted decide compartir. Su último borrador se guarda solo en su navegador para que no lo pierda.</p>' +
-      '<h2>Cuando nos escribe</h2><p>Si nos manda un mensaje por WhatsApp o correo, recibimos los datos que usted comparta (por ejemplo, su nombre, su número y la información de su negocio) y los usamos solo para contestarle y prepararle su vista previa o su cotización.</p>' +
-      '<h2>Cookies y publicidad</h2><p>Este sitio no usa cookies de rastreo ni publicidad.</p>' +
-      '<h2>Contacto</h2><p>Para cualquier duda sobre sus datos escríbanos a <b>' + esc(cfg.correo || 'nuestro WhatsApp') + '</b>.</p></div></main>'
+    title: 'Aviso de Privacidad para Visitantes y uso de cookies | ' + brand,
+    ogTitle: 'Aviso de Privacidad para Visitantes',
+    description: 'Qué guarda ' + brand + ' en su navegador cuando usted solo visita el sitio, para qué, y cómo borrarlo. Aviso corto, para quien no ha contratado nada.',
+    head: '<script>window.AVISO_185_LIBRE = true;</script>',
+    body: () => '<main class="page"><div class="wrap prose"><span class="kicker">Para quien visita el sitio</span><h1>Aviso de Privacidad para Visitantes</h1>' +
+      '<p style="margin-top:12px"><b>Última actualización: 5 de octubre de 2026.</b> Este aviso es para usted si solo está viendo el sitio: no tiene que registrarse, ni dejar sus datos, ni contratar nada. ' +
+      (DOCS.privacidad ? 'Si decide contratar una página web, aplica además el <a' + out(esc(DOCS.privacidad)) + '>Aviso de Privacidad completo</a>, que es más largo porque ahí sí hay datos de un cliente.' : '') + '</p>' +
+
+      '<h2>1. Quién responde por sus datos</h2>' +
+      '<p>' + esc(RESP.nombre || brand) + (RESP.comercial ? ', que opera con el nombre comercial <b>' + esc(RESP.comercial) + '</b>' : '') +
+      (RESP.domicilio ? ', con domicilio en ' + esc(RESP.domicilio) : '') + ', es la responsable del tratamiento, conforme a la Ley Federal de Protección de Datos Personales en Posesión de los Particulares.</p>' +
+      '<p>Para cualquier duda sobre sus datos: ' + (cfg.correo ? '<a href="mailto:' + esc(cfg.correo) + '">' + esc(cfg.correo) + '</a> o ' : '') +
+      'WhatsApp <a' + out(wa('Hola, ' + brand + '. Tengo una duda sobre la privacidad del sitio.')) + '>' + esc(PY.prettyWa(cfg.wa)) + '</a>.</p>' +
+
+      '<h2>2. Qué pasa si usted solo mira el sitio</h2>' +
+      '<p>No le pedimos su nombre, su correo ni su teléfono para dejarlo entrar. Mientras navega, ocurren tres cosas:</p>' +
+      '<ul>' +
+      '<li><b>El servidor registra datos técnicos.</b> Como cualquier sitio en internet: su dirección IP, la hora, la página que pidió y el tipo de navegador. Sirven para que el sitio funcione y para protegerlo de ataques. No los usamos para identificarlo ni para hacerle publicidad.</li>' +
+      '<li><b>Su navegador guarda cosas en su propia computadora o celular.</b> Están en la lista de abajo. Esa información se queda en su aparato: no viaja a ningún servidor nuestro.</li>' +
+      '<li><b>Se cargan tipos de letra desde Google Fonts.</b> Al hacerlo, su navegador le envía a Google su dirección IP y datos técnicos, y Google los trata según su propio aviso de privacidad.</li>' +
+      '</ul>' +
+
+      '<h2>3. Cookies y almacenamiento del navegador</h2>' +
+      '<p><b>Este sitio no usa cookies de publicidad ni de rastreo</b>, ni lo sigue a otros sitios, ni vende nada a redes de anuncios. Lo que sí usamos es el <i>almacenamiento local</i> del navegador, que es una tecnología parecida a una cookie: guarda información en su aparato para que la página se acuerde de lo que usted hizo. Esto es lo que guarda y para qué:</p>' +
+      '<div class="table-wrap"><table class="cmp"><thead><tr><th scope="col">Qué se guarda</th><th scope="col">Para qué</th></tr></thead><tbody>' +
+      guardados.map((g) => '<tr><th scope="row">' + g[0] + '</th><td>' + g[1] + '</td></tr>').join('') +
+      '</tbody></table></div>' +
+      '<p>Nada de esto tiene fecha de caducidad automática: se queda hasta que usted lo borre. Si usa el navegador en modo privado, desaparece al cerrar la ventana.</p>' +
+
+      '<h2>4. Borrar lo que se guardó</h2>' +
+      '<p>Puede hacerlo cuando quiera, desde la configuración de su navegador («Borrar datos de navegación») o con este botón, que borra en este aparato todo lo que este sitio guardó, incluida su aceptación del aviso:</p>' +
+      '<p><button type="button" class="btn btn-ghost" id="cw-borrar">Borrar lo que guardé en este navegador</button> <span id="cw-borrado" hidden style="color:var(--muted)"></span></p>' +
+      '<p class="fineprint" style="text-align:left">Si lo borra, la próxima vez que abra el sitio le volveremos a pedir que acepte el aviso, y el creador de vistas previas empezará en blanco.</p>' +
+
+      '<h2>5. Cuando usted nos escribe</h2>' +
+      '<p>Si nos manda un mensaje por WhatsApp o correo, o si nos pide una vista previa, recibimos los datos que usted decida compartir: por ejemplo su nombre, su número y la información de su negocio. Los usamos solo para contestarle y prepararle lo que pidió. Si después de eso no contrata, los conservamos seis meses por si regresa y luego los borramos.</p>' +
+      '<p>El creador de vistas previas y la herramienta de link de WhatsApp <b>funcionan dentro de su navegador</b>: lo que escribe ahí no se nos envía. Viaja únicamente dentro del enlace que usted decide compartir, cuando usted lo comparte.</p>' +
+
+      '<h2>6. Enlaces y servicios de otras empresas</h2>' +
+      '<p>Para que el sitio funcione intervienen: <b>Render</b> (donde está alojado, puede guardar los registros técnicos fuera de México), <b>Google Fonts</b> (tipos de letra), <b>Google Maps</b> (el mapa que se ve dentro de los ejemplos de negocios) y <b>WhatsApp</b> (cuando usted toca un botón para escribirnos). Cada una trata sus datos según su propio aviso de privacidad. No vendemos ni rentamos sus datos a nadie.</p>' +
+
+      '<h2>7. Menores de edad</h2>' +
+      '<p>Este sitio es para dueños de negocios y personas que organizan un evento. No está dirigido a menores de edad y no les pedimos datos a propósito.</p>' +
+
+      '<h2>8. Sus derechos</h2>' +
+      '<p>Usted puede pedirnos en cualquier momento acceder a sus datos, corregirlos, cancelarlos, oponerse a su uso o retirar su consentimiento (derechos ARCO). Escriba a ' +
+      (cfg.correo ? '<a href="mailto:' + esc(cfg.correo) + '">' + esc(cfg.correo) + '</a> o al ' : '') + 'WhatsApp de arriba con su nombre, un medio para contestarle y qué quiere que hagamos. Le contestamos en máximo 20 días hábiles y el trámite no tiene costo. Si considera que no se respetaron sus derechos, puede acudir a la autoridad en materia de protección de datos personales.</p>' +
+
+      '<h2>9. Cambios a este aviso</h2>' +
+      '<p>Si este aviso cambia, publicaremos la versión nueva en esta misma página con su fecha, y le volveremos a pedir su aceptación la próxima vez que entre.</p>' +
+      '</div></main>',
+    // El botón de borrar vive aquí porque es la única página que lo necesita.
+    scripts: () => '<script>(function(){var b=document.getElementById("cw-borrar"),m=document.getElementById("cw-borrado");' +
+      'if(!b)return;b.addEventListener("click",function(){var n=0;' +
+      'try{Object.keys(localStorage).forEach(function(k){if(/^(cw185-|py-|vitrina-local|muestra185\\.)/.test(k)){localStorage.removeItem(k);n++;}});}catch(e){}' +
+      'try{Object.keys(sessionStorage).forEach(function(k){if(/^(cw185-|py-)/.test(k))sessionStorage.removeItem(k);});}catch(e){}' +
+      'm.hidden=false;m.textContent=n?"Listo: se borraron "+n+" cosas guardadas.":"No había nada guardado en este navegador.";});})();</script>'
   });
 
   /* ================= 404 ================= */
@@ -346,6 +411,7 @@ module.exports = function pages(cfg, PY, PRESETS, ver) {
     abs: true, path: '/404.html', noindex: true,
     title: 'Página no encontrada | ' + brand,
     description: 'La página que busca no existe.',
+    head: '<script>window.AVISO_185_LIBRE = true;</script>',
     body: () => '<main class="page"><div class="wrap" style="text-align:center;max-width:620px"><p style="font-size:4rem">🧭</p><h1>No encontramos esta página</h1><p style="color:var(--muted);margin:14px 0 26px">Puede que el enlace esté incompleto o que la página ya no exista.</p><div class="hero-ctas" style="justify-content:center"><a class="btn btn-pri" href="/">Ir al inicio</a><a class="btn btn-ghost" href="/crear/">Ver mi página gratis</a></div></div></main>'
   });
 

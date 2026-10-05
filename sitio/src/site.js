@@ -91,6 +91,39 @@
     if (ed) ed.href = page((D.home || '/') + 'crear/') + location.search + location.hash;
   }
 
+  /* ----- vista previa: nada sale de la página -----
+     Una vista previa lleva el nombre y a veces el teléfono real de un negocio que todavía no
+     contrata. Si los botones funcionaran, alguien podría mandarle un pedido creyendo que es su
+     página oficial, y el negocio nunca lo recibiría. Así que en `demo` y `preview` ningún enlace
+     de la página sale a WhatsApp, al teléfono, al mapa ni a una red social: todos abren el aviso.
+     Los únicos que sí salen son los de la barra de arriba, que llevan al WhatsApp de la agencia. */
+  var ES_VISTA = D.mode === 'demo' || D.mode === 'preview';
+  var EN_MARCO = window.self !== window.top;
+
+  function avisoVista() {
+    var d = $('#py-aviso');
+    if (d) { openDlg(d); return true; }
+    return false;
+  }
+  if (ES_VISTA) {
+    document.addEventListener('click', function (e) {
+      var a = e.target.closest && e.target.closest('a[href]');
+      if (!a) return;
+      var h = a.getAttribute('href') || '';
+      if (/^#/.test(h) || a.hasAttribute('data-legal')) return;          // anclas y textos legales: se quedan
+      if (a.closest('.py-bar')) return;                                   // la barra de la agencia sí funciona
+      if (!/^(https?:|tel:|mailto:|wa\.me)/i.test(h)) return;             // rutas internas: no son salidas
+      e.preventDefault();
+      avisoVista();
+    }, true);
+    document.addEventListener('submit', function (e) {
+      // El formulario del carrito tiene su propio manejador; este atrapa cualquier otro.
+      if (e.target.hasAttribute('data-order-form')) return;
+      e.preventDefault();
+      avisoVista();
+    }, true);
+  }
+
   /* ----- aviso de privacidad y términos (al pie) ----- */
   function openLegal(id) {
     var d = document.getElementById(id);
@@ -120,6 +153,19 @@
     var c = e.target.closest && e.target.closest('[data-close]');
     if (c) closeDlg(c.closest('dialog'));
   });
+
+  /* El aviso se abre solo al entrar, una vez por pestaña. Dentro del creador de vistas previas
+     la página va en un marco y se vuelve a dibujar con cada tecla, así que ahí no se abre solo:
+     ahí ya se sabe que es una vista previa, y los enlaces siguen bloqueados igual. */
+  if (ES_VISTA && !EN_MARCO) {
+    var VISTO = 'py-aviso:' + (D.slug || location.pathname);
+    var yaVio = false;
+    try { yaVio = sessionStorage.getItem(VISTO) === '1'; } catch (e) {}
+    if (!yaVio) {
+      avisoVista();
+      try { sessionStorage.setItem(VISTO, '1'); } catch (e) {}
+    }
+  }
 
   function showPreview(msg) {
     var pv = $('#py-preview');

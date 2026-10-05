@@ -172,4 +172,39 @@ t('engine.js funciona como en el navegador', () => {
   assert(html.includes('Gym') && html.includes('<style>'));
 });
 
+t('la vista previa no deja salir a WhatsApp', () => {
+  // Una vista previa lleva el teléfono real de un negocio que no ha contratado: si los botones
+  // funcionaran, le llegarían pedidos que nunca pidió. Ver 'En una vista previa no funciona ningún botón'.
+  for (const mode of ['demo', 'preview']) {
+    const html = PY.renderSite({ tipo: 'restaurante', nombre: 'Tacos X', whatsapp: '3312345678' }, { mode });
+    assert(html.includes('id=\"py-aviso\"'), mode + ': falta el aviso de vista previa');
+    assert(html.includes('todavía no es una página web'), mode + ': el aviso no lo dice con todas sus letras');
+    assert(!html.includes('data-msg-open'), mode + ': sigue el botón que abría WhatsApp de verdad');
+  }
+  for (const mode of ['live', 'example']) {
+    assert(!PY.renderSite({ tipo: 'restaurante', nombre: 'Tacos X' }, { mode }).includes('id=\"py-aviso\"'), mode + ': no debe llevar el aviso de vista previa');
+  }
+});
+
+t('el aviso de cookies va donde debe', () => {
+  const ejemplo = PY.renderSite({ tipo: 'tienda', nombre: 'Tienda X' }, { mode: 'example', home: '../../' });
+  assert(ejemplo.includes('../../aviso-visitantes.js'), 'los ejemplos son páginas nuestras y sí lo llevan');
+  for (const mode of ['live', 'demo', 'preview']) {
+    assert(!PY.renderSite({ tipo: 'tienda', nombre: 'Tienda X' }, { mode }).includes('aviso-visitantes.js'), mode + ': no le toca el aviso de cookies');
+  }
+});
+
+t('el aviso de cookies no tapa lo que hay que leer para aceptarlo', () => {
+  const cfg = JSON.parse(fs.readFileSync(path.join(ROOT, 'config.json'), 'utf8'));
+  cfg.wa = PY.waNumber(cfg.whatsapp);
+  const A = require(path.join(ROOT, 'src', 'agency', 'pages.js'))(cfg, PY, PRESETS, 'x');
+  for (const [nombre, html] of [['privacidad del sitio', A.privacy], ['404', A.notFound]]) {
+    assert(html.includes('AVISO_185_LIBRE'), nombre + ': debe poder leerse sin aceptar');
+  }
+  for (const [nombre, html] of [['portada', A.home], ['crear', A.crear]]) {
+    assert(html.includes('aviso-visitantes.js'), nombre + ': le falta el aviso');
+    assert(!html.includes('AVISO_185_LIBRE'), nombre + ': esta sí se tapa');
+  }
+});
+
 Promise.all(pending).then(() => console.log(process.exitCode ? '\nHay pruebas fallidas.\n' : '\n✔ ' + passed + ' pruebas pasaron.\n'));

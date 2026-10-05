@@ -74,7 +74,9 @@ const server = http.createServer((req, res) => {
     }
   }
   // Las invitaciones de ejemplo no deben aparecer en buscadores.
-  if (pathname.startsWith('/ejemplodeevento-muestra')) res.setHeader('X-Robots-Tag', 'noindex, nofollow');
+  if (pathname.startsWith('/ejemplodeevento-muestra') || pathname.startsWith('/boda-muestra')) {
+    res.setHeader('X-Robots-Tag', 'noindex, nofollow');
+  }
 
   if (pathname.startsWith('/api/')) return solicitudes.manejar(req, res, pathname);
 
